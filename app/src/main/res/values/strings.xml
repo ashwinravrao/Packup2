@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Packup</string>
+    <string name="default_search_bar_hint">Search</string>
+    <string name="hint_main_screen_top_search_bar">Describe an item to search…</string>
+    <string name="search_close_and_go_back_description">Close search and go back</string>
+    <string name="navigation_menu_open_description">Open navigation menu</string>
+    <string name="voice_search_start_description">Start voice search</string>
+    <string name="search_expanded_announcement">Search bar expanded. Type to search.</string>
+    <string name="search_collapsed_announcement">Search bar collapsed. Navigation drawer available.</string>
 </resources>

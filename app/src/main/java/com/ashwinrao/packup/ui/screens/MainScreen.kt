@@ -2,11 +2,16 @@ package com.ashwinrao.packup.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
+import com.ashwinrao.packup.R
+import com.ashwinrao.packup.ui.composables.PersistentSearchBar
 import com.ashwinrao.packup.ui.theme.PackupTheme
 
 @Composable
@@ -14,8 +19,20 @@ import com.ashwinrao.packup.ui.theme.PackupTheme
 fun MainScreen(
     modifier: Modifier = Modifier,
 ) {
+    val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        topBar = {
+            PersistentSearchBar(
+                textFieldState = searchBarTextFieldState,
+                searchResults = emptyList(),
+                onHamburgerMenuClicked = { /* TODO: Open navigation drawer */ },
+                onMicClicked = { /* TODO: Figure out how to take in voice input */ },
+                onSearch = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
+                hint = stringResource(R.string.hint_main_screen_top_search_bar)
+            )
+        }
     ) {  innerPadding ->
         // todo: add content
     }
