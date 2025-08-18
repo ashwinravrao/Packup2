@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import com.ashwinrao.packup.R
-import com.ashwinrao.packup.ui.composables.PersistentSearchBar
+import com.ashwinrao.packup.ui.composables.TopSearchBar
 import com.ashwinrao.packup.ui.theme.PackupTheme
 
 @Composable
@@ -24,12 +24,11 @@ fun MainScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            PersistentSearchBar(
+            TopSearchBar(
                 textFieldState = searchBarTextFieldState,
                 searchResults = emptyList(),
-                onHamburgerMenuClicked = { /* TODO: Open navigation drawer */ },
-                onMicClicked = { /* TODO: Figure out how to take in voice input */ },
-                onSearch = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
+                onVoiceSearchToggled = { /* TODO: Figure out how to take in voice input */ },
+                onTextSearched = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
                 hint = stringResource(R.string.hint_main_screen_top_search_bar)
             )
         }
