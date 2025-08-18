@@ -1,6 +1,7 @@
 package com.ashwinrao.packup.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Scaffold
@@ -11,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import com.ashwinrao.packup.R
+import com.ashwinrao.packup.ui.composables.BottomNavBar
 import com.ashwinrao.packup.ui.composables.TopSearchBar
 import com.ashwinrao.packup.ui.theme.PackupTheme
 
@@ -30,6 +32,12 @@ fun MainScreen(
                 onVoiceSearchToggled = { /* TODO: Figure out how to take in voice input */ },
                 onTextSearched = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
                 hint = stringResource(R.string.hint_main_screen_top_search_bar)
+            )
+        },
+        bottomBar = {
+            BottomNavBar(
+                onSettingsClicked = { /* TODO: Figure out what view to open settings in (ie. bottom sheet? replace grid?) */ },
+                onCameraFabClicked = { /* TODO: Open native camera view or launch intent? */ },
             )
         }
     ) {  innerPadding ->
