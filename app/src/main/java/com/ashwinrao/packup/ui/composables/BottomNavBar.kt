@@ -1,6 +1,8 @@
 package com.ashwinrao.packup.ui.composables
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
@@ -25,15 +27,20 @@ fun BottomNavBar(
     onCameraFabClicked: () -> Unit,
 ) {
     BottomAppBar(
+        modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp),
         actions = {
-            IconButton(onClick = onSettingsClicked) {
+            IconButton(
+                modifier = Modifier.padding(top = 8.dp),
+                onClick = onSettingsClicked
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_settings),
                     contentDescription = stringResource(R.string.settings_button_description)
                 )
             }
         },
+        windowInsets = WindowInsets.navigationBars,
         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
         floatingActionButton = {
             FloatingActionButton(

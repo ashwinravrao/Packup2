@@ -37,11 +37,11 @@ fun TopSearchBar(
     isVoiceSearchEnabled: Boolean = true,
     onVoiceSearchToggled: () -> Unit,
     onTextSearched: (String) -> Unit,
+    isExpanded: Boolean = false,
+    onExpanded: (Boolean) -> Unit,
     searchResults: List<String>, // todo: change type?
     hint: String = stringResource(R.string.default_search_bar_hint),
 ) {
-
-    var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     // Animate horizontal padding so the bar doesn't jankily widen before expanding
     val animatedPadding by animateDpAsState(
@@ -61,7 +61,7 @@ fun TopSearchBar(
                     onQueryChange = { textFieldState.edit { replace(0, length, it) } },
                     onSearch = {
                         onTextSearched(textFieldState.text.toString())
-                        isExpanded = false
+                        onExpanded(false)
                     },
                     leadingIcon = {
                         if (isExpanded) {
@@ -69,7 +69,7 @@ fun TopSearchBar(
                                 modifier = Modifier.padding(end = 8.dp),
                                 onClick = {
                                     textFieldState.clearText()
-                                    isExpanded = false
+                                    onExpanded(false)
                                 }
                             ) {
                                 Icon(
@@ -98,13 +98,13 @@ fun TopSearchBar(
                         }
                     },
                     expanded = isExpanded,
-                    onExpandedChange = { isExpanded = it },
+                    onExpandedChange = onExpanded,
                     placeholder = { Text(text = hint) }
                 )
             },
             shape = RoundedCornerShape(corner = CornerSize(16.dp)),
             expanded = isExpanded,
-            onExpandedChange = { isExpanded = it },
+            onExpandedChange = onExpanded,
             modifier = modifier.fillMaxWidth(),
         ) {
             Box {
@@ -117,12 +117,17 @@ fun TopSearchBar(
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
 @Composable
 fun TopSearchBarPreview() {
+
     val state = remember { TextFieldState() }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+
     PackupTheme {
         TopSearchBar(
             textFieldState = state,
             onTextSearched = {},
             onVoiceSearchToggled = {},
+            isExpanded = isExpanded,
+            onExpanded = { isExpanded = it },
             searchResults = emptyList(),
             hint = "Describe an item to search..."
         )
