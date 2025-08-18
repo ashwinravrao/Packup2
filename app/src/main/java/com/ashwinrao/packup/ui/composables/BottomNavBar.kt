@@ -41,7 +41,7 @@ fun BottomNavBar(
             }
         },
         windowInsets = WindowInsets.navigationBars,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(top = 8.dp),
