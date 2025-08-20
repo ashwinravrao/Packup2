@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Packup"
 include(":app")
- 
+include(":feature:camera")
+include(":feature:main")
+include(":feature:common")

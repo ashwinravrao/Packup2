@@ -1,4 +1,4 @@
-package com.ashwinrao.packup.ui.screens
+package com.ashwinrao.packup.feature.main.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -17,10 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
-import com.ashwinrao.packup.R
-import com.ashwinrao.packup.ui.composables.BottomNavBar
-import com.ashwinrao.packup.ui.composables.TopSearchBar
-import com.ashwinrao.packup.ui.theme.PackupTheme
+import com.ashwinrao.packup.feature.common.R
+import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

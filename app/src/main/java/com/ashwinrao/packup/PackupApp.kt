@@ -1,8 +1,8 @@
 package com.ashwinrao.packup
 
 import androidx.compose.runtime.Composable
+import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.navigation.PackupNavHost
-import com.ashwinrao.packup.ui.theme.PackupTheme
 
 @Composable
 fun PackupApp() {

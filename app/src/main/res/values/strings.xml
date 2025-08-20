@@ -1,10 +1,3 @@
 <resources>
     <string name="app_name">Packup</string>
-    <string name="default_search_bar_hint">Search</string>
-    <string name="search_bar_icon_description">Magnifying glass icon</string>
-    <string name="hint_main_screen_top_search_bar">Describe your item…</string>
-    <string name="search_close_and_go_back_description">Close search and go back</string>
-    <string name="voice_search_start_description">Start voice search</string>
-    <string name="settings_button_description">Click to configure app settings</string>
-    <string name="camera_fab_button_description">Click to capture an item image</string>
 </resources>

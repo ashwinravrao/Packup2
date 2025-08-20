@@ -1,4 +1,4 @@
-package com.ashwinrao.packup.ui.composables
+package com.ashwinrao.packup.feature.main.ui
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
@@ -26,8 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ashwinrao.packup.R
-import com.ashwinrao.packup.ui.theme.PackupTheme
+import com.ashwinrao.packup.feature.common.R
+import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
