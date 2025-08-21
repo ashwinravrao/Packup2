@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ashwinrao.packup.feature.camera"
+    namespace = "com.ashwinrao.packup.core.camera"
     compileSdk = 36
 
     defaultConfig {
@@ -34,22 +34,12 @@ android {
 
 dependencies {
     // project
-    implementation(project(":feature:common"))
     implementation(project(":domain:camera"))
 
-    // external
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.runtime)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-
-    // local test
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     testImplementation(libs.junit)
-
-    // device test
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
