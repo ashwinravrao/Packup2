@@ -44,7 +44,9 @@ android {
 
 dependencies {
     // project
+    implementation(project(":domain:camera"))
     implementation(project(":feature:main"))
+    implementation(project(":feature:camera"))
     implementation(project(":feature:common"))
 
     // external

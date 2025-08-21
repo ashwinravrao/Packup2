@@ -15,6 +15,7 @@ composeAnimation = "1.9.0"
 dagger = "2.57.1"
 hilt = "1.2.0"
 ksp = "2.2.10-2.0.2"
+cameraX = "1.5.0-rc01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +42,11 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 hilt-runtime = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
 hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
+camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX"}
+camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX"}
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX"}
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX"}
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

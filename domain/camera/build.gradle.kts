@@ -33,13 +33,5 @@ android {
 }
 
 dependencies {
-    // external
-    implementation(libs.androidx.core.ktx)
-
-    // local test
     testImplementation(libs.junit)
-
-    // device test
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
