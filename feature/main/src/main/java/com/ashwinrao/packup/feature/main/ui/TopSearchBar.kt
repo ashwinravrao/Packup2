@@ -49,67 +49,61 @@ fun TopSearchBar(
         label = "searchBarHorizontalPadding"
     )
 
-    Box(
+    SearchBar(
         modifier = modifier
             .fillMaxWidth()
-            .padding(all = animatedPadding)
-    ) {
-        SearchBar(
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = textFieldState.text.toString(),
-                    onQueryChange = { textFieldState.edit { replace(0, length, it) } },
-                    onSearch = {
-                        onTextSearched(textFieldState.text.toString())
-                        onExpanded(false)
-                    },
-                    leadingIcon = {
-                        if (isExpanded) {
-                            IconButton(
-                                modifier = Modifier.padding(end = 8.dp),
-                                onClick = {
-                                    textFieldState.clearText()
-                                    onExpanded(false)
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_back_arrow),
-                                    contentDescription = stringResource(R.string.search_close_and_go_back_description)
-                                )
+            .padding(all = animatedPadding),
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = textFieldState.text.toString(),
+                onQueryChange = { textFieldState.edit { replace(0, length, it) } },
+                onSearch = {
+                    onTextSearched(textFieldState.text.toString())
+                    onExpanded(false)
+                },
+                leadingIcon = {
+                    if (isExpanded) {
+                        IconButton(
+                            onClick = {
+                                textFieldState.clearText()
+                                onExpanded(false)
                             }
-                        } else {
+                        ) {
                             Icon(
-                                painter = painterResource(R.drawable.ic_search),
-                                contentDescription = stringResource(R.string.search_bar_icon_description)
+                                painter = painterResource(R.drawable.ic_back_arrow),
+                                contentDescription = stringResource(R.string.search_close_and_go_back_description)
                             )
                         }
-                    },
-                    trailingIcon = {
-                        if (isVoiceSearchEnabled) {
-                            IconButton(
-                                modifier = Modifier.padding(start = 8.dp),
-                                onClick = onVoiceSearchToggled,
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_mic),
-                                    contentDescription = stringResource(R.string.voice_search_start_description)
-                                )
-                            }
+                    } else {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_search),
+                            contentDescription = stringResource(R.string.search_bar_icon_description)
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if (isVoiceSearchEnabled) {
+                        IconButton(
+                            onClick = onVoiceSearchToggled,
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_mic),
+                                contentDescription = stringResource(R.string.voice_search_start_description)
+                            )
                         }
-                    },
-                    expanded = isExpanded,
-                    onExpandedChange = onExpanded,
-                    placeholder = { Text(text = hint) }
-                )
-            },
-            shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-            expanded = isExpanded,
-            onExpandedChange = onExpanded,
-            modifier = modifier.fillMaxWidth(),
-        ) {
-            Box {
-                // todo: show search results
-            }
+                    }
+                },
+                expanded = isExpanded,
+                onExpandedChange = onExpanded,
+                placeholder = { Text(text = hint) }
+            )
+        },
+        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
+        expanded = isExpanded,
+        onExpandedChange = onExpanded,
+    ) {
+        Box {
+            // todo: show search results
         }
     }
 }
