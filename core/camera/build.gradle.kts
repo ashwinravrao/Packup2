@@ -36,10 +36,13 @@ dependencies {
     // project
     implementation(project(":domain:camera"))
 
+    // external
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+
+    // local test
     testImplementation(libs.junit)
+
+    // device test
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
