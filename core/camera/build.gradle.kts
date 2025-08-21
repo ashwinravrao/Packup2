@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -38,9 +40,14 @@ dependencies {
 
     // external
     implementation(libs.androidx.core.ktx)
+    implementation(libs.hilt.runtime)
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 
     // local test
     testImplementation(libs.junit)
+    testImplementation(libs.hilt.android.testing)
 
     // device test
     androidTestImplementation(libs.androidx.junit)
