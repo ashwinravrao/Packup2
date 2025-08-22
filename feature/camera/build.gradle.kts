@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
 }
 
@@ -34,11 +35,10 @@ android {
 }
 
 dependencies {
-    // project
     implementation(project(":feature:common"))
+    implementation(project(":core:common"))
     implementation(project(":domain:camera"))
 
-    // external
     implementation(libs.camerax.camera2)
     implementation(libs.camerax.core)
     implementation(libs.camerax.extensions)
@@ -48,21 +48,23 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.runtime)
     implementation(libs.hilt.runtime)
+    implementation(libs.hilt.compose)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
 
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
     kspTest(libs.hilt.compiler)
 
-    // local test
-    testImplementation(libs.junit)
-    testImplementation(libs.hilt.android.testing)
-
-    // device test
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    kspAndroidTest(libs.hilt.compiler)
 }
