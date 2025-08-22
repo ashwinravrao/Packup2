@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
@@ -23,16 +24,21 @@ fun CameraScreen(
     modifier: Modifier = Modifier,
     onComplete: () -> Unit,
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val cameraViewModel: CameraViewModel =
         getViewModelForInspectionMode(FakeCameraViewModel()) {
             hiltViewModel<RealCameraViewModel>()
         }
 
-    cameraViewModel.init(
-        context = LocalContext.current,
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    // init is already idempotent; this is just an additional safeguard
+    LaunchedEffect(cameraViewModel) {
+        cameraViewModel.init(
+            context = context,
+            lifecycleOwner = lifecycleOwner
+        )
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize()

@@ -17,6 +17,7 @@ class RealCameraViewModel @Inject constructor(
         private set
 
     override fun init(context: Context, lifecycleOwner: LifecycleOwner) {
+        if (::manager.isInitialized) return
         manager = factory.create(context, lifecycleOwner)
     }
 
