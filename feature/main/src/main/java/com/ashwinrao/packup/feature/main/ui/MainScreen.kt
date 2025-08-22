@@ -24,6 +24,7 @@ import com.ashwinrao.packup.feature.common.theme.PackupTheme
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MainScreen(
     modifier: Modifier = Modifier,
+    onNavigateToCamera: () -> Unit,
 ) {
     val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
     var isSearchBarExpanded by rememberSaveable { mutableStateOf(false) }
@@ -49,7 +50,7 @@ fun MainScreen(
             ) {
                 BottomNavBar(
                     onSettingsClicked = { /* TODO: Figure out what view to open settings in (ie. bottom sheet? replace grid?) */ },
-                    onCameraFabClicked = { /* TODO: Open native camera view or launch intent? */ },
+                    onCameraFabClicked = onNavigateToCamera,
                 )
             }
         }
@@ -62,6 +63,8 @@ fun MainScreen(
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
 fun MainScreenPreview() {
     PackupTheme {
-        MainScreen()
+        MainScreen(
+            onNavigateToCamera = {}
+        )
     }
 }

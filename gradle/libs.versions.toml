@@ -16,6 +16,7 @@ dagger = "2.57.1"
 hilt = "1.2.0"
 ksp = "2.2.10-2.0.2"
 cameraX = "1.5.0-rc01"
+accompanist = "0.37.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,6 +48,7 @@ camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.
 camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX"}
 camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX"}
 camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX"}
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

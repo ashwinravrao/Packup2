@@ -3,6 +3,7 @@ package com.ashwinrao.packup.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 
@@ -16,8 +17,9 @@ fun PackupNavHost(
          navController = navController,
          startDestination = NavRoute.MainScreen,
      ) {
-         mainScreen()
-
-         // todo: add other screens here
+         mainScreen {
+             navController.navigate(route = NavRoute.CameraScreen)
+         }
+         cameraScreen { navController.popBackStack() }
      }
 }

@@ -7,4 +7,6 @@ sealed interface NavRoute {
     @Serializable
     object MainScreen : NavRoute
 
+    @Serializable
+    object CameraScreen : NavRoute
 }

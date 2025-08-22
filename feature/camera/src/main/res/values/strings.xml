@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_ui_error_initialization">We couldn\'t start the camera. Try again.</string>
+    <string name="camera_ui_error_denied_permissions">You\’ve denied camera access. Enable it in settings to continue.</string>
+    <string name="camera_ui_error_image_capture_failed">Couldn\'t take the photo. Please try again.</string>
+    <string name="camera_ui_error_unknown">Something went wrong. Please try again.</string>
+</resources>

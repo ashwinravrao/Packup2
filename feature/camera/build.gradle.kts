@@ -37,8 +37,8 @@ android {
 dependencies {
     implementation(project(":feature:common"))
     implementation(project(":core:common"))
-    implementation(project(":domain:camera"))
 
+    implementation(libs.accompanist.permissions)
     implementation(libs.camerax.camera2)
     implementation(libs.camerax.core)
     implementation(libs.camerax.extensions)

@@ -1,12 +1,8 @@
 package com.ashwinrao.packup.feature.camera.viewmodel
 
-import android.content.Context
-import androidx.lifecycle.LifecycleOwner
+import com.ashwinrao.packup.feature.camera.model.CameraUIError
+import kotlinx.coroutines.flow.SharedFlow
 
 interface CameraViewModel {
-    fun init(context: Context, lifecycleOwner: LifecycleOwner)
-    fun startCamera()
-    fun stopCamera()
-    fun captureImage()
-    fun arePermissionsGranted()
+    val errors: SharedFlow<CameraUIError>
 }
