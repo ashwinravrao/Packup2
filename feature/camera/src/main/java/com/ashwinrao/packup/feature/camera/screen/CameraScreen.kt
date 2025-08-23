@@ -6,24 +6,18 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.ashwinrao.packup.core.common.composable.HandleSinglePermissionRequest
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -32,80 +26,58 @@ fun CameraScreen(
     modifier: Modifier = Modifier,
     onComplete: () -> Unit,
 ) {
-    val cameraPermissionState = rememberMultiplePermissionsState(
-        listOf(
-            Manifest.permission.CAMERA,
-        )
-    )
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val cameraController: LifecycleCameraController =
-        remember { LifecycleCameraController(context) }
+
+    val cameraController: LifecycleCameraController = remember {
+        LifecycleCameraController(context)
+    }
 
     LaunchedEffect(Unit) {
         cameraController.bindToLifecycle(lifecycleOwner)
     }
 
-    when {
-        cameraPermissionState.allPermissionsGranted -> {
-            Scaffold(
-                modifier = modifier.fillMaxSize()
-            ) { innerPadding ->
-                AndroidView(
-                    modifier = Modifier.fillMaxSize(),
-                    factory = { context ->
-                        PreviewView(context).apply {
-                            controller = cameraController
-                        }
-                    }
-                )
-            }
+    HandleSinglePermissionRequest(
+        requiredPermission = Manifest.permission.CAMERA,
+        onRequested = { /* request launched automatically; show optional progress ui here */ },
+        onGranted = {
+            CameraScreenContent(
+                modifier = modifier,
+                cameraController = cameraController
+            )
+        },
+        onTemporarilyDenied = { onRetry ->
+            // the user has denied the first request, but we can try again by doing the following
+            // todo: show placeholder and text explaining why we need the permission
+            // todo: add a button that calls onRetry, launching another permissions dialog
+        },
+        onPermanentlyDenied = { guideUserToSettings ->
+            // the user has permanently denied the request and we can no longer retry
+            // however, we can still explain to the user why the permission is critical to this feature
+            // and hope they grant permission
+            // todo: show placeholder and text explaining why the feature cannot be used without the permission being granted
+            // todo: add a button that takes user to the app-specific system settings page
         }
-
-        cameraPermissionState.shouldShowRationale -> {
-            // todo: add a more elaborate message with a placeholder and button/instructions
-            //  to show the user how to enable permissions
-            Text("Camera permission is needed to use this feature.")
-        }
-
-        else -> {
-            Text("Requesting camera permission...")  // todo: determine if necessary
-            LaunchedEffect(Unit) {
-                cameraPermissionState.launchMultiplePermissionRequest()
-            }
-        }
-    }
+    )
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HandleSinglePermissionRequest(
-    requiredPermission: String,
-    onRequested: @Composable () -> Unit,
-    onGranted: @Composable () -> Unit,
-    onTemporarilyDenied: @Composable () -> Unit,
-    onPermanentlyDenied: @Composable () -> Unit,
+private fun CameraScreenContent(
+    modifier: Modifier = Modifier,
+    cameraController: LifecycleCameraController,
 ) {
-    val state = rememberPermissionState(requiredPermission)
-    val hasRequestedBefore = rememberSaveable { mutableStateOf(false) }
-
-    val isGranted = state.status.isGranted
-    val isTempDenied = state.status.shouldShowRationale
-    val isPermaDenied = hasRequestedBefore.value && !isGranted && !isTempDenied
-
-    when {
-        isGranted -> onGranted()
-        isPermaDenied -> onPermanentlyDenied()
-        isTempDenied -> onTemporarilyDenied()
-        else -> {
-            onRequested() // first time only
-            LaunchedEffect(Unit) {
-                if (!hasRequestedBefore.value) {
-                    hasRequestedBefore.value = true
-                    state.launchPermissionRequest()
+    Scaffold(
+        modifier = modifier.fillMaxSize()
+    ) { _ ->
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { context ->
+                PreviewView(context).apply {
+                    controller = cameraController
                 }
             }
-        }
+        )
     }
 }
 
