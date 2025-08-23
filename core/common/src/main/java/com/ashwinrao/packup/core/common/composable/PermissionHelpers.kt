@@ -14,7 +14,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 @Composable
 fun HandleSinglePermissionRequest(
     requiredPermission: String,
-    onRequested: @Composable () -> Unit,
     onGranted: @Composable () -> Unit,
     onTemporarilyDenied: @Composable (() -> Unit) -> Unit,
     onPermanentlyDenied: @Composable (@Composable () -> Unit) -> Unit,
@@ -31,7 +30,6 @@ fun HandleSinglePermissionRequest(
         isPermaDenied -> onPermanentlyDenied { GuideUserToSystemSettings() }
         isTempDenied -> onTemporarilyDenied { state.launchPermissionRequest() }
         else -> {
-            onRequested()
             LaunchedEffect(Unit) {
                 if (!hasRequestedBefore.value) {
                     hasRequestedBefore.value = true

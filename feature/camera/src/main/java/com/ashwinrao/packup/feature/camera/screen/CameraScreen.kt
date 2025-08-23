@@ -39,7 +39,6 @@ fun CameraScreen(
 
     HandleSinglePermissionRequest(
         requiredPermission = Manifest.permission.CAMERA,
-        onRequested = { /* request launched automatically; show optional progress ui here */ },
         onGranted = {
             CameraScreenContent(
                 modifier = modifier,
