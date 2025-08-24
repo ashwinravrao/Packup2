@@ -14,7 +14,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HandleSinglePermissionRequest(
-    retryKey: MutableState<Boolean>,
+    requestRetryFlag: MutableState<Boolean>,
     requiredPermission: String,
     onGranted: @Composable () -> Unit,
     onSoftDenied: @Composable (onRetry: () -> Unit) -> Unit,
@@ -23,14 +23,17 @@ fun HandleSinglePermissionRequest(
     val context = LocalContext.current
     val state = rememberPermissionState(requiredPermission)
 
+    // Request permissions on first composition
     LaunchedEffect(Unit) {
         state.launchPermissionRequest()
     }
 
-    LifecycleResumeEffect(retryKey) {
-        if (retryKey.value) {
+    // Runs when the app regains foreground (as is the case when returning from system settings).
+    // Check if the retry flag has been set; if so, launch a new permissions request to advance in the flow.
+    LifecycleResumeEffect(requestRetryFlag) {
+        if (requestRetryFlag.value) {
             state.launchPermissionRequest()
-            retryKey.value = false
+            requestRetryFlag.value = false
         }
         onPauseOrDispose { }
     }
@@ -39,8 +42,12 @@ fun HandleSinglePermissionRequest(
         onGranted()
     } else {
         if (state.status.shouldShowRationale) {
+            // In a soft denial, the user can be persuaded to grant permissions with an explanation.
             onSoftDenied { state.launchPermissionRequest() }
         } else {
+            // In a hard denial, the feature may be permanently inaccessible.
+            // If the user wishes to access the feature, they must grant permission from system settings.
+            // We can offer an explanation but must respect the user's choice to deny the permission.
             onHardDenied { launchAppDetailsInSystemSettings(context) }
         }
     }

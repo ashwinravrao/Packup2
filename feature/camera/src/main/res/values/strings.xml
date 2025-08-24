@@ -4,4 +4,8 @@
     <string name="camera_ui_error_denied_permissions">You\’ve denied camera access. Enable it in settings to continue.</string>
     <string name="camera_ui_error_image_capture_failed">Couldn\'t take the photo. Please try again.</string>
     <string name="camera_ui_error_unknown">Something went wrong. Please try again.</string>
+    <string name="camera_permission_explanation_hard_denial">Camera access is required to add new items. To use this feature, please enable camera permissions in your device\'s settings.</string>
+    <string name="camera_permission_button_title_hard_denial">Open Settings</string>
+    <string name="camera_permission_explanation_soft_denial">To add new items to your inventory, we need camera access to take photos of them. This makes it quick and easy to catalog your belongings.</string>
+    <string name="camera_permission_button_title_soft_denial">Allow Camera Access</string>
 </resources>
