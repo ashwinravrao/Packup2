@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
@@ -12,7 +13,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,11 +41,14 @@ fun CameraScreen(
         LifecycleCameraController(context)
     }
 
+    val permissionRequestRetryKey = rememberSaveable { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         cameraController.bindToLifecycle(lifecycleOwner)
     }
 
     HandleSinglePermissionRequest(
+        retryKey = permissionRequestRetryKey,
         requiredPermission = Manifest.permission.CAMERA,
         onGranted = {
             CameraScreenContent(
@@ -50,10 +56,7 @@ fun CameraScreen(
                 cameraController = cameraController
             )
         },
-        onTemporarilyDenied = { onRetry ->
-            // the user has denied the first request, but we can try again by doing the following
-            // todo: show placeholder and text explaining why we need the permission
-            // todo: add a button that calls onRetry, launching another permissions dialog
+        onSoftDenied = { onRetry ->
             Scaffold(
                 modifier = modifier.fillMaxSize()
             ) {
@@ -69,12 +72,7 @@ fun CameraScreen(
                 }
             }
         },
-        onPermanentlyDenied = { guideUserToSettings ->
-            // the user has permanently denied the request and we can no longer retry
-            // however, we can still explain to the user why the permission is critical to this feature
-            // and hope they grant permission
-            // todo: show placeholder and text explaining why the feature cannot be used without the permission being granted
-            // todo: add a button that takes user to the app-specific system settings page
+        onHardDenied = { onGoToSettings ->
             Scaffold(
                 modifier = modifier.fillMaxSize()
             ) {
@@ -84,7 +82,12 @@ fun CameraScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text("The camera permission is required to use this feature. Please enable it in system settings.")
-                    Button(onClick = guideUserToSettings) {
+                    Button(
+                        onClick = {
+                            onGoToSettings()
+                            permissionRequestRetryKey.value = true
+                        }
+                    ) {
                         Text("Go To Settings")
                     }
                 }
