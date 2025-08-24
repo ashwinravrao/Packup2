@@ -4,11 +4,16 @@ import android.Manifest
 import android.annotation.SuppressLint
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
@@ -49,6 +54,20 @@ fun CameraScreen(
             // the user has denied the first request, but we can try again by doing the following
             // todo: show placeholder and text explaining why we need the permission
             // todo: add a button that calls onRetry, launching another permissions dialog
+            Scaffold(
+                modifier = modifier.fillMaxSize()
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("The camera permission is required")
+                    Button(onClick = onRetry) {
+                        Text("Grant Permission")
+                    }
+                }
+            }
         },
         onPermanentlyDenied = { guideUserToSettings ->
             // the user has permanently denied the request and we can no longer retry
@@ -56,6 +75,20 @@ fun CameraScreen(
             // and hope they grant permission
             // todo: show placeholder and text explaining why the feature cannot be used without the permission being granted
             // todo: add a button that takes user to the app-specific system settings page
+            Scaffold(
+                modifier = modifier.fillMaxSize()
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("The camera permission is required to use this feature. Please enable it in system settings.")
+                    Button(onClick = guideUserToSettings) {
+                        Text("Go To Settings")
+                    }
+                }
+            }
         }
     )
 }

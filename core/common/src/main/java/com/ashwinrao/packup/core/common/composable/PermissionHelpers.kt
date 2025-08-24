@@ -1,5 +1,6 @@
 package com.ashwinrao.packup.core.common.composable
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -16,8 +17,9 @@ fun HandleSinglePermissionRequest(
     requiredPermission: String,
     onGranted: @Composable () -> Unit,
     onTemporarilyDenied: @Composable (() -> Unit) -> Unit,
-    onPermanentlyDenied: @Composable (@Composable () -> Unit) -> Unit,
+    onPermanentlyDenied: @Composable (() -> Unit) -> Unit,
 ) {
+    val context = LocalContext.current
     val state = rememberPermissionState(requiredPermission)
     val hasRequestedBefore = rememberSaveable { mutableStateOf(false) }
 
@@ -27,7 +29,7 @@ fun HandleSinglePermissionRequest(
 
     when {
         isGranted -> onGranted()
-        isPermaDenied -> onPermanentlyDenied { GuideUserToSystemSettings() }
+        isPermaDenied -> onPermanentlyDenied { guideUserToSystemSettings(context) }
         isTempDenied -> onTemporarilyDenied { state.launchPermissionRequest() }
         else -> {
             LaunchedEffect(Unit) {
@@ -40,9 +42,7 @@ fun HandleSinglePermissionRequest(
     }
 }
 
-@Composable
-private fun GuideUserToSystemSettings() {
-    val context = LocalContext.current
+private fun guideUserToSystemSettings(context: Context) {
     val intent = android.content.Intent(
         android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         android.net.Uri.fromParts("package", context.packageName, null)
