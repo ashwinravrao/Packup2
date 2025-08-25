@@ -38,6 +38,7 @@ import com.ashwinrao.packup.feature.camera.R
 import com.ashwinrao.packup.feature.camera.composable.CameraCaptureButton
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -56,6 +57,7 @@ fun CameraScreen(
     val onResumePermissionRequestRetryFlag = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
+        delay(350) // allow for this screen's nav enter transition to complete
         cameraController.bindToLifecycle(lifecycleOwner)
     }
 
