@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -16,20 +18,23 @@ import com.google.accompanist.permissions.shouldShowRationale
 fun HandleSinglePermissionRequest(
     requestRetryFlag: MutableState<Boolean>,
     requiredPermission: String,
+    onRequestInFlight: @Composable () -> Unit,
     onGranted: @Composable () -> Unit,
     onSoftDenied: @Composable (onRetry: () -> Unit) -> Unit,
     onHardDenied: @Composable (onGoToSettings: () -> Unit) -> Unit,
 ) {
     val context = LocalContext.current
     val state = rememberPermissionState(requiredPermission)
+    val isInitialRequestInFlight = remember { mutableStateOf(false) }
 
-    // Request permissions on first composition
+    // Request permission on first composition
     LaunchedEffect(Unit) {
         state.launchPermissionRequest()
+        isInitialRequestInFlight.value = true
     }
 
-    // Runs when the app regains foreground (as is the case when returning from system settings).
-    // Check if the retry flag has been set; if so, launch a new permissions request to advance in the flow.
+    // When lifecycle owner resumes && retry flag has been thrown,
+    // initiate a new permission request to advance in the flow
     LifecycleResumeEffect(requestRetryFlag) {
         if (requestRetryFlag.value) {
             state.launchPermissionRequest()
@@ -38,18 +43,21 @@ fun HandleSinglePermissionRequest(
         onPauseOrDispose { }
     }
 
-    if (state.status.isGranted) {
-        onGranted()
-    } else {
-        if (state.status.shouldShowRationale) {
-            // In a soft denial, the user can be persuaded to grant permissions with an explanation.
-            onSoftDenied { state.launchPermissionRequest() }
-        } else {
-            // In a hard denial, the feature may be permanently inaccessible.
-            // If the user wishes to access the feature, they must grant permission from system settings.
-            // We can offer an explanation but must respect the user's choice to deny the permission.
-            onHardDenied { launchAppDetailsInSystemSettings(context) }
+    val isGranted = state.status.isGranted
+    val isSoftDenied = state.status.shouldShowRationale
+    val isHardDenied = !isInitialRequestInFlight.value && !isGranted && !isSoftDenied
+
+    when {
+        isGranted -> {
+            onGranted()
+            isInitialRequestInFlight.value = false
         }
+        isSoftDenied -> {
+            onSoftDenied { state.launchPermissionRequest() }
+            isInitialRequestInFlight.value = false
+        }
+        isHardDenied -> onHardDenied { launchAppDetailsInSystemSettings(context) }
+        else -> onRequestInFlight()
     }
 }
 

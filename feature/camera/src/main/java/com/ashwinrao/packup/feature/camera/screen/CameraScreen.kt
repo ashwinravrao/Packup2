@@ -56,6 +56,9 @@ fun CameraScreen(
     HandleSinglePermissionRequest(
         requestRetryFlag = onResumePermissionRequestRetryFlag,
         requiredPermission = Manifest.permission.CAMERA,
+        onRequestInFlight = {
+            CameraScreenPlaceholder(modifier = modifier)
+        },
         onGranted = {
             CameraScreenContent(
                 modifier = modifier,
@@ -115,6 +118,20 @@ private fun CameraPermissionExplanation(
                 Text(text = stringResource(id = buttonTitle))
             }
         }
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+private fun CameraScreenPlaceholder(
+    modifier: Modifier = Modifier,
+) {
+    Scaffold(
+        modifier = modifier.fillMaxSize()
+    ) { _ ->
+        // any content added here should be covered up by the permission dialog
+        // but if for some reason, the dialog doesn't appear, maybe we want to display
+        // a placeholder image, text, and toggle? TBD
     }
 }
 
