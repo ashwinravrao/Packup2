@@ -19,9 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,8 +52,6 @@ fun CameraScreen(
         LifecycleCameraController(context)
     }
 
-    val onResumePermissionRequestRetryFlag = rememberSaveable { mutableStateOf(false) }
-
     LaunchedEffect(Unit) {
         delay(350) // allow for this screen's nav enter transition to complete
         cameraController.bindToLifecycle(lifecycleOwner)
@@ -68,7 +64,6 @@ fun CameraScreen(
     }
 
     HandleSinglePermissionRequest(
-        requestRetryFlag = onResumePermissionRequestRetryFlag,
         requiredPermission = Manifest.permission.CAMERA,
         onRequestInFlight = {
             CameraScreenPlaceholder(modifier = modifier)
@@ -96,10 +91,7 @@ fun CameraScreen(
                 modifier = modifier,
                 explanation = R.string.camera_permission_explanation_hard_denial,
                 buttonTitle = R.string.camera_permission_button_title_hard_denial,
-                action = {
-                    onGoToSettings()
-                    onResumePermissionRequestRetryFlag.value = true
-                }
+                action = onGoToSettings
             )
         }
     )

@@ -3,9 +3,8 @@ package com.ashwinrao.packup.core.common.composable
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -16,7 +15,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HandleSinglePermissionRequest(
-    requestRetryFlag: MutableState<Boolean>,
     requiredPermission: String,
     onRequestInFlight: @Composable () -> Unit,
     onGranted: @Composable () -> Unit,
@@ -25,7 +23,8 @@ fun HandleSinglePermissionRequest(
 ) {
     val context = LocalContext.current
     val state = rememberPermissionState(requiredPermission)
-    val isInitialRequestInFlight = remember { mutableStateOf(false) }
+    val isInitialRequestInFlight = rememberSaveable { mutableStateOf(false) }
+    val retryPermissionRequest = rememberSaveable { mutableStateOf(false) }
 
     // Request permission on first composition
     LaunchedEffect(Unit) {
@@ -33,14 +32,13 @@ fun HandleSinglePermissionRequest(
         isInitialRequestInFlight.value = true
     }
 
-    // When lifecycle owner resumes && retry flag has been thrown,
-    // initiate a new permission request to advance in the flow
-    LifecycleResumeEffect(requestRetryFlag) {
-        if (requestRetryFlag.value) {
+    // Retry permission request when user returns from app-specific system settings
+    LifecycleResumeEffect(retryPermissionRequest) {
+        if (retryPermissionRequest.value) {
             state.launchPermissionRequest()
-            requestRetryFlag.value = false
+            retryPermissionRequest.value = false
         }
-        onPauseOrDispose { }
+        onPauseOrDispose { /* do nothing */ }
     }
 
     val isGranted = state.status.isGranted
@@ -52,19 +50,26 @@ fun HandleSinglePermissionRequest(
             onGranted()
             isInitialRequestInFlight.value = false
         }
+
         isSoftDenied -> {
             onSoftDenied { state.launchPermissionRequest() }
             isInitialRequestInFlight.value = false
         }
-        isHardDenied -> onHardDenied { launchAppDetailsInSystemSettings(context) }
+
+        isHardDenied -> onHardDenied {
+            val launched = launchAppSpecificSystemSettings(context)
+            if (launched) retryPermissionRequest.value = true
+        }
+
         else -> onRequestInFlight()
     }
 }
 
-private fun launchAppDetailsInSystemSettings(context: Context) {
+private fun launchAppSpecificSystemSettings(context: Context): Boolean {
     val intent = android.content.Intent(
         android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         android.net.Uri.fromParts("package", context.packageName, null)
     )
     context.startActivity(intent)
+    return true
 }
