@@ -1,5 +1,6 @@
 package com.ashwinrao.packup.navigation
 
+import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.ashwinrao.packup.feature.camera.screen.CameraScreen
@@ -18,7 +19,9 @@ fun NavGraphBuilder.mainScreen(
 fun NavGraphBuilder.cameraScreen(
     onComplete: () -> Unit,
 ) {
-    composable<NavRoute.CameraScreen> { backStackEntry ->
+    composable<NavRoute.CameraScreen>(
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { -it }) } // Camera slides out to right
+    ) { backStackEntry ->
         CameraScreen(
             onComplete = onComplete
         )
