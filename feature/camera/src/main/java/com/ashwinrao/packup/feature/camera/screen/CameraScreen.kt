@@ -2,10 +2,13 @@ package com.ashwinrao.packup.feature.camera.screen
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +34,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.ashwinrao.packup.core.common.composable.HandleSinglePermissionRequest
 import com.ashwinrao.packup.feature.camera.R
+import com.ashwinrao.packup.feature.camera.composable.CameraCaptureButton
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
@@ -62,7 +67,11 @@ fun CameraScreen(
         onGranted = {
             CameraScreenContent(
                 modifier = modifier,
-                cameraController = cameraController
+                cameraController = cameraController,
+                onCapturePhoto = {
+                    Log.d("CameraScreen", "Captured!")
+                    // todo: actually capture stuff
+                }
             )
         },
         onSoftDenied = { onRetry ->
@@ -135,23 +144,44 @@ private fun CameraScreenPlaceholder(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun CameraScreenContent(
     modifier: Modifier = Modifier,
     cameraController: LifecycleCameraController,
+    onCapturePhoto: () -> Unit,
 ) {
-    Scaffold(
+    Column(
         modifier = modifier.fillMaxSize()
-    ) { _ ->
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(color = Color.Black)
+        )
         AndroidView(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(4f),
             factory = { context ->
                 PreviewView(context).apply {
                     controller = cameraController
+                    scaleType = PreviewView.ScaleType.FILL_CENTER
                 }
             }
         )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(2f)
+                .background(color = Color.Black),
+            contentAlignment = Alignment.Center
+        ) {
+            CameraCaptureButton(
+                modifier = Modifier.padding(bottom = 32.dp),
+                onClick = onCapturePhoto,
+            )
+        }
     }
 }
 
