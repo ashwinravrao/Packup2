@@ -1,4 +1,4 @@
-package com.ashwinrao.packup.core.common.composable
+package com.ashwinrao.packup.feature.common.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalInspectionMode

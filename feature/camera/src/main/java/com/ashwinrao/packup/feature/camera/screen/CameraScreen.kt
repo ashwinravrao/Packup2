@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.ashwinrao.packup.core.common.composable.HandleSinglePermissionRequest
+import com.ashwinrao.packup.feature.common.composable.HandleSinglePermissionRequest
 import com.ashwinrao.packup.feature.camera.R
 import com.ashwinrao.packup.feature.camera.composable.CameraCaptureButton
 import com.ashwinrao.packup.feature.common.theme.PackupTheme

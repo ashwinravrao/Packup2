@@ -1,6 +1,9 @@
-package com.ashwinrao.packup.core.common.composable
+package com.ashwinrao.packup.feature.common.composable
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -66,9 +69,9 @@ fun HandleSinglePermissionRequest(
 }
 
 private fun launchAppSpecificSystemSettings(context: Context): Boolean {
-    val intent = android.content.Intent(
-        android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        android.net.Uri.fromParts("package", context.packageName, null)
+    val intent = Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        Uri.fromParts("package", context.packageName, null)
     )
     context.startActivity(intent)
     return true
