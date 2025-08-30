@@ -17,58 +17,58 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HandleSinglePermissionRequest(
-    requiredPermission: String,
-    onRequestInFlight: @Composable () -> Unit,
+fun RequestPermission(
+    permission: String,
+    onRequested: @Composable () -> Unit,
     onGranted: @Composable () -> Unit,
     onSoftDenied: @Composable (onRetry: () -> Unit) -> Unit,
-    onHardDenied: @Composable (onGoToSettings: () -> Unit) -> Unit,
+    onHardDenied: @Composable (openSettings: () -> Unit) -> Unit,
 ) {
     val context = LocalContext.current
-    val state = rememberPermissionState(requiredPermission)
-    val isInitialRequestInFlight = rememberSaveable { mutableStateOf(false) }
-    val retryPermissionRequest = rememberSaveable { mutableStateOf(false) }
+    val state = rememberPermissionState(permission)
+    val isFirstRequest = rememberSaveable { mutableStateOf(false) }
+    val requestAgain = rememberSaveable { mutableStateOf(false) }
 
-    // Request permission on first composition
+    // Request permission for the first time
     LaunchedEffect(Unit) {
         state.launchPermissionRequest()
-        isInitialRequestInFlight.value = true
+        isFirstRequest.value = true
     }
 
-    // Retry permission request when user returns from app-specific system settings
-    LifecycleResumeEffect(retryPermissionRequest) {
-        if (retryPermissionRequest.value) {
+    // Restart request when returning from settings
+    LifecycleResumeEffect(requestAgain) {
+        if (requestAgain.value) {
             state.launchPermissionRequest()
-            retryPermissionRequest.value = false
+            requestAgain.value = false
         }
         onPauseOrDispose { /* do nothing */ }
     }
 
     val isGranted = state.status.isGranted
     val isSoftDenied = state.status.shouldShowRationale
-    val isHardDenied = !isInitialRequestInFlight.value && !isGranted && !isSoftDenied
+    val isHardDenied = !isFirstRequest.value && !isGranted && !isSoftDenied
 
     when {
         isGranted -> {
             onGranted()
-            isInitialRequestInFlight.value = false
+            isFirstRequest.value = false
         }
 
         isSoftDenied -> {
             onSoftDenied { state.launchPermissionRequest() }
-            isInitialRequestInFlight.value = false
+            isFirstRequest.value = false
         }
 
         isHardDenied -> onHardDenied {
-            val launched = launchAppSpecificSystemSettings(context)
-            if (launched) retryPermissionRequest.value = true
+            val wereSettingsLaunched = openAppInAndroidSettings(context)
+            requestAgain.value = wereSettingsLaunched
         }
 
-        else -> onRequestInFlight()
+        else -> onRequested()
     }
 }
 
-private fun launchAppSpecificSystemSettings(context: Context): Boolean {
+private fun openAppInAndroidSettings(context: Context): Boolean {
     val intent = Intent(
         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         Uri.fromParts("package", context.packageName, null)

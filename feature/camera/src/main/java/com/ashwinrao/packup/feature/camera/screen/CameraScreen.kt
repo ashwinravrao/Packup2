@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.ashwinrao.packup.feature.common.composable.HandleSinglePermissionRequest
+import com.ashwinrao.packup.feature.common.composable.RequestPermission
 import com.ashwinrao.packup.feature.camera.R
 import com.ashwinrao.packup.feature.camera.composable.CameraCaptureButton
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
@@ -53,7 +53,7 @@ fun CameraScreen(
     }
 
     LaunchedEffect(Unit) {
-        delay(350) // allow for this screen's nav enter transition to complete
+        delay(350) // wait til nav transition completes
         cameraController.bindToLifecycle(lifecycleOwner)
     }
 
@@ -63,9 +63,9 @@ fun CameraScreen(
         }
     }
 
-    HandleSinglePermissionRequest(
-        requiredPermission = Manifest.permission.CAMERA,
-        onRequestInFlight = {
+    RequestPermission(
+        permission = Manifest.permission.CAMERA,
+        onRequested = {
             CameraScreenPlaceholder(modifier = modifier)
         },
         onGranted = {
