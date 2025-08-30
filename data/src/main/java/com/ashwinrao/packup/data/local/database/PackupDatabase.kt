@@ -1,0 +1,18 @@
+package com.ashwinrao.packup.data.local.database
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.ashwinrao.packup.data.local.repository.ItemDao
+import com.ashwinrao.packup.data.local.LocationTypeConverter
+import com.ashwinrao.packup.data.local.model.ItemEntity
+
+@Database(
+    entities = [ItemEntity::class],
+    version = DatabaseConstants.DATABASE_VERSION,
+    exportSchema = false
+)
+@TypeConverters(LocationTypeConverter::class)
+abstract class PackupDatabase : RoomDatabase() {
+    abstract fun itemDao(): ItemDao
+}
