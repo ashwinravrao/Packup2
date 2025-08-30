@@ -1,13 +1,13 @@
 package com.ashwinrao.packup.data.local
 
 import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 import com.ashwinrao.packup.domain.model.ItemLocationType
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
+
 class LocationTypeConverter {
     private val moshi = Moshi.Builder()
         .add(LocationTypeAdapter())

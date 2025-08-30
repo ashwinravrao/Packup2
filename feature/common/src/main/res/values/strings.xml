@@ -7,4 +7,6 @@
     <string name="voice_search_start_description">Start voice search</string>
     <string name="settings_button_description">Click to configure app settings</string>
     <string name="camera_fab_button_description">Click to capture an item image</string>
+    <string name="permission_explanation_preview_message">We need camera permission to preview this composable.</string>
+    <string name="permission_explanation_preview_button">Allow Access</string>
 </resources>
