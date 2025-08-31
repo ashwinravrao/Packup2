@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -17,8 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
+import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
+import com.ashwinrao.packup.feature.main.ui.composables.Dashboard
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -55,7 +58,10 @@ fun MainScreen(
             }
         }
     ) { innerPadding ->
-        // todo: add content
+        Dashboard(
+            modifier = Modifier.padding(innerPadding),
+            items = Item.generated
+        )
     }
 }
 
