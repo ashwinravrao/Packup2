@@ -1,8 +1,11 @@
 package com.ashwinrao.packup.feature.main.ui.composables
 
 import android.R
+import android.R.attr.onClick
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,6 +32,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,6 +60,7 @@ fun Dashboard(
 fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
     var isExpanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
+    val haptic = LocalHapticFeedback.current
 
     Card(
         modifier = modifier
@@ -62,8 +68,11 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable(
                 interactionSource = interactionSource,
-                indication = null, // Remove ripple if you want
-                onClick = { isExpanded = !isExpanded }
+                indication = null,
+                onClick = {
+                    isExpanded = !isExpanded
+                    haptic.performHapticFeedback(HapticFeedbackType.GestureEnd)
+                }
             ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp,
@@ -108,7 +117,6 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
 
             if (isExpanded) {
                 HorizontalDivider(Modifier, 0.5.dp, DividerDefaults.color)
-//                Spacer(modifier = Modifier.height(8.dp))
 
                 Column(
                     modifier = Modifier.fillMaxSize().background(color = primaryDark.copy(alpha = 0.3f)).padding(all = 16.dp),
