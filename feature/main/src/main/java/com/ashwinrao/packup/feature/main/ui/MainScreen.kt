@@ -22,6 +22,9 @@ import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.main.ui.composables.Dashboard
+import com.ashwinrao.packup.feature.main.ui.composables.GridGestureBackground
+import com.ashwinrao.packup.feature.main.ui.composables.GridGestureDotBackground
+import com.ashwinrao.packup.feature.main.ui.composables.GridGestureDotBackground2
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -58,10 +61,15 @@ fun MainScreen(
             }
         }
     ) { innerPadding ->
-        Dashboard(
-            modifier = Modifier.padding(innerPadding),
-            items = Item.generated
-        )
+//        GridGestureBackground()
+//        GridGestureDotBackground()
+        GridGestureDotBackground2()
+
+
+//        Dashboard(
+//            modifier = Modifier.padding(innerPadding),
+//            items = Item.generated
+//        )
     }
 }
 
