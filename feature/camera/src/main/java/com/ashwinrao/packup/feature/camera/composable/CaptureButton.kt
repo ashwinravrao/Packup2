@@ -20,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -30,6 +32,7 @@ fun CaptureButton(
     onClick: () -> Unit,
 ) {
     var isPressed by remember { mutableStateOf(false) }
+    val haptics = LocalHapticFeedback.current
 
     val animatedButtonScale by animateFloatAsState(
         targetValue = if (isPressed) 0.9f else 1f,
@@ -47,6 +50,7 @@ fun CaptureButton(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
+                        haptics.performHapticFeedback(HapticFeedbackType.Confirm)
                         isPressed = true
                         val released = tryAwaitRelease()
                         isPressed = false
