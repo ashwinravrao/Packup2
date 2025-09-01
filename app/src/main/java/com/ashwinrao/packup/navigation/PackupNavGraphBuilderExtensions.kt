@@ -1,5 +1,6 @@
 package com.ashwinrao.packup.navigation
 
+import android.net.Uri
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.tween
@@ -19,7 +20,8 @@ fun NavGraphBuilder.mainScreen(
 }
 
 fun NavGraphBuilder.cameraScreen(
-    onComplete: () -> Unit,
+    onSuccess: (uri: Uri?) -> Unit,
+    onFailure: (error: String?) -> Unit,
 ) {
     composable<NavRoute.CameraScreen>(
         enterTransition = {
@@ -39,7 +41,8 @@ fun NavGraphBuilder.cameraScreen(
         }
     ) {
         CameraScreen(
-            onComplete = onComplete
+            onSuccess = onSuccess,
+            onFailure = onFailure,
         )
     }
 }
