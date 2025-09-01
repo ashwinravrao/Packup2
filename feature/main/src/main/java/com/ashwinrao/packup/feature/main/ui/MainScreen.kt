@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
@@ -58,10 +61,16 @@ fun MainScreen(
             }
         }
     ) { innerPadding ->
-        Dashboard(
-            modifier = Modifier.padding(innerPadding),
-            items = Item.generated
-        )
+        AnimatedVisibility(
+            visible = !isSearchBarExpanded,
+            enter = fadeIn(animationSpec = tween(durationMillis = 300)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 150))
+        ) {
+            Dashboard(
+                modifier = Modifier.padding(innerPadding),
+                items = Item.generated
+            )
+        }
     }
 }
 
