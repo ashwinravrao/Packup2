@@ -8,8 +8,7 @@ Ground-up redesign of the [original Packup app](https://github.com/ashwinravrao/
 ---
 
 <sub>
-All rights reserved © 2025 Ashwin R. Rao.
-For educational purposes only.
-Commercial use is not permitted.
+Copyright © 2025 Ashwin R. Rao.
+All rights reserved.
 <a href="LICENSE">View license.</a>
 </sub>
