@@ -2,11 +2,11 @@ package com.ashwinrao.packup.feature.main.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
@@ -21,10 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
-import com.ashwinrao.packup.domain.model.Item
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ashwinrao.packup.feature.common.R
+import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.main.ui.composables.Dashboard
+import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
+import com.ashwinrao.packup.feature.main.ui.viewmodel.RealMainScreenViewModel
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -34,6 +38,12 @@ fun MainScreen(
 ) {
     val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
     var isSearchBarExpanded by rememberSaveable { mutableStateOf(false) }
+
+    val viewModel = getViewModelForInspectionMode(FakeMainScreenViewModel()) {
+        hiltViewModel<RealMainScreenViewModel>()
+    }
+
+    val items by viewModel.items.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -68,7 +78,7 @@ fun MainScreen(
         ) {
             Dashboard(
                 modifier = Modifier.padding(innerPadding),
-                items = Item.generated
+                items = items
             )
         }
     }

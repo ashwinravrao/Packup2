@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,11 +35,9 @@ android {
 }
 
 dependencies {
-    // project
     implementation(project(":domain"))
     implementation(project(":feature:common"))
 
-    // external
     implementation(libs.androidx.animation)
     implementation(libs.androidx.animation.core)
     implementation(platform(libs.androidx.compose.bom))
@@ -48,17 +47,22 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.hilt.runtime)
+    implementation(libs.hilt.compose)
 
-    // debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // local test
     testImplementation(libs.junit)
 
-    // device test
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    kspTest(libs.hilt.compiler)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
