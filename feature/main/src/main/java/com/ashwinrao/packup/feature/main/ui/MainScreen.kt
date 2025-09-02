@@ -26,7 +26,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
-import com.ashwinrao.packup.feature.main.ui.composables.Dashboard
+import com.ashwinrao.packup.feature.main.ui.composable.BottomNavBar
+import com.ashwinrao.packup.feature.main.ui.composable.Dashboard
+import com.ashwinrao.packup.feature.main.ui.composable.TopSearchBar
 import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
 import com.ashwinrao.packup.feature.main.ui.viewmodel.RealMainScreenViewModel
 

@@ -1,4 +1,4 @@
-package com.ashwinrao.packup.feature.main.ui
+package com.ashwinrao.packup.feature.main.ui.composable
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box

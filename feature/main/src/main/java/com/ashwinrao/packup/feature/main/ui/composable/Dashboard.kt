@@ -1,11 +1,7 @@
-package com.ashwinrao.packup.feature.main.ui.composables
+package com.ashwinrao.packup.feature.main.ui.composable
 
-import android.R
-import android.R.attr.onClick
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.Indication
-import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

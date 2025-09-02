@@ -23,6 +23,7 @@ class RealMainScreenViewModel @Inject constructor(
     private var _items = MutableStateFlow<List<Item>>(emptyList())
     override val items = _items.asStateFlow()
 
+    // todo: move to a dedicated vm?
     private var _selectedItem = MutableStateFlow<Item?>(null)
     override val selectedItem: StateFlow<Item?> = _selectedItem.asStateFlow()
 
