@@ -1,5 +1,7 @@
 package com.ashwinrao.packup.feature.camera.screen
 
+import android.R.attr.bitmap
+import android.R.attr.onClick
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -12,13 +14,23 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,11 +44,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontVariation.weight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import com.ashwinrao.packup.feature.camera.R
 import com.ashwinrao.packup.feature.camera.composable.CaptureButton
 import com.ashwinrao.packup.feature.camera.model.CameraScreenContentMode
+import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.util.io.saveBitmapToFile
 
 @Composable
@@ -204,28 +221,66 @@ private fun PhotoPreviewContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(4f),
-            contentScale = ContentScale.Fit,
+            alignment = Alignment.Center,
+            contentScale = ContentScale.FillBounds,
         )
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .weight(2f)
                 .background(color = Color.Black),
         ) {
-            Row {
-                Button(
-                    modifier = Modifier,
-                    onClick = { onRetake() },
-                ) {
-                    Text("Retake")
-                }
-                Button(
-                    modifier = Modifier,
-                    onClick = { onSave(bitmap) },
-                ) {
-                    Text("Save")
-                }
-            }
+            PhotoPreviewButtons(
+                onSave = { onSave(bitmap) },
+                onRetake = onRetake
+            )
         }
+    }
+}
+
+@Composable
+fun PhotoPreviewButtons(
+    onSave: () -> Unit,
+    onRetake: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 32.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            modifier = Modifier.height(200.dp).weight(1f).padding(end = 8.dp)
+                .background(MaterialTheme.colorScheme.primary),
+            onClick = onRetake,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_retake),
+                contentDescription = "retake button"
+            )
+        }
+        IconButton(
+            modifier = Modifier.height(200.dp).weight(1f).padding(start = 8.dp)
+                .background(MaterialTheme.colorScheme.primary),
+            onClick = onSave,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_floppy_disk),
+                contentDescription = "save button"
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun Preview() {
+    PackupTheme(darkTheme = true) {
+        PhotoPreviewButtons(
+            onSave = {},
+            onRetake = {}
+        )
     }
 }
