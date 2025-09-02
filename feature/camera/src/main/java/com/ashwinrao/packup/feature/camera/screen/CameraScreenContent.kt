@@ -1,7 +1,5 @@
 package com.ashwinrao.packup.feature.camera.screen
 
-import android.R.attr.bitmap
-import android.R.attr.onClick
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -18,18 +16,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +43,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontVariation.weight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -231,6 +229,7 @@ private fun PhotoPreviewContent(
                 .background(color = Color.Black),
         ) {
             PhotoPreviewButtons(
+                modifier = Modifier.padding(32.dp),
                 onSave = { onSave(bitmap) },
                 onRetake = onRetake
             )
@@ -240,36 +239,89 @@ private fun PhotoPreviewContent(
 
 @Composable
 fun PhotoPreviewButtons(
+    modifier: Modifier = Modifier,
     onSave: () -> Unit,
     onRetake: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = 32.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .wrapContentWidth()
+            .height(100.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        IconButton(
-            modifier = Modifier.height(200.dp).weight(1f).padding(end = 8.dp)
-                .background(MaterialTheme.colorScheme.primary),
-            onClick = onRetake,
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.error,
+            ),
+            shape = RoundedCornerShape(8.dp),
+            onClick = onRetake
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_retake),
-                contentDescription = "retake button"
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        painter = painterResource(R.drawable.ic_retake),
+                        contentDescription = "retake button"
+                    )
+                    Text(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                            .padding(top = 8.dp),
+                        text = "RETAKE",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
         }
-        IconButton(
-            modifier = Modifier.height(200.dp).weight(1f).padding(start = 8.dp)
-                .background(MaterialTheme.colorScheme.primary),
-            onClick = onSave,
+        Spacer(modifier = Modifier.width(32.dp))
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
+            shape = RoundedCornerShape(8.dp),
+            onClick = onSave
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_floppy_disk),
-                contentDescription = "save button"
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        painter = painterResource(R.drawable.ic_floppy_disk),
+                        contentDescription = "save button"
+                    )
+                    Text(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                            .padding(top = 8.dp),
+                        text = "SAVE",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+            }
         }
     }
 }
