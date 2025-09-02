@@ -44,9 +44,12 @@ android {
 
 dependencies {
     // project
+    implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(project(":feature:main"))
     implementation(project(":feature:camera"))
     implementation(project(":feature:common"))
+    implementation(project(":util"))
 
     // external
     implementation(libs.androidx.activity.compose)

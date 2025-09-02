@@ -2,11 +2,13 @@ package com.ashwinrao.packup.data.local
 
 import androidx.room.TypeConverter
 import com.ashwinrao.packup.domain.model.ItemLocationType
+import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.ToJson
 
 class LocationTypeConverter {
     private val moshi = Moshi.Builder()
@@ -28,6 +30,7 @@ class LocationTypeConverter {
 
 class LocationTypeAdapter : JsonAdapter<ItemLocationType>() {
 
+    @FromJson
     override fun fromJson(reader: JsonReader): ItemLocationType? {
         reader.beginObject()
         var type: String? = null
@@ -48,11 +51,16 @@ class LocationTypeAdapter : JsonAdapter<ItemLocationType>() {
 
         return when (type) {
             "room" -> ItemLocationType.Room(name = name ?: "")
-            "coordinates" -> ItemLocationType.Coordinates(latitude = latitude, longitude = longitude)
+            "coordinates" -> ItemLocationType.Coordinates(
+                latitude = latitude,
+                longitude = longitude
+            )
+
             else -> throw JsonDataException("Unknown location type: $type")
         }
     }
 
+    @ToJson
     override fun toJson(writer: JsonWriter, value: ItemLocationType?) {
         if (value == null) {
             writer.nullValue()
@@ -65,6 +73,7 @@ class LocationTypeAdapter : JsonAdapter<ItemLocationType>() {
                 writer.name("type").value("room")
                 writer.name("name").value(value.name)
             }
+
             is ItemLocationType.Coordinates -> {
                 writer.name("type").value("coordinates")
                 writer.name("latitude").value(value.latitude)
