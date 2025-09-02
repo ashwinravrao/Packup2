@@ -10,5 +10,5 @@ Ground-up redesign of the [original Packup app](https://github.com/ashwinravrao/
 <sub>
 All rights reserved © 2025 Ashwin R. Rao.
 You are welcome to review or learn from my code.
-But reuse or commercial use is not permitted.
+But reproduction or commercial use is not permitted.
 </sub>
