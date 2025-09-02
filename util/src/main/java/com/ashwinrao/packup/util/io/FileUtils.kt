@@ -20,7 +20,7 @@ internal fun createFile(context: Context): File {
     return File(dir, filename)
 }
 
-fun saveImageProxyToFile(
+fun saveBitmapToFile(
     context: Context,
     bitmap: Bitmap,
     onSuccess: (Uri) -> Unit,
@@ -29,7 +29,7 @@ fun saveImageProxyToFile(
     try {
         val file = createFile(context)
         FileOutputStream(file).use { outputStream ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         }
         val uri = Uri.fromFile(file)
         onSuccess(uri)

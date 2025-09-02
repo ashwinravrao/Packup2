@@ -2,6 +2,7 @@ package com.ashwinrao.packup.feature.camera.screen
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
 import android.util.Log
 import androidx.camera.core.ImageCapture
@@ -36,7 +37,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.ashwinrao.packup.feature.camera.composable.CaptureButton
 import com.ashwinrao.packup.feature.camera.model.CameraScreenContentMode
-import com.ashwinrao.packup.util.io.saveImageProxyToFile
+import com.ashwinrao.packup.util.io.saveBitmapToFile
 
 @Composable
 fun CameraScreenContent(
@@ -48,6 +49,11 @@ fun CameraScreenContent(
     var imageProxy by remember { mutableStateOf<ImageProxy?>(null) }
     var contentMode by remember {
         mutableStateOf(CameraScreenContentMode.ViewFinder)
+    }
+
+    fun disposeOfImageProxy() {
+        imageProxy?.close()
+        imageProxy = null
     }
 
     LaunchedEffect(imageProxy) {
@@ -73,35 +79,50 @@ fun CameraScreenContent(
 
         CameraScreenContentMode.PhotoPreview -> {
             imageProxy?.let { proxy ->
+                val rotatedBitmap = compensateForSensorRotation(proxy)
                 PhotoPreviewContent(
-                    imageProxy = proxy,
+                    bitmap = rotatedBitmap,
                     onSave = { bitmap ->
-                        saveImageProxyToFile(
+                        saveBitmapToFile(
                             context = context,
-                            bitmap = bitmap,
+                            bitmap = rotatedBitmap,
                             onSuccess = { uri ->
+                                disposeOfImageProxy()
                                 onCapturePhoto(uri)
                                 Log.d("CameraScreen", "Image proxy saved to file; uri = $uri")
                             },
                             onError = { error ->
+                                disposeOfImageProxy()
                                 Log.e(
                                     "CameraScreen",
                                     error.message ?: "Failed to save image proxy to file."
                                 )
                             }
                         )
-                        proxy.close()
-                        imageProxy = null
                     },
                     onRetake = {
-                        proxy.close()
-                        imageProxy = null
+                        disposeOfImageProxy()
                     }
                 )
             }
 
         }
     }
+}
+
+private fun compensateForSensorRotation(proxy: ImageProxy): Bitmap {
+    val ogBitmap = proxy.toBitmap()
+    val rotationDegrees = proxy.imageInfo.rotationDegrees
+    val rotatedBitmap = if (rotationDegrees != 0) {
+        val matrix = Matrix()
+        matrix.postRotate(rotationDegrees.toFloat())
+        Bitmap.createBitmap(
+            ogBitmap, 0, 0, ogBitmap.width, ogBitmap.height, matrix, true
+        )
+    } else {
+        ogBitmap
+    }
+    return rotatedBitmap
 }
 
 @Composable
@@ -163,13 +184,10 @@ private fun ViewFinderContent(
 @Composable
 private fun PhotoPreviewContent(
     modifier: Modifier = Modifier,
-    imageProxy: ImageProxy,
+    bitmap: Bitmap,
     onSave: (Bitmap) -> Unit,
     onRetake: () -> Unit,
 ) {
-    val preview = remember(imageProxy) {
-        imageProxy.toBitmap()
-    }
 
     Column(
         modifier = modifier.fillMaxSize()
@@ -181,7 +199,7 @@ private fun PhotoPreviewContent(
                 .background(color = Color.Black)
         )
         Image(
-            bitmap = preview.asImageBitmap(),
+            bitmap = bitmap.asImageBitmap(),
             contentDescription = "preview of the captured image",
             modifier = Modifier
                 .fillMaxWidth()
@@ -203,7 +221,7 @@ private fun PhotoPreviewContent(
                 }
                 Button(
                     modifier = Modifier,
-                    onClick = { onSave(preview) },
+                    onClick = { onSave(bitmap) },
                 ) {
                     Text("Save")
                 }
