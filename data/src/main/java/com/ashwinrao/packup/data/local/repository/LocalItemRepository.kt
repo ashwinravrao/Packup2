@@ -4,8 +4,6 @@ import com.ashwinrao.packup.data.local.mapper.toDataEntity
 import com.ashwinrao.packup.data.local.mapper.toDomainModel
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.repository.ItemRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,11 +12,9 @@ class LocalItemRepository @Inject constructor(
     private val itemDao: ItemDao
 ) : ItemRepository {
 
-    override suspend fun getItems(): Flow<List<Item>> =
+    override suspend fun getItems(): List<Item> =
         itemDao.getItems().map { entities ->
-            entities.map { entity ->
-                entity.toDomainModel()
-            }
+            entities.toDomainModel()
         }
 
     override suspend fun getItem(id: Int) =

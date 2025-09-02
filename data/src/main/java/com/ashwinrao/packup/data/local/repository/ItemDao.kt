@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.ashwinrao.packup.data.local.model.ItemEntity
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
 @Dao
@@ -12,7 +11,7 @@ import javax.inject.Singleton
 interface ItemDao {
 
     @Query("SELECT * FROM items")
-    suspend fun getItems(): Flow<List<ItemEntity>>
+    suspend fun getItems(): List<ItemEntity>
 
     @Query("SELECT * FROM items WHERE id = :id")
     suspend fun getItem(id: Int): ItemEntity
