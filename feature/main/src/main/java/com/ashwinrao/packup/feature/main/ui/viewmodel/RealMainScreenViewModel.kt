@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemsUseCase
-import com.ashwinrao.packup.domain.usecase.PackItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RealMainScreenViewModel @Inject constructor(
-    private val packItemUseCase: PackItemUseCase,
     private val getItemsUseCase: GetItemsUseCase,
     private val getItemUseCase: GetItemUseCase,
 ) : ViewModel(), MainScreenViewModel {
@@ -26,7 +24,6 @@ class RealMainScreenViewModel @Inject constructor(
     // todo: move to a dedicated vm?
     private var _selectedItem = MutableStateFlow<Item?>(null)
     override val selectedItem: StateFlow<Item?> = _selectedItem.asStateFlow()
-
 
     init {
         fetchItems()
@@ -41,12 +38,6 @@ class RealMainScreenViewModel @Inject constructor(
     override fun fetchItem(id: Int) {
         viewModelScope.launch {
             _selectedItem.emit(getItemUseCase(id))
-        }
-    }
-
-    override fun packItem(item: Item) {
-        viewModelScope.launch {
-            packItemUseCase(item)
         }
     }
 }

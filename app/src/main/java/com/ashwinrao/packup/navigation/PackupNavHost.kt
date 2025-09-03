@@ -1,6 +1,6 @@
 package com.ashwinrao.packup.navigation
 
-import android.util.Log
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -22,16 +22,24 @@ fun PackupNavHost(
         navController = navController,
         startDestination = NavRoute.MainScreen,
     ) {
-        mainScreen {
-            navController.navigate(route = NavRoute.CameraScreen)
-        }
+        mainScreen(
+            onNavigateToCamera = {
+                navController.navigate(route = NavRoute.CameraScreen)
+            }
+        )
         cameraScreen(
-            onSuccess = { uri ->
-                navController.popBackStack()
-                Log.d("PackupNavHost", "Photo saved - Uri: ${uri?.path}")
+            onExit = { uri ->
+                navController.navigate(
+                    route = "${NavRoute.IntakeScreen}?imageUri=${Uri.encode(uri.toString())}"
+                ) {
+                    popUpTo(NavRoute.CameraScreen) { inclusive = true }
+                }
             },
-            onFailure = { error ->
-                Log.e("PackupNavHost", "Failed to save photo - error: $error")
+        )
+
+        intakeScreen(
+            onExit = {
+                navController.popBackStack(NavRoute.MainScreen, inclusive = false)
             }
         )
     }

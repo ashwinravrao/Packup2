@@ -28,8 +28,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun CameraScreen(
     modifier: Modifier = Modifier,
-    onSuccess: (uri: Uri?) -> Unit, // go back to main screen and use the uri to pull up the photo so you can add additional details
-    onFailure: (error: String?) -> Unit,
+    onExit: (uri: Uri?) -> Unit,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -56,14 +55,14 @@ fun CameraScreen(
             Surface(
                 modifier = modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background,
-                content = {}
+                content = { /* intentional */ }
             )
         },
         onGranted = {
             CameraScreenContent(
                 modifier = modifier,
                 cameraController = cameraController,
-                onCapturePhoto = onSuccess,
+                onCapturePhoto = onExit,
             )
         },
         onSoftDenied = { onRetry ->

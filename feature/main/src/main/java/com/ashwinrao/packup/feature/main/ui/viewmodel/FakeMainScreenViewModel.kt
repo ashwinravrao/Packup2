@@ -13,7 +13,4 @@ class FakeMainScreenViewModel : MainScreenViewModel {
     override fun fetchItems() {}
 
     override fun fetchItem(id: Int) {}
-
-    override fun packItem(item: Item) {}
-
 }

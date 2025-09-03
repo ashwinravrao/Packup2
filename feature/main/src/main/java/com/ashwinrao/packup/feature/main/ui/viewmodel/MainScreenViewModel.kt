@@ -8,5 +8,4 @@ interface MainScreenViewModel {
     val selectedItem: StateFlow<Item?>
     fun fetchItems()
     fun fetchItem(id: Int)
-    fun packItem(item: Item)
 }
