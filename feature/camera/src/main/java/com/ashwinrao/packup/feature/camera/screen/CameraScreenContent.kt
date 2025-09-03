@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,11 +53,10 @@ fun CameraScreenContent(
         imageProxy = null
     }
 
-    LaunchedEffect(imageProxy) {
-        contentMode = if (imageProxy == null) {
-            CameraScreenContentMode.ViewFinder
-        } else {
-            CameraScreenContentMode.PhotoPreview
+    fun toggleContentMode() {
+        contentMode = when (contentMode) {
+            CameraScreenContentMode.ViewFinder -> CameraScreenContentMode.PhotoPreview
+            CameraScreenContentMode.PhotoPreview -> CameraScreenContentMode.ViewFinder
         }
     }
 
@@ -68,7 +66,10 @@ fun CameraScreenContent(
                 modifier = modifier,
                 context = context,
                 cameraController = cameraController,
-                onCaptured = { imageProxy = it },
+                onCaptured = {
+                    imageProxy = it
+                    toggleContentMode()
+                },
                 onCaptureFailed = {
                     // todo: log and display error
                 }
@@ -99,7 +100,8 @@ fun CameraScreenContent(
                         )
                     },
                     onRetake = {
-                        disposeOfImageProxy()
+                        imageProxy = null
+                        toggleContentMode()
                     }
                 )
             }
