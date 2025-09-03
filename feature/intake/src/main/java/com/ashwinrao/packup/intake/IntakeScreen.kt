@@ -1,16 +1,20 @@
 package com.ashwinrao.packup.intake
 
-import android.annotation.SuppressLint
 import android.net.Uri
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.ashwinrao.packup.feature.common.theme.PackupTheme
+import com.ashwinrao.packup.intake.composable.ItemImagePreview
 
 @Composable
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun IntakeScreen(
     modifier: Modifier = Modifier,
     itemImageUri: Uri?,
@@ -18,12 +22,28 @@ fun IntakeScreen(
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top
         ) {
-        // todo: add real stuff
-        Text(
-            text = itemImageUri?.path ?: "...",
-            textAlign = TextAlign.Center
+            ItemImagePreview(
+                uri = itemImageUri
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(device = PIXEL_7_PRO, showSystemUi = true)
+fun IntakeScreenPreview() {
+    PackupTheme {
+        IntakeScreen(
+            itemImageUri = null,
+            onExit = {}
         )
     }
 }
