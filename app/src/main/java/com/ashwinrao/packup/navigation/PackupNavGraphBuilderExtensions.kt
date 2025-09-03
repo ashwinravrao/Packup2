@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.ashwinrao.packup.feature.camera.screen.CameraScreen
@@ -34,8 +35,12 @@ fun NavGraphBuilder.cameraScreen(
             )
         },
         popExitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+            fadeOut(
+                animationSpec = tween(300)
+            )
+        },
+        exitTransition = {
+            fadeOut(
                 animationSpec = tween(300)
             )
         }
