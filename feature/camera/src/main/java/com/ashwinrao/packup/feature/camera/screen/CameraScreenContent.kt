@@ -152,7 +152,6 @@ private fun ViewFinderContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(VIEWFINDER_RATIO),
-//                .weight(4f),
             factory = { context ->
                 PreviewView(context).apply {
                     controller = cameraController
@@ -212,7 +211,6 @@ private fun PhotoPreviewContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(VIEWFINDER_RATIO),
-//                .weight(4f),
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop,
         )
