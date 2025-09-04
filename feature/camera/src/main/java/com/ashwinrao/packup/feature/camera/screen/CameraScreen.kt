@@ -3,11 +3,8 @@ package com.ashwinrao.packup.feature.camera.screen
 import android.Manifest
 import android.annotation.SuppressLint
 import android.net.Uri
-import androidx.camera.core.AspectRatio
 import androidx.camera.view.CameraController.IMAGE_CAPTURE
 import androidx.camera.view.LifecycleCameraController
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
