@@ -51,7 +51,7 @@ fun IntakeScreen(
         ) {
             ItemImagePreview(
                 modifier = Modifier
-                    .height(300.dp)
+                    .height(200.dp)
                     .fillMaxWidth(),
                 uri = itemImageUri
             )

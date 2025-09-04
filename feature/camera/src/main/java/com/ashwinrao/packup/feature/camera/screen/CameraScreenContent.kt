@@ -12,8 +12,10 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,6 +37,8 @@ import com.ashwinrao.packup.feature.camera.composable.CaptureButton
 import com.ashwinrao.packup.feature.camera.composable.PhotoPreviewButtons
 import com.ashwinrao.packup.feature.camera.model.CameraScreenContentMode
 import com.ashwinrao.packup.util.io.saveBitmapToFile
+
+private const val VIEWFINDER_RATIO = 3f / 4f
 
 @Composable
 fun CameraScreenContent(
@@ -80,6 +84,7 @@ fun CameraScreenContent(
             imageProxy?.let { proxy ->
                 val rotatedBitmap = compensateForSensorRotation(proxy)
                 PhotoPreviewContent(
+                    modifier = modifier,
                     bitmap = rotatedBitmap,
                     onSave = { bitmap ->
                         saveBitmapToFile(
@@ -134,7 +139,8 @@ private fun ViewFinderContent(
     onCaptureFailed: (ImageCaptureException) -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
@@ -145,7 +151,8 @@ private fun ViewFinderContent(
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(4f),
+                .aspectRatio(VIEWFINDER_RATIO),
+//                .weight(4f),
             factory = { context ->
                 PreviewView(context).apply {
                     controller = cameraController
@@ -161,7 +168,7 @@ private fun ViewFinderContent(
             contentAlignment = Alignment.Center
         ) {
             CaptureButton(
-                modifier = Modifier.padding(bottom = 32.dp),
+                modifier = Modifier.padding(all = 32.dp),
                 onClick = {
                     cameraController.takePicture(
                         ContextCompat.getMainExecutor(context),
@@ -190,7 +197,8 @@ private fun PhotoPreviewContent(
 ) {
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
@@ -203,13 +211,14 @@ private fun PhotoPreviewContent(
             contentDescription = "preview of the captured image",
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(4f),
+                .aspectRatio(VIEWFINDER_RATIO),
+//                .weight(4f),
             alignment = Alignment.Center,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
         )
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .weight(2f)
                 .background(color = Color.Black),
         ) {
