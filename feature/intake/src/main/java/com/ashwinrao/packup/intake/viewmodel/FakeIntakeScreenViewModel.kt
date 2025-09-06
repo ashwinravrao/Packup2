@@ -4,7 +4,12 @@
 
 package com.ashwinrao.packup.intake.viewmodel
 
+import com.ashwinrao.packup.domain.model.Item
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
 class FakeIntakeScreenViewModel : IntakeScreenViewModel {
+    override val currentItem: StateFlow<Item?> = MutableStateFlow(null)
     override fun discardCurrentItem() {}
     override fun saveCurrentItem() {}
 }
