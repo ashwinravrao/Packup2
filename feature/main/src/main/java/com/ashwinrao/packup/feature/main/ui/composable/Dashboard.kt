@@ -1,3 +1,5 @@
+/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+
 package com.ashwinrao.packup.feature.main.ui.composable
 
 import androidx.compose.animation.animateContentSize
@@ -115,7 +117,10 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
                 HorizontalDivider(Modifier, 0.5.dp, DividerDefaults.color)
 
                 Column(
-                    modifier = Modifier.fillMaxSize().background(color = primaryDark.copy(alpha = 0.3f)).padding(all = 16.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = primaryDark.copy(alpha = 0.3f))
+                        .padding(all = 16.dp),
                 ) {
                     item.description?.let { description ->
                         Text(

@@ -1,3 +1,5 @@
+/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+
 package com.ashwinrao.packup.feature.camera.composable
 
 import androidx.compose.animation.core.EaseInOut
