@@ -22,8 +22,8 @@ class LocalItemRepository @Inject constructor(
     override suspend fun getItem(id: Int) =
         itemDao.getItem(id).toDomainModel()
 
-    override suspend fun packItem(item: Item) =
-        itemDao.packItem(item.toDataEntity())
+    override suspend fun saveItem(item: Item) =
+        itemDao.saveItem(item.toDataEntity())
 
     override suspend fun discardItem(id: Int) =
         itemDao.discardItemById(id)

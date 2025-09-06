@@ -6,9 +6,9 @@ import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.repository.ItemRepository
 import javax.inject.Inject
 
-class DiscardMultipleItemsUseCase @Inject constructor(
+class SaveItemUseCase @Inject constructor(
     private val repo: ItemRepository
 ) {
-    suspend operator fun invoke(items: List<Item>) =
-        repo.discardItems(items.map { it.id })
+    suspend operator fun invoke(item: Item) =
+        repo.saveItem(item)
 }

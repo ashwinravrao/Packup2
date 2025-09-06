@@ -19,7 +19,7 @@ interface ItemDao {
     suspend fun getItem(id: Int): ItemEntity
 
     @Insert
-    suspend fun packItem(item: ItemEntity)
+    suspend fun saveItem(item: ItemEntity)
 
     @Query("DELETE FROM items WHERE id = :id")
     suspend fun discardItemById(id: Int)

@@ -87,7 +87,7 @@ fun NavGraphBuilder.intakeScreen(
         val uri = backStackEntry.arguments?.getString("imageUri")
         IntakeScreen(
             itemImageUri = uri?.toUri(),
-            onExit = onExit,
+            onEscape = onExit,
         )
     }
 }
