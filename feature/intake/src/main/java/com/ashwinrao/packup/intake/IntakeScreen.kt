@@ -15,6 +15,7 @@ import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -74,9 +75,9 @@ fun IntakeScreen(
                 onEscape = onEscape,
             )
         },
-    ) {
+    ) { contentPadding ->
         IntakeScreenContent(
-            contentPadding = it,
+            modifier = Modifier.padding(contentPadding),
             previewImageUri = itemImageUri,
         )
     }
