@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeIntakeScreenViewModel : IntakeScreenViewModel {
     override val currentItem: StateFlow<Item?> = MutableStateFlow(null)
+    override fun fetchCurrentItem(id: Int) {}
     override fun discardCurrentItem() {}
     override fun saveCurrentItem() {}
 }

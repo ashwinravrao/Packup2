@@ -5,8 +5,16 @@ package com.ashwinrao.packup.intake.composable
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,31 +36,46 @@ fun ItemImagePreview(
     modifier: Modifier = Modifier,
     uri: Uri? = null,
 ) {
-    if (uri != null) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(uri)
-                .crossfade(true)
-                .build(),
-            contentDescription = "Captured Item Image",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .fillMaxWidth()
-                .aspectRatio(4f/3f)
-        )
-    } else {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(4f/3f)
-                .padding(32.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_coat_stand),
-                contentDescription = "Placeholder",
-                tint = Color.Gray
+    Card(
+        modifier = modifier
+            .wrapContentWidth()
+            .padding(horizontal = 8.dp)
+            .height(100.dp),
+        shape = RoundedCornerShape(
+            topStart = 0.dp,
+            topEnd = 0.dp,
+            bottomStart = 8.dp,
+            bottomEnd = 8.dp
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 16.dp, focusedElevation = 64.dp)
+
+    ) {
+        if (uri != null) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(uri)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Captured Item Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(4f / 3f)
             )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(4f / 3f)
+                    .padding(32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_coat_stand),
+                    contentDescription = "Placeholder",
+                    tint = Color.Gray
+                )
+            }
         }
     }
 }
