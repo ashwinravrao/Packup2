@@ -9,11 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class RealIntakeScreenViewModel @Inject constructor(
     private val saveItemUC: SaveItemUseCase,
     private val discardItemUC: DiscardItemUseCase,
