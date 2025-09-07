@@ -1,14 +1,3 @@
-## Packup 2 for Android
+### Packup 2 for Android
 
-Ground-up redesign of the [original Packup app](https://github.com/ashwinravrao/Packup) that focuses on simple ux and clean software design.
-
-
-🏗️ Pardon our dust. Check back soon for updates. 🧱
-
----
-
-<sub>
-© 2025 Ashwin R. Rao.
-All rights reserved.
-<a href="LICENSE">License.</a>
-</sub>
+This is a rewrite of my first app [Packup](https://github.com/ashwinravrao/Packup). Packup is an NFC-based home inventory tool. This second version aims to improve usability and provide  intelligent features, while demonstrating clean architecture and software design.
