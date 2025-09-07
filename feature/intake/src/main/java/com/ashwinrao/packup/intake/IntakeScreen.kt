@@ -10,7 +10,6 @@
 
 package com.ashwinrao.packup.intake
 
-import android.R.attr.padding
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
