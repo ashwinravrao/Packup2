@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.main.ui.viewmodel
 
@@ -15,11 +15,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RealMainScreenViewModel @Inject constructor(
+class RealMainScreenViewModel
+@Inject
+constructor(
     private val getItemsUseCase: GetItemsUseCase,
     private val getItemUseCase: GetItemUseCase,
-) : ViewModel(), MainScreenViewModel {
-
+) : ViewModel(),
+    MainScreenViewModel {
     private var _items = MutableStateFlow<List<Item>>(emptyList())
     override val items = _items.asStateFlow()
 

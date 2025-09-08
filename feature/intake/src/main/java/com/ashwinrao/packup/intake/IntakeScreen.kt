@@ -37,17 +37,14 @@ import com.ashwinrao.packup.intake.viewmodel.RealIntakeScreenViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("SourceLockedOrientationActivity")
 @Composable
-fun IntakeScreen(
-    modifier: Modifier = Modifier,
-    itemImageUri: Uri?,
-    onEscape: () -> Unit,
-) {
+fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: () -> Unit) {
     val context = LocalContext.current
 
-    val viewmodel = getViewModelForInspectionMode(
-        fake = FakeIntakeScreenViewModel(),
-        real = { hiltViewModel<RealIntakeScreenViewModel>() }
-    )
+    val viewmodel =
+        getViewModelForInspectionMode(
+            fake = FakeIntakeScreenViewModel(),
+            real = { hiltViewModel<RealIntakeScreenViewModel>() },
+        )
 
     val currentItem by viewmodel.currentItem.collectAsStateWithLifecycle()
 
@@ -85,7 +82,7 @@ fun IntakeScreen(
 
 @Composable
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
-fun IntakeScreenPreview() {
+private fun IntakeScreenPreview() {
     PackupTheme {
         IntakeScreen(
             itemImageUri = null,

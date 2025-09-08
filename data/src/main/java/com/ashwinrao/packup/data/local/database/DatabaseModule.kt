@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.data.local.database
 
@@ -15,19 +15,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
-    fun providePackupDatabase(@ApplicationContext context: Context): PackupDatabase {
-        return Room.databaseBuilder(
-            context,
-            PackupDatabase::class.java,
-            DatabaseConstants.DATABASE_NAME
-        ).build()
-    }
+    fun providePackupDatabase(@ApplicationContext context: Context): PackupDatabase = Room.databaseBuilder(
+        context,
+        PackupDatabase::class.java,
+        DatabaseConstants.DATABASE_NAME,
+    ).build()
 
     @Provides
-    fun provideItemDao(database: PackupDatabase): ItemDao {
-        return database.itemDao()
-    }
+    fun provideItemDao(database: PackupDatabase): ItemDao = database.itemDao()
 }

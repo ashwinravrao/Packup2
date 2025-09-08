@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.data.local
 
@@ -13,25 +13,21 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 
 class LocationTypeConverter {
-    private val moshi = Moshi.Builder()
-        .add(LocationTypeAdapter())
-        .build()
+    private val moshi =
+        Moshi.Builder()
+            .add(LocationTypeAdapter())
+            .build()
 
     private val adapter = moshi.adapter(ItemLocationType::class.java)
 
     @TypeConverter
-    fun fromLocationTypeToJson(locationType: ItemLocationType?): String? {
-        return locationType?.let { adapter.toJson(it) }
-    }
+    fun fromLocationTypeToJson(locationType: ItemLocationType?): String? = locationType?.let { adapter.toJson(it) }
 
     @TypeConverter
-    fun fromJsonToLocationType(json: String?): ItemLocationType? {
-        return json?.let { adapter.fromJson(it) }
-    }
+    fun fromJsonToLocationType(json: String?): ItemLocationType? = json?.let { adapter.fromJson(it) }
 }
 
 class LocationTypeAdapter : JsonAdapter<ItemLocationType>() {
-
     @FromJson
     override fun fromJson(reader: JsonReader): ItemLocationType? {
         reader.beginObject()
@@ -53,10 +49,11 @@ class LocationTypeAdapter : JsonAdapter<ItemLocationType>() {
 
         return when (type) {
             "room" -> ItemLocationType.Room(name = name ?: "")
-            "coordinates" -> ItemLocationType.Coordinates(
-                latitude = latitude,
-                longitude = longitude
-            )
+            "coordinates" ->
+                ItemLocationType.Coordinates(
+                    latitude = latitude,
+                    longitude = longitude,
+                )
 
             else -> throw JsonDataException("Unknown location type: $type")
         }

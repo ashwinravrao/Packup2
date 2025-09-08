@@ -34,16 +34,14 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CameraScreen(
-    modifier: Modifier = Modifier,
-    onExit: (uri: Uri?) -> Unit,
-) {
+fun CameraScreen(modifier: Modifier = Modifier, onExit: (uri: Uri?) -> Unit) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val cameraController: LifecycleCameraController = remember {
-        LifecycleCameraController(context)
-    }
+    val cameraController: LifecycleCameraController =
+        remember {
+            LifecycleCameraController(context)
+        }
 
     LaunchedEffect(Unit) {
         delay(350) // wait til nav transition completes
@@ -63,7 +61,7 @@ fun CameraScreen(
             Surface(
                 modifier = modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background,
-                content = { /* intentional */ }
+                content = { /* intentional */ },
             )
         },
         onGranted = {
@@ -78,7 +76,7 @@ fun CameraScreen(
                 modifier = modifier,
                 explanation = R.string.camera_permission_explanation_soft_denial,
                 buttonTitle = R.string.camera_permission_button_title_soft_denial,
-                action = onRetry
+                action = onRetry,
             )
         },
         onHardDenied = { onGoToSettings ->
@@ -86,8 +84,8 @@ fun CameraScreen(
                 modifier = modifier,
                 explanation = R.string.camera_permission_explanation_hard_denial,
                 buttonTitle = R.string.camera_permission_button_title_hard_denial,
-                action = onGoToSettings
+                action = onGoToSettings,
             )
-        }
+        },
     )
 }

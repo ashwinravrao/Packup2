@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
@@ -44,15 +44,15 @@ fun TopSearchBar(
     searchResults: List<String>, // todo: change type?
     hint: String = stringResource(R.string.default_search_bar_hint),
 ) {
-
     // Animate horizontal padding so the bar doesn't jankily widen before expanding
     val animatedPadding by animateDpAsState(
         targetValue = if (isExpanded) 0.dp else 16.dp,
-        label = "searchBarHorizontalPadding"
+        label = "searchBarHorizontalPadding",
     )
 
     SearchBar(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(all = animatedPadding),
         inputField = {
@@ -69,17 +69,17 @@ fun TopSearchBar(
                             onClick = {
                                 textFieldState.clearText()
                                 onExpanded(false)
-                            }
+                            },
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back_arrow),
-                                contentDescription = stringResource(R.string.search_close_and_go_back_description)
+                                contentDescription = stringResource(R.string.search_close_and_go_back_description),
                             )
                         }
                     } else {
                         Icon(
                             painter = painterResource(R.drawable.ic_search),
-                            contentDescription = stringResource(R.string.search_bar_icon_description)
+                            contentDescription = stringResource(R.string.search_bar_icon_description),
                         )
                     }
                 },
@@ -90,14 +90,14 @@ fun TopSearchBar(
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_mic),
-                                contentDescription = stringResource(R.string.voice_search_start_description)
+                                contentDescription = stringResource(R.string.voice_search_start_description),
                             )
                         }
                     }
                 },
                 expanded = isExpanded,
                 onExpandedChange = onExpanded,
-                placeholder = { Text(text = hint) }
+                placeholder = { Text(text = hint) },
             )
         },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
@@ -112,8 +112,7 @@ fun TopSearchBar(
 
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
 @Composable
-fun TopSearchBarPreview() {
-
+private fun TopSearchBarPreview() {
     val state = remember { TextFieldState() }
     var isExpanded by rememberSaveable { mutableStateOf(false) }
 
@@ -125,7 +124,7 @@ fun TopSearchBarPreview() {
             isExpanded = isExpanded,
             onExpanded = { isExpanded = it },
             searchResults = emptyList(),
-            hint = "Describe an item to search..."
+            hint = "Describe an item to search...",
         )
     }
 }

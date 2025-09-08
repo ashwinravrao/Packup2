@@ -17,12 +17,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RealIntakeScreenViewModel @Inject constructor(
+class RealIntakeScreenViewModel
+@Inject
+constructor(
     private val ucSaveItem: SaveItemUseCase,
     private val ucDiscardItem: DiscardItemUseCase,
     private val ucGetItem: GetItemUseCase,
-) : IntakeScreenViewModel, ViewModel() {
-
+) : ViewModel(),
+    IntakeScreenViewModel {
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 

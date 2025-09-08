@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.util.io
 
@@ -22,12 +22,7 @@ internal fun createFile(context: Context): File {
     return File(dir, filename)
 }
 
-fun saveBitmapToFile(
-    context: Context,
-    bitmap: Bitmap,
-    onSuccess: (Uri) -> Unit,
-    onError: (Exception) -> Unit
-) {
+fun saveBitmapToFile(context: Context, bitmap: Bitmap, onSuccess: (Uri) -> Unit, onError: (Exception) -> Unit) {
     try {
         val file = createFile(context)
         FileOutputStream(file).use { outputStream ->

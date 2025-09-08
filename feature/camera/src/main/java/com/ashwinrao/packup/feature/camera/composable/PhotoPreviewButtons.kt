@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.camera.composable
 
@@ -30,87 +30,92 @@ import com.ashwinrao.packup.feature.camera.R
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
-fun PhotoPreviewButtons(
-    modifier: Modifier = Modifier,
-    onSave: () -> Unit,
-    onRetake: () -> Unit,
-) {
+fun PhotoPreviewButtons(modifier: Modifier = Modifier, onSave: () -> Unit, onRetake: () -> Unit) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .wrapContentWidth()
             .height(100.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Card(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .weight(1f),
-            colors = CardDefaults.cardColors(
+            colors =
+            CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.error,
             ),
             shape = RoundedCornerShape(8.dp),
-            onClick = onRetake
+            onClick = onRetake,
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(48.dp),
                 ) {
                     Icon(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .weight(1f),
                         painter = painterResource(R.drawable.ic_retake),
-                        contentDescription = "retake button"
+                        contentDescription = "retake button",
                     )
                     Text(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .weight(1f)
                             .padding(top = 8.dp),
                         text = "RETAKE",
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.labelSmall
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
             }
         }
         Spacer(modifier = Modifier.width(32.dp))
         Card(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .weight(1f),
-            colors = CardDefaults.cardColors(
+            colors =
+            CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
             shape = RoundedCornerShape(8.dp),
-            onClick = onSave
+            onClick = onSave,
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(48.dp),
                 ) {
                     Icon(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .weight(1f),
                         painter = painterResource(R.drawable.ic_floppy_disk),
-                        contentDescription = "save button"
+                        contentDescription = "save button",
                     )
                     Text(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .weight(1f)
                             .padding(top = 8.dp),
                         text = "SAVE",
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.labelSmall
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
             }
@@ -120,11 +125,11 @@ fun PhotoPreviewButtons(
 
 @Composable
 @Preview
-fun PhotoPreviewButtonsPreview() {
+private fun PhotoPreviewButtonsPreview() {
     PackupTheme(darkTheme = true) {
         PhotoPreviewButtons(
             onSave = {},
-            onRetake = {}
+            onRetake = {},
         )
     }
 }

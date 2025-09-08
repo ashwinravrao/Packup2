@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
@@ -42,10 +42,7 @@ import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.common.theme.primaryDark
 
 @Composable
-fun Dashboard(
-    modifier: Modifier,
-    items: List<Item>,
-) {
+fun Dashboard(modifier: Modifier = Modifier, items: List<Item>) {
     LazyColumn(modifier = modifier) {
         items(items.size) { index ->
             val item = items[index]
@@ -61,7 +58,8 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
     val haptic = LocalHapticFeedback.current
 
     Card(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable(
@@ -70,43 +68,47 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
                 onClick = {
                     isExpanded = !isExpanded
                     haptic.performHapticFeedback(HapticFeedbackType.GestureEnd)
-                }
+                },
             ),
-        elevation = CardDefaults.cardElevation(
+        elevation =
+        CardDefaults.cardElevation(
             defaultElevation = 4.dp,
         ),
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .animateContentSize(
-                    animationSpec = spring(
+                    animationSpec =
+                    spring(
                         dampingRatio = 0.65f,
-                        stiffness = 800f
-                    )
-                )
+                        stiffness = 800f,
+                    ),
+                ),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .weight(1f)
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                        .padding(all = 16.dp)
+                        .padding(all = 16.dp),
                 ) {
                     item.name?.let { name ->
                         Text(
                             text = name,
                             style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         (item.locationType as? ItemLocationType.Room)?.let { room ->
                             Text(
                                 text = room.name,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
@@ -117,7 +119,8 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
                 HorizontalDivider(Modifier, 0.5.dp, DividerDefaults.color)
 
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize()
                         .background(color = primaryDark.copy(alpha = 0.3f))
                         .padding(all = 16.dp),
@@ -126,12 +129,12 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
                         Text(
                             text = "Description",
                             style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                         Text(
                             text = description,
                             style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = 4.dp),
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
@@ -143,11 +146,11 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
 
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
 @Composable
-fun ExpandingItemCardPreview() {
+private fun ExpandingItemCardPreview() {
     PackupTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             val items = Item.generated
             ExpandingItemCard(modifier = Modifier, items[0])

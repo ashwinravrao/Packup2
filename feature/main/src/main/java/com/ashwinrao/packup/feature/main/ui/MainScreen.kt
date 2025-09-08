@@ -44,16 +44,14 @@ import com.ashwinrao.packup.feature.main.ui.viewmodel.RealMainScreenViewModel
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun MainScreen(
-    modifier: Modifier = Modifier,
-    onNavigateToCamera: () -> Unit,
-) {
+fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
     val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
     var isSearchBarExpanded by rememberSaveable { mutableStateOf(false) }
 
-    val viewModel = getViewModelForInspectionMode(FakeMainScreenViewModel()) {
-        hiltViewModel<RealMainScreenViewModel>()
-    }
+    val viewModel =
+        getViewModelForInspectionMode(FakeMainScreenViewModel()) {
+            hiltViewModel<RealMainScreenViewModel>()
+        }
 
     val items by viewModel.items.collectAsStateWithLifecycle()
 
@@ -67,7 +65,7 @@ fun MainScreen(
                 onExpanded = { isSearchBarExpanded = it },
                 onVoiceSearchToggled = { /* TODO: Figure out how to take in voice input */ },
                 onTextSearched = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
-                hint = stringResource(R.string.hint_main_screen_top_search_bar)
+                hint = stringResource(R.string.hint_main_screen_top_search_bar),
             )
         },
         bottomBar = {
@@ -77,20 +75,22 @@ fun MainScreen(
                 exit = slideOutVertically { it },
             ) {
                 BottomNavBar(
-                    onSettingsClicked = { /* TODO: Figure out what view to open settings in (ie. bottom sheet? replace grid?) */ },
+                    onSettingsClicked = {
+                        /* TODO: Figure out what view to open settings in (ie. bottom sheet? replace grid?) */
+                    },
                     onCameraFabClicked = onNavigateToCamera,
                 )
             }
-        }
+        },
     ) { innerPadding ->
         AnimatedVisibility(
             visible = !isSearchBarExpanded,
             enter = fadeIn(animationSpec = tween(durationMillis = 300)),
-            exit = fadeOut(animationSpec = tween(durationMillis = 150))
+            exit = fadeOut(animationSpec = tween(durationMillis = 150)),
         ) {
             Dashboard(
                 modifier = Modifier.padding(innerPadding),
-                items = items
+                items = items,
             )
         }
     }
@@ -98,10 +98,10 @@ fun MainScreen(
 
 @Composable
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
-fun MainScreenPreview() {
+private fun MainScreenPreview() {
     PackupTheme {
         MainScreen(
-            onNavigateToCamera = {}
+            onNavigateToCamera = {},
         )
     }
 }

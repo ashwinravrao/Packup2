@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
+
 package com.ashwinrao.packup.navigation
 
 import android.net.Uri
@@ -6,6 +8,7 @@ import androidx.compose.animation.core.EaseInQuart
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
+import androidx.core.net.toUri
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -13,76 +16,72 @@ import androidx.navigation.navArgument
 import com.ashwinrao.packup.feature.camera.screen.CameraScreen
 import com.ashwinrao.packup.feature.main.ui.MainScreen
 import com.ashwinrao.packup.intake.IntakeScreen
-import androidx.core.net.toUri
 
-fun NavGraphBuilder.mainScreen(
-    onNavigateToCamera: () -> Unit,
-) {
+fun NavGraphBuilder.mainScreen(onNavigateToCamera: () -> Unit) {
     composable<NavRoute.MainScreen> {
         MainScreen(
-            onNavigateToCamera = onNavigateToCamera
+            onNavigateToCamera = onNavigateToCamera,
         )
     }
 }
 
-fun NavGraphBuilder.cameraScreen(
-    onExit: (uri: Uri?) -> Unit,
-) {
+fun NavGraphBuilder.cameraScreen(onExit: (uri: Uri?) -> Unit) {
     composable<NavRoute.CameraScreen>(
         enterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Up,
-                animationSpec = tween(
+                animationSpec =
+                tween(
                     durationMillis = 400,
-                    easing = EaseOutQuart
-                )
+                    easing = EaseOutQuart,
+                ),
             )
         },
         popExitTransition = {
             fadeOut(
-                animationSpec = tween(300)
+                animationSpec = tween(300),
             )
         },
         exitTransition = {
             fadeOut(
-                animationSpec = tween(300)
+                animationSpec = tween(300),
             )
-        }
+        },
     ) {
         CameraScreen(onExit = onExit)
     }
 }
 
-fun NavGraphBuilder.intakeScreen(
-    onExit: () -> Unit,
-) {
+fun NavGraphBuilder.intakeScreen(onExit: () -> Unit) {
     composable(
         route = "${NavRoute.IntakeScreen}?imageUri={imageUri}",
-        arguments = listOf(
+        arguments =
+        listOf(
             navArgument("imageUri") {
                 type = NavType.StringType
                 nullable = true
-            }
+            },
         ),
         enterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(
+                animationSpec =
+                tween(
                     durationMillis = 400,
-                    easing = EaseInQuart
-                )
+                    easing = EaseInQuart,
+                ),
             )
         },
         exitTransition = {
             fadeOut(
-                animationSpec = tween()
+                animationSpec = tween(),
             )
         },
         popExitTransition = {
             fadeOut(
-                animationSpec = tween()
+                animationSpec = tween(),
             )
-        }
+        },
     ) { backStackEntry ->
         val uri = backStackEntry.arguments?.getString("imageUri")
         IntakeScreen(

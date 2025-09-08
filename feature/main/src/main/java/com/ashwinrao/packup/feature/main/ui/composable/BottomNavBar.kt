@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
@@ -23,22 +23,18 @@ import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
-fun BottomNavBar(
-    modifier: Modifier = Modifier,
-    onSettingsClicked: () -> Unit,
-    onCameraFabClicked: () -> Unit,
-) {
+fun BottomNavBar(modifier: Modifier = Modifier, onSettingsClicked: () -> Unit, onCameraFabClicked: () -> Unit) {
     BottomAppBar(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp),
         actions = {
             IconButton(
                 modifier = Modifier.padding(top = 8.dp),
-                onClick = onSettingsClicked
+                onClick = onSettingsClicked,
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_settings),
-                    contentDescription = stringResource(R.string.settings_button_description)
+                    contentDescription = stringResource(R.string.settings_button_description),
                 )
             }
         },
@@ -53,16 +49,16 @@ fun BottomNavBar(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_camera),
-                    contentDescription = stringResource(R.string.camera_fab_button_description)
+                    contentDescription = stringResource(R.string.camera_fab_button_description),
                 )
             }
-        }
+        },
     )
 }
 
 @Composable
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
-fun BottomNavBarPreview() {
+private fun BottomNavBarPreview() {
     PackupTheme {
         BottomNavBar(
             onSettingsClicked = {},

@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.data.local.repository
 
@@ -11,9 +11,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Binds
-    abstract fun bindItemRepository(
-        impl: LocalItemRepository
-    ): ItemRepository
+    abstract fun bindItemRepository(impl: LocalItemRepository): ItemRepository
 }

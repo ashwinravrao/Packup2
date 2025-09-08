@@ -17,32 +17,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
-fun IntakeScreenContent(
-    modifier: Modifier = Modifier,
-    previewImageUri: Uri?,
-) {
+fun IntakeScreenContent(modifier: Modifier = Modifier, previewImageUri: Uri?) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
     ) {
         ItemImagePreview(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth(),
-            uri = previewImageUri
+            uri = previewImageUri,
         )
     }
 }
 
 @Preview
 @Composable
-fun IntakeScreenContentPreview() {
+private fun IntakeScreenContentPreview() {
     PackupTheme {
         Scaffold { contentPadding ->
             IntakeScreenContent(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(contentPadding)
                     .fillMaxSize(),
-                previewImageUri = null
+                previewImageUri = null,
             )
         }
     }

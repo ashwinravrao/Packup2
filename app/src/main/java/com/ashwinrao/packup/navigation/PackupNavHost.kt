@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
+
 package com.ashwinrao.packup.navigation
 
 import android.net.Uri
@@ -11,12 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun PackupNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-) {
+fun PackupNavHost(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()) {
     NavHost(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         navController = navController,
@@ -25,12 +25,12 @@ fun PackupNavHost(
         mainScreen(
             onNavigateToCamera = {
                 navController.navigate(route = NavRoute.CameraScreen)
-            }
+            },
         )
         cameraScreen(
             onExit = { uri ->
                 navController.navigate(
-                    route = "${NavRoute.IntakeScreen}?imageUri=${Uri.encode(uri.toString())}"
+                    route = "${NavRoute.IntakeScreen}?imageUri=${Uri.encode(uri.toString())}",
                 ) {
                     popUpTo(NavRoute.CameraScreen) { inclusive = true }
                 }
@@ -40,7 +40,7 @@ fun PackupNavHost(
         intakeScreen(
             onExit = {
                 navController.popBackStack(NavRoute.MainScreen, inclusive = false)
-            }
+            },
         )
     }
 }

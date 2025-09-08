@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.common.composable
 
@@ -12,10 +12,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
  * containing a viewmodel, the preview will not render.
  */
 @Composable
-fun <T> getViewModelForInspectionMode(
-    fake: T,
-    real: @Composable () -> T,
-): T {
-    return if (LocalInspectionMode.current) fake
-    else real()
+fun <T> getViewModelForInspectionMode(fake: T, real: @Composable () -> T): T = if (LocalInspectionMode.current) {
+    fake
+} else {
+    real()
 }

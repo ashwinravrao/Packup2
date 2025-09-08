@@ -37,7 +37,7 @@ fun IntakeScreenTopBar(
 ) {
     TopAppBar(
         modifier = modifier.padding(all = 8.dp),
-        title = { /* no title desired */},
+        title = { /* no title desired */ },
         actions = {
             FilledIconButton(
                 onClick = onDiscard,
@@ -45,7 +45,7 @@ fun IntakeScreenTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Delete,
-                    contentDescription = "discard button"
+                    contentDescription = "discard button",
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
@@ -55,7 +55,7 @@ fun IntakeScreenTopBar(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_done_outlined),
-                    contentDescription = "save button"
+                    contentDescription = "save button",
                 )
                 Spacer(Modifier.width(8.dp))
                 Text("Save")
@@ -65,21 +65,21 @@ fun IntakeScreenTopBar(
             IconButton(onClick = onEscape) {
                 Icon(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = "escape button"
+                    contentDescription = "escape button",
                 )
             }
-        }
+        },
     )
 }
 
 @Preview
 @Composable
-fun IntakeScreenTopBarPreview() {
+private fun IntakeScreenTopBarPreview() {
     PackupTheme {
         IntakeScreenTopBar(
             onDiscard = {},
             onSave = {},
-            onEscape = {}
+            onEscape = {},
         )
     }
 }

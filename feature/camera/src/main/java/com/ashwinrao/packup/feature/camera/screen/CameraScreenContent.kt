@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.camera.screen
 
@@ -60,10 +60,11 @@ fun CameraScreenContent(
     }
 
     fun toggleContentMode() {
-        contentMode = when (contentMode) {
-            CameraScreenContentMode.ViewFinder -> CameraScreenContentMode.PhotoPreview
-            CameraScreenContentMode.PhotoPreview -> CameraScreenContentMode.ViewFinder
-        }
+        contentMode =
+            when (contentMode) {
+                CameraScreenContentMode.ViewFinder -> CameraScreenContentMode.PhotoPreview
+                CameraScreenContentMode.PhotoPreview -> CameraScreenContentMode.ViewFinder
+            }
     }
 
     when (contentMode) {
@@ -78,7 +79,7 @@ fun CameraScreenContent(
                 },
                 onCaptureFailed = {
                     // todo: log and display error
-                }
+                },
             )
         }
 
@@ -101,18 +102,17 @@ fun CameraScreenContent(
                                 disposeOfImageProxy()
                                 Log.e(
                                     "CameraScreen",
-                                    error.message ?: "Failed to save image proxy to file."
+                                    error.message ?: "Failed to save image proxy to file.",
                                 )
-                            }
+                            },
                         )
                     },
                     onRetake = {
                         imageProxy = null
                         toggleContentMode()
-                    }
+                    },
                 )
             }
-
         }
     }
 }
@@ -120,15 +120,22 @@ fun CameraScreenContent(
 private fun compensateForSensorRotation(proxy: ImageProxy): Bitmap {
     val ogBitmap = proxy.toBitmap()
     val rotationDegrees = proxy.imageInfo.rotationDegrees
-    val rotatedBitmap = if (rotationDegrees != 0) {
-        val matrix = Matrix()
-        matrix.postRotate(rotationDegrees.toFloat())
-        Bitmap.createBitmap(
-            ogBitmap, 0, 0, ogBitmap.width, ogBitmap.height, matrix, true
-        )
-    } else {
-        ogBitmap
-    }
+    val rotatedBitmap =
+        if (rotationDegrees != 0) {
+            val matrix = Matrix()
+            matrix.postRotate(rotationDegrees.toFloat())
+            Bitmap.createBitmap(
+                ogBitmap,
+                0,
+                0,
+                ogBitmap.width,
+                ogBitmap.height,
+                matrix,
+                true,
+            )
+        } else {
+            ogBitmap
+        }
     return rotatedBitmap
 }
 
@@ -142,16 +149,18 @@ private fun ViewFinderContent(
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(color = Color.Black)
+                .background(color = Color.Black),
         )
         AndroidView(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .aspectRatio(VIEWFINDER_RATIO),
             factory = { context ->
@@ -159,14 +168,15 @@ private fun ViewFinderContent(
                     controller = cameraController
                     scaleType = PreviewView.ScaleType.FILL_CENTER
                 }
-            }
+            },
         )
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(2f)
                 .background(color = Color.Black),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             CaptureButton(
                 modifier = Modifier.padding(all = 32.dp),
@@ -181,7 +191,7 @@ private fun ViewFinderContent(
                             override fun onError(exception: ImageCaptureException) {
                                 onCaptureFailed(exception)
                             }
-                        }
+                        },
                     )
                 },
             )
@@ -196,28 +206,30 @@ private fun PhotoPreviewContent(
     onSave: (Bitmap) -> Unit,
     onRetake: () -> Unit,
 ) {
-
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(color = Color.Black)
+                .background(color = Color.Black),
         )
         Image(
             bitmap = bitmap.asImageBitmap(),
             contentDescription = "preview of the captured image",
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .aspectRatio(VIEWFINDER_RATIO),
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop,
         )
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .weight(2f)
                 .background(color = Color.Black),
@@ -225,7 +237,7 @@ private fun PhotoPreviewContent(
             PhotoPreviewButtons(
                 modifier = Modifier.padding(32.dp),
                 onSave = { onSave(bitmap) },
-                onRetake = onRetake
+                onRetake = onRetake,
             )
         }
     }

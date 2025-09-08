@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.camera.model
 
@@ -13,14 +13,17 @@ sealed interface CameraUIError {
         override val stringRes: Int
             get() = R.string.camera_ui_error_initialization
     }
+
     data object PermissionsDenied : CameraUIError {
         override val stringRes: Int
             get() = R.string.camera_ui_error_denied_permissions
     }
+
     data object ImageCaptureFailed : CameraUIError {
         override val stringRes: Int
             get() = R.string.camera_ui_error_image_capture_failed
     }
+
     data class Unknown(val exception: Exception) : CameraUIError {
         override val stringRes: Int
             get() = R.string.camera_ui_error_unknown

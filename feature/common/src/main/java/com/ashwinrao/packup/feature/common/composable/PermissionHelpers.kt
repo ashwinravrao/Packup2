@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.common.composable
 
@@ -61,20 +61,22 @@ fun RequestPermission(
             isFirstRequest.value = false
         }
 
-        isHardDenied -> onHardDenied {
-            val wereSettingsLaunched = openAppInAndroidSettings(context)
-            requestAgain.value = wereSettingsLaunched
-        }
+        isHardDenied ->
+            onHardDenied {
+                val wereSettingsLaunched = openAppInAndroidSettings(context)
+                requestAgain.value = wereSettingsLaunched
+            }
 
         else -> onRequested()
     }
 }
 
 private fun openAppInAndroidSettings(context: Context): Boolean {
-    val intent = Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", context.packageName, null)
-    )
+    val intent =
+        Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", context.packageName, null),
+        )
     context.startActivity(intent)
     return true
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.common.theme
 
@@ -219,10 +219,3 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF1E201A)
 val surfaceContainerDarkHighContrast = Color(0xFF2F312A)
 val surfaceContainerHighDarkHighContrast = Color(0xFF3A3C35)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF454840)
-
-
-
-
-
-
-

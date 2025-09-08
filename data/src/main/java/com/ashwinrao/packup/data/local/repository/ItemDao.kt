@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.data.local.repository
 
@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Dao
 @Singleton
 interface ItemDao {
-
     @Query("SELECT * FROM items")
     suspend fun getItems(): List<ItemEntity>
 
@@ -26,5 +25,4 @@ interface ItemDao {
 
     @Query("DELETE FROM items WHERE id IN (:ids)")
     suspend fun discardItemsByIds(ids: List<Int>)
-
 }

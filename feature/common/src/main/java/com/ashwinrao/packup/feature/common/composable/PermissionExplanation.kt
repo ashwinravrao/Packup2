@@ -1,4 +1,4 @@
-/* Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved. */
+// Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
 package com.ashwinrao.packup.feature.common.composable
 
@@ -32,24 +32,26 @@ fun PermissionExplanation(
     action: () -> Unit,
 ) {
     Scaffold(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) { _ ->
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(horizontal = 64.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 textAlign = TextAlign.Justify,
-                text = stringResource(id = explanation)
+                text = stringResource(id = explanation),
             )
             Button(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp),
-                onClick = action
+                onClick = action,
             ) {
                 Text(text = stringResource(id = buttonTitle))
             }
@@ -64,7 +66,7 @@ private fun PermissionExplanationPreview() {
         PermissionExplanation(
             explanation = R.string.permission_explanation_preview_message,
             buttonTitle = R.string.permission_explanation_preview_button,
-            action = {}
+            action = {},
         )
     }
 }
