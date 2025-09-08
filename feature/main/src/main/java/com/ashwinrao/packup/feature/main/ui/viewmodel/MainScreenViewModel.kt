@@ -11,5 +11,5 @@ interface MainScreenViewModel {
 
     fun fetchItems()
 
-    fun fetchItem(id: Int)
+    fun fetchItem(id: Long)
 }

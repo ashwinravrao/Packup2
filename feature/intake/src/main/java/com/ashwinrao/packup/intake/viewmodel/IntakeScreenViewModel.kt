@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface IntakeScreenViewModel {
     val currentItem: StateFlow<Item?>
 
-    fun fetchCurrentItem(id: Int)
+    fun fetchCurrentItem(id: Long)
 
     fun discardCurrentItem()
 

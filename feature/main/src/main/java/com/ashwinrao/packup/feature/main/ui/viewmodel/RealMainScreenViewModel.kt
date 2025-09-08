@@ -39,7 +39,7 @@ constructor(
         }
     }
 
-    override fun fetchItem(id: Int) {
+    override fun fetchItem(id: Long) {
         viewModelScope.launch {
             _selectedItem.emit(getItemUseCase(id))
         }

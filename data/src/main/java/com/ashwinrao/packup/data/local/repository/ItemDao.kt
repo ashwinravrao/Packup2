@@ -4,6 +4,7 @@ package com.ashwinrao.packup.data.local.repository
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import com.ashwinrao.packup.data.local.model.ItemEntity
 import javax.inject.Singleton
@@ -15,14 +16,14 @@ interface ItemDao {
     suspend fun getItems(): List<ItemEntity>
 
     @Query("SELECT * FROM items WHERE id = :id")
-    suspend fun getItem(id: Int): ItemEntity
+    suspend fun getItem(id: Long): ItemEntity
 
-    @Insert
-    suspend fun saveItem(item: ItemEntity)
+    @Insert(onConflict = REPLACE)
+    suspend fun saveItem(item: ItemEntity): Long
 
     @Query("DELETE FROM items WHERE id = :id")
-    suspend fun discardItemById(id: Int)
+    suspend fun discardItemById(id: Long)
 
     @Query("DELETE FROM items WHERE id IN (:ids)")
-    suspend fun discardItemsByIds(ids: List<Int>)
+    suspend fun discardItemsByIds(ids: List<Long>)
 }

@@ -8,9 +8,9 @@ import com.ashwinrao.packup.domain.model.ItemLocationType
 
 @Entity(tableName = "items")
 data class ItemEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long = 1L,
     val name: String?,
-    val photoUri: String,
+    val photoUri: String?,
     val description: String?,
-    val locationType: ItemLocationType,
+    val locationType: ItemLocationType?,
 )

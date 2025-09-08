@@ -7,11 +7,11 @@ import com.ashwinrao.packup.domain.model.Item
 interface ItemRepository {
     suspend fun getItems(): List<Item>
 
-    suspend fun getItem(id: Int): Item
+    suspend fun getItem(id: Long): Item
 
-    suspend fun saveItem(item: Item)
+    suspend fun saveItem(item: Item): Long
 
-    suspend fun discardItem(id: Int)
+    suspend fun discardItem(id: Long)
 
-    suspend fun discardItems(ids: List<Int>)
+    suspend fun discardItems(ids: List<Long>)
 }

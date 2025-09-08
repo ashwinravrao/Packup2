@@ -9,5 +9,5 @@ import javax.inject.Inject
 class GetItemUseCase
 @Inject
 constructor(private val repo: ItemRepository) {
-    suspend operator fun invoke(id: Int): Item = repo.getItem(id)
+    suspend operator fun invoke(id: Long): Item = repo.getItem(id)
 }

@@ -17,13 +17,13 @@ constructor(private val itemDao: ItemDao) : ItemRepository {
         entities.toDomainModel()
     }
 
-    override suspend fun getItem(id: Int) = itemDao.getItem(id).toDomainModel()
+    override suspend fun getItem(id: Long) = itemDao.getItem(id).toDomainModel()
 
-    override suspend fun saveItem(item: Item) = itemDao.saveItem(item.toDataEntity())
+    override suspend fun saveItem(item: Item): Long = itemDao.saveItem(item.toDataEntity())
 
-    override suspend fun discardItem(id: Int) = itemDao.discardItemById(id)
+    override suspend fun discardItem(id: Long) = itemDao.discardItemById(id)
 
-    override suspend fun discardItems(ids: List<Int>) {
+    override suspend fun discardItems(ids: List<Long>) {
         itemDao.discardItemsByIds(ids)
     }
 }

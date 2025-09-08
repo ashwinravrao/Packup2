@@ -28,7 +28,7 @@ constructor(
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
-    override fun fetchCurrentItem(id: Int) {
+    override fun fetchCurrentItem(id: Long) {
         viewModelScope.launch {
             _currentItem.value = ucGetItem(id)
         }

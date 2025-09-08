@@ -9,5 +9,5 @@ import javax.inject.Inject
 class SaveItemUseCase
 @Inject
 constructor(private val repo: ItemRepository) {
-    suspend operator fun invoke(item: Item) = repo.saveItem(item)
+    suspend operator fun invoke(item: Item): Long = repo.saveItem(item)
 }
