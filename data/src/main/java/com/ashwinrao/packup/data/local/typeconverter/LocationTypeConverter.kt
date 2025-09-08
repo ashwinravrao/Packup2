@@ -1,6 +1,6 @@
 // Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
 
-package com.ashwinrao.packup.data.local
+package com.ashwinrao.packup.data.local.typeconverter
 
 import androidx.room.TypeConverter
 import com.ashwinrao.packup.domain.model.ItemLocationType

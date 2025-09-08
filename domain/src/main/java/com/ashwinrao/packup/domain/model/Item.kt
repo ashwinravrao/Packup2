@@ -8,6 +8,7 @@ data class Item(
     val photoUri: String?,
     val description: String?,
     val locationType: ItemLocationType?,
+    val itemType: ItemType? = ItemType.Draft,
 ) {
     companion object {
         val generated: List<Item>
