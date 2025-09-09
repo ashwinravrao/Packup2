@@ -14,13 +14,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
@@ -61,6 +64,7 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
         modifier = modifier.fillMaxSize(),
         topBar = {
             IntakeScreenTopBar(
+                modifier = Modifier.fillMaxWidth(),
                 onDiscard = {
                     viewmodel.discardCurrentItem()
                     onEscape()
@@ -74,8 +78,11 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
         },
     ) { contentPadding ->
         IntakeScreenContent(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .padding(contentPadding)
+                .consumeWindowInsets(contentPadding),
             previewImageUri = itemImageUri,
+            viewmodel = viewmodel,
         )
     }
 }

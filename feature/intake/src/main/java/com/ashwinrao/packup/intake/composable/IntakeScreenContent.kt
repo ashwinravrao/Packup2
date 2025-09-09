@@ -10,14 +10,34 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
+import com.ashwinrao.packup.intake.IntakeScreen
+import com.ashwinrao.packup.intake.viewmodel.IntakeScreenViewModel
 
 @Composable
-fun IntakeScreenContent(modifier: Modifier = Modifier, previewImageUri: Uri?) {
+fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenViewModel, previewImageUri: Uri?) {
+    val nameFieldValue by viewmodel.nameField.collectAsStateWithLifecycle()
+    val descriptionFieldValue by viewmodel.descriptionField.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -28,6 +48,52 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, previewImageUri: Uri?) {
                 .fillMaxWidth(),
             uri = previewImageUri,
         )
+
+        Text(
+            modifier = Modifier
+                .padding(start = 24.dp, top = 48.dp, bottom = 8.dp),
+            text = "Describe your item...",
+            textAlign = TextAlign.Start,
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(start = 20.dp, end = 20.dp)
+                .fillMaxWidth(),
+            label = { Text(text = "Name") },
+            shape = RoundedCornerShape(8.dp),
+            trailingIcon = {
+                if (nameFieldValue.text.isNotBlank()) {
+                    IconButton(
+                        onClick = {
+                            viewmodel.setNameField(TextFieldValue())
+                        },
+                    ) {
+                        Icon(
+                            modifier = Modifier.scale(0.75f),
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "escape button",
+                        )
+                    }
+                }
+            },
+            value = nameFieldValue,
+            onValueChange = viewmodel::setNameField,
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(start = 20.dp, end = 20.dp, top = 10.dp)
+                .fillMaxWidth(),
+            label = { Text(text = "Description") },
+            shape = RoundedCornerShape(8.dp),
+            minLines = 4,
+            maxLines = 4,
+            value = descriptionFieldValue,
+            onValueChange = viewmodel::setDescriptionField,
+        )
     }
 }
 
@@ -36,12 +102,13 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, previewImageUri: Uri?) {
 private fun IntakeScreenContentPreview() {
     PackupTheme {
         Scaffold { contentPadding ->
-            IntakeScreenContent(
+            IntakeScreen(
                 modifier =
                 Modifier
                     .padding(contentPadding)
                     .fillMaxSize(),
-                previewImageUri = null,
+                itemImageUri = null,
+                onEscape = {},
             )
         }
     }

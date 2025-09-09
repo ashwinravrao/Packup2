@@ -4,6 +4,7 @@
 
 package com.ashwinrao.packup.intake.viewmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ashwinrao.packup.domain.model.Item
@@ -28,6 +29,12 @@ constructor(
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
+    private var _nameField = MutableStateFlow(TextFieldValue())
+    override val nameField = _nameField.asStateFlow()
+
+    private var _descriptionField = MutableStateFlow(TextFieldValue())
+    override val descriptionField = _descriptionField.asStateFlow()
+
     override fun fetchCurrentItem(id: Long) {
         viewModelScope.launch {
             _currentItem.value = ucGetItem(id)
@@ -48,5 +55,13 @@ constructor(
                 ucSaveItem(item)
             }
         }
+    }
+
+    override fun setNameField(new: TextFieldValue) {
+        _nameField.value = new
+    }
+
+    override fun setDescriptionField(new: TextFieldValue) {
+        _descriptionField.value = new
     }
 }

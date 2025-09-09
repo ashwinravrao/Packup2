@@ -4,11 +4,20 @@
 
 package com.ashwinrao.packup.intake.viewmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ashwinrao.packup.domain.model.Item
 import kotlinx.coroutines.flow.StateFlow
 
 interface IntakeScreenViewModel {
     val currentItem: StateFlow<Item?>
+
+    val nameField: StateFlow<TextFieldValue>
+
+    val descriptionField: StateFlow<TextFieldValue>
+
+    fun setNameField(new: TextFieldValue)
+
+    fun setDescriptionField(new: TextFieldValue)
 
     fun fetchCurrentItem(id: Long)
 
