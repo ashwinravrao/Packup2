@@ -12,7 +12,6 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,9 +29,11 @@ fun BottomNavBar(modifier: Modifier = Modifier, onSettingsClicked: () -> Unit, o
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp),
         actions = {
-            IconButton(
-                modifier = Modifier.padding(top = 8.dp),
+            FloatingActionButton(
+                modifier = Modifier.padding(top = 8.dp, start = 10.dp),
                 onClick = onSettingsClicked,
+                containerColor = MaterialTheme.colorScheme.secondary,
+                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_settings),
