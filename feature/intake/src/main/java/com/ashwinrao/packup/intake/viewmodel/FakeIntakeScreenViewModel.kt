@@ -4,6 +4,7 @@
 
 package com.ashwinrao.packup.intake.viewmodel
 
+import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import com.ashwinrao.packup.domain.model.Item
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,4 +24,6 @@ class FakeIntakeScreenViewModel : IntakeScreenViewModel {
     override fun discardCurrentItem() {}
 
     override fun saveCurrentItem() {}
+
+    override fun newItemAsDraft(uri: Uri?) {}
 }

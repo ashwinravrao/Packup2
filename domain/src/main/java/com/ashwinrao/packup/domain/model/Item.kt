@@ -13,6 +13,14 @@ data class Item(
     val itemType: ItemType? = ItemType.Draft,
 ) {
     companion object {
+        fun roughDraft(photoUri: String?) = Item(
+            name = null,
+            photoUri = photoUri,
+            description = null,
+            locationType = null,
+            itemType = ItemType.Draft,
+        )
+
         val generated: List<Item>
             get() =
                 listOf(

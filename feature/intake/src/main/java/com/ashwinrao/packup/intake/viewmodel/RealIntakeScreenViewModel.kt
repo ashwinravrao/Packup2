@@ -4,10 +4,12 @@
 
 package com.ashwinrao.packup.intake.viewmodel
 
+import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ashwinrao.packup.domain.model.Item
+import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
@@ -24,6 +26,7 @@ constructor(
     private val ucSaveItem: SaveItemUseCase,
     private val ucDiscardItem: DiscardItemUseCase,
     private val ucGetItem: GetItemUseCase,
+    private val ucCreateDraftItem: CreateDraftItemUseCase,
 ) : ViewModel(),
     IntakeScreenViewModel {
     private var _currentItem = MutableStateFlow<Item?>(null)
@@ -57,11 +60,15 @@ constructor(
         }
     }
 
-    override fun setNameField(new: TextFieldValue) {
+    override fun newItemAsDraft(uri: Uri?) {
+        _currentItem.value = ucCreateDraftItem(uri)
+    }
+
+    override fun updateName(new: TextFieldValue) {
         _nameField.value = new
     }
 
-    override fun setDescriptionField(new: TextFieldValue) {
+    override fun updateDescription(new: TextFieldValue) {
         _descriptionField.value = new
     }
 }
