@@ -52,7 +52,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
         Text(
             modifier = Modifier
                 .padding(start = 24.dp, top = 48.dp, bottom = 8.dp),
-            text = "Describe your item...",
+            text = "Tell us about your item",
             textAlign = TextAlign.Start,
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
@@ -62,7 +62,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             modifier = Modifier
                 .padding(start = 20.dp, end = 20.dp)
                 .fillMaxWidth(),
-            label = { Text(text = "Name") },
+            label = { Text(text = "Name *") },
             shape = RoundedCornerShape(8.dp),
             trailingIcon = {
                 if (nameFieldValue.text.isNotBlank()) {
@@ -87,7 +87,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             modifier = Modifier
                 .padding(start = 20.dp, end = 20.dp, top = 10.dp)
                 .fillMaxWidth(),
-            label = { Text(text = "Description") },
+            label = { Text(text = "Description *") },
             shape = RoundedCornerShape(8.dp),
             minLines = 4,
             maxLines = 4,
