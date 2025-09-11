@@ -7,6 +7,7 @@ package com.ashwinrao.packup.intake.viewmodel
 import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import com.ashwinrao.packup.domain.model.Item
+import com.ashwinrao.packup.intake.model.IntakeFormErrors
 import kotlinx.coroutines.flow.StateFlow
 
 interface IntakeScreenViewModel {
@@ -16,9 +17,11 @@ interface IntakeScreenViewModel {
 
     val descriptionField: StateFlow<TextFieldValue>
 
-    fun setNameField(new: TextFieldValue)
+    val formErrors: StateFlow<IntakeFormErrors>
 
-    fun setDescriptionField(new: TextFieldValue)
+    fun updateName(new: TextFieldValue)
+
+    fun updateDescription(new: TextFieldValue)
 
     fun fetchCurrentItem(id: Long)
 

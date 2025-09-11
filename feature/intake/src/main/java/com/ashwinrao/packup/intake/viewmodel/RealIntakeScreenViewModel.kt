@@ -13,9 +13,16 @@ import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
+import com.ashwinrao.packup.intake.model.IntakeField
+import com.ashwinrao.packup.intake.model.IntakeFormErrors
+import com.ashwinrao.packup.intake.model.IntakeUIError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,6 +44,31 @@ constructor(
 
     private var _descriptionField = MutableStateFlow(TextFieldValue())
     override val descriptionField = _descriptionField.asStateFlow()
+
+    override val formErrors: StateFlow<IntakeFormErrors> =
+        combine(
+            _nameField,
+            _descriptionField,
+        ) { name, desc ->
+            IntakeFormErrors(
+                nameField =
+                if (name.text.isBlank()) {
+                    IntakeUIError.RequiredButEmpty(IntakeField.Name)
+                } else {
+                    null
+                },
+                descriptionField =
+                if (desc.text.isBlank()) {
+                    IntakeUIError.RequiredButEmpty(IntakeField.Description)
+                } else {
+                    null
+                },
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = IntakeFormErrors(),
+        )
 
     override fun fetchCurrentItem(id: Long) {
         viewModelScope.launch {

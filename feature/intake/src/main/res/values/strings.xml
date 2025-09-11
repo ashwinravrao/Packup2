@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
+  -->
+
+<resources>
+  <string name="generic_intake_error">There was a problem with one or more input fields. Fix the issue and try again.</string>
+  <string name="required_intake_error">This field is required! Please enter a value to continue.</string>
+</resources>

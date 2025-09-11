@@ -37,6 +37,7 @@ import com.ashwinrao.packup.intake.viewmodel.IntakeScreenViewModel
 fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenViewModel, previewImageUri: Uri?) {
     val nameFieldValue by viewmodel.nameField.collectAsStateWithLifecycle()
     val descriptionFieldValue by viewmodel.descriptionField.collectAsStateWithLifecycle()
+    val formErrors by viewmodel.formErrors.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -68,7 +69,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
                 if (nameFieldValue.text.isNotBlank()) {
                     IconButton(
                         onClick = {
-                            viewmodel.setNameField(TextFieldValue())
+                            viewmodel.updateName(TextFieldValue())
                         },
                     ) {
                         Icon(
@@ -79,8 +80,9 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
                     }
                 }
             },
+            isError = !formErrors.isNameValid,
             value = nameFieldValue,
-            onValueChange = viewmodel::setNameField,
+            onValueChange = viewmodel::updateName,
         )
 
         OutlinedTextField(
@@ -91,8 +93,9 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             shape = RoundedCornerShape(8.dp),
             minLines = 4,
             maxLines = 4,
+            isError = !formErrors.isDescriptionValid,
             value = descriptionFieldValue,
-            onValueChange = viewmodel::setDescriptionField,
+            onValueChange = viewmodel::updateDescription,
         )
     }
 }
