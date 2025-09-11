@@ -36,6 +36,9 @@ constructor(
     private val ucCreateDraftItem: CreateDraftItemUseCase,
 ) : ViewModel(),
     IntakeScreenViewModel {
+
+    private var hasNameBeenSet: Boolean = false
+    private var hasDescriptionBeenSet: Boolean = false
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
@@ -52,13 +55,13 @@ constructor(
         ) { name, desc ->
             IntakeFormErrors(
                 nameField =
-                if (name.text.isBlank()) {
+                if (name.text.isBlank() && hasNameBeenSet) {
                     IntakeUIError.RequiredButEmpty(IntakeField.Name)
                 } else {
                     null
                 },
                 descriptionField =
-                if (desc.text.isBlank()) {
+                if (desc.text.isBlank() && hasNameBeenSet) {
                     IntakeUIError.RequiredButEmpty(IntakeField.Description)
                 } else {
                     null
@@ -98,9 +101,11 @@ constructor(
 
     override fun updateName(new: TextFieldValue) {
         _nameField.value = new
+        hasNameBeenSet = true
     }
 
     override fun updateDescription(new: TextFieldValue) {
         _descriptionField.value = new
+        hasDescriptionBeenSet = true
     }
 }
