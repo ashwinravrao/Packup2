@@ -8,20 +8,19 @@ import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ashwinrao.packup.domain.model.IntakeError
 import com.ashwinrao.packup.domain.model.Item
+import com.ashwinrao.packup.domain.model.ValidatedFieldInput
 import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
-import com.ashwinrao.packup.intake.model.IntakeField
-import com.ashwinrao.packup.intake.model.IntakeFormErrors
-import com.ashwinrao.packup.intake.model.IntakeUIError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,32 +44,35 @@ constructor(
     private var _nameField = MutableStateFlow(TextFieldValue())
     override val nameField = _nameField.asStateFlow()
 
-    private var _descriptionField = MutableStateFlow(TextFieldValue())
-    override val descriptionField = _descriptionField.asStateFlow()
-
-    override val formErrors: StateFlow<IntakeFormErrors> =
-        combine(
-            _nameField,
-            _descriptionField,
-        ) { name, desc ->
-            IntakeFormErrors(
-                nameField =
-                if (name.text.isBlank() && hasNameBeenSet) {
-                    IntakeUIError.RequiredButEmpty(IntakeField.Name)
-                } else {
-                    null
-                },
-                descriptionField =
-                if (desc.text.isBlank() && hasNameBeenSet) {
-                    IntakeUIError.RequiredButEmpty(IntakeField.Description)
-                } else {
-                    null
-                },
-            )
+    override val nameValidation: StateFlow<ValidatedFieldInput?> =
+        _nameField.map {
+            val name = it.text
+            if (name.isBlank() && hasNameBeenSet) {
+                ValidatedFieldInput(name, IntakeError.RequiredField)
+            } else {
+                null
+            }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = IntakeFormErrors(),
+            initialValue = null,
+        )
+
+    private var _descriptionField = MutableStateFlow(TextFieldValue())
+    override val descriptionField = _descriptionField.asStateFlow()
+
+    override val descriptionValidation: StateFlow<ValidatedFieldInput?> =
+        _descriptionField.map {
+            val description = it.text
+            if (description.isBlank() && hasDescriptionBeenSet) {
+                ValidatedFieldInput(description, IntakeError.RequiredField)
+            } else {
+                null
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = null,
         )
 
     override fun fetchCurrentItem(id: Long) {
