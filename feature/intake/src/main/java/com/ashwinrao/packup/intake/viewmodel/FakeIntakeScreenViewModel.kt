@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeIntakeScreenViewModel : IntakeScreenViewModel {
     override val currentItem: StateFlow<Item?> = MutableStateFlow(null)
-    override val nameField: StateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
-    override val nameValidation: StateFlow<ValidatedFieldInput?> = MutableStateFlow(null)
-    override val descriptionField: StateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
-    override val descriptionValidation: StateFlow<ValidatedFieldInput?> = MutableStateFlow(null)
+    override val selectedName: StateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    override val validatedName: StateFlow<ValidatedFieldInput> = MutableStateFlow(ValidatedFieldInput())
+    override val selectedDescription: StateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    override val validatedDescription: StateFlow<ValidatedFieldInput> = MutableStateFlow(ValidatedFieldInput())
 
     override fun updateName(new: TextFieldValue) {}
 

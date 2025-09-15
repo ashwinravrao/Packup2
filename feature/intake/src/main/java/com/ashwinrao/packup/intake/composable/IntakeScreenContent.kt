@@ -4,7 +4,6 @@
 
 package com.ashwinrao.packup.intake.composable
 
-import android.R.attr.value
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,11 +35,11 @@ import com.ashwinrao.packup.intake.viewmodel.IntakeScreenViewModel
 
 @Composable
 fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenViewModel, previewImageUri: Uri?) {
-    val nameFieldValue by viewmodel.nameField.collectAsStateWithLifecycle()
-    val descriptionFieldValue by viewmodel.descriptionField.collectAsStateWithLifecycle()
+    val selectedName by viewmodel.selectedName.collectAsStateWithLifecycle()
+    val selectedDescription by viewmodel.selectedDescription.collectAsStateWithLifecycle()
 
-    val nameValidation by viewmodel.nameValidation.collectAsStateWithLifecycle()
-    val descriptionValidation by viewmodel.descriptionValidation.collectAsStateWithLifecycle()
+    val validatedName by viewmodel.validatedName.collectAsStateWithLifecycle()
+    val validatedDescription by viewmodel.validatedDescription.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -48,8 +47,8 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
     ) {
         ItemImagePreview(
             modifier =
-            Modifier
-                .fillMaxWidth(),
+                Modifier
+                    .fillMaxWidth(),
             uri = previewImageUri,
         )
 
@@ -69,7 +68,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             label = { Text(text = "Name *") },
             shape = RoundedCornerShape(8.dp),
             trailingIcon = {
-                if (nameFieldValue.text.isNotBlank()) {
+                if (selectedName.text.isNotBlank()) {
                     IconButton(
                         onClick = {
                             viewmodel.updateName(TextFieldValue())
@@ -83,8 +82,8 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
                     }
                 }
             },
-            isError = nameValidation?.isError ?: false,
-            value = nameFieldValue,
+            isError = !validatedName.isValid,
+            value = selectedName,
             onValueChange = viewmodel::updateName,
         )
 
@@ -96,8 +95,8 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             shape = RoundedCornerShape(8.dp),
             minLines = 4,
             maxLines = 4,
-            isError = descriptionValidation?.isError ?: false,
-            value = descriptionFieldValue,
+            isError = !validatedDescription.isValid,
+            value = selectedDescription,
             onValueChange = viewmodel::updateDescription,
         )
     }
@@ -110,9 +109,9 @@ private fun IntakeScreenContentPreview() {
         Scaffold { contentPadding ->
             IntakeScreen(
                 modifier =
-                Modifier
-                    .padding(contentPadding)
-                    .fillMaxSize(),
+                    Modifier
+                        .padding(contentPadding)
+                        .fillMaxSize(),
                 itemImageUri = null,
                 onEscape = {},
             )

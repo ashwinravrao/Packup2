@@ -15,6 +15,8 @@ import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
+import com.ashwinrao.packup.intake.FieldHygienist
+import com.ashwinrao.packup.intake.model.IntakeField
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,46 +35,51 @@ constructor(
     private val ucDiscardItem: DiscardItemUseCase,
     private val ucGetItem: GetItemUseCase,
     private val ucCreateDraftItem: CreateDraftItemUseCase,
+    private val hygienist: FieldHygienist,
 ) : ViewModel(),
     IntakeScreenViewModel {
-
-    private var hasNameBeenSet: Boolean = false
-    private var hasDescriptionBeenSet: Boolean = false
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
-    private var _nameField = MutableStateFlow(TextFieldValue())
-    override val nameField = _nameField.asStateFlow()
+    private var _selectedName = MutableStateFlow(TextFieldValue())
+    override val selectedName = _selectedName.asStateFlow()
 
-    override val nameValidation: StateFlow<ValidatedFieldInput?> =
-        _nameField.map {
-            val name = it.text
-            if (name.isBlank() && hasNameBeenSet) {
-                ValidatedFieldInput(name, FieldError.RequiredButAbsent)
-            } else {
-                null
-            }
+    override val validatedName: StateFlow<ValidatedFieldInput> =
+        _selectedName.map {
+            ValidatedFieldInput(
+                input = it.text,
+                error =
+                    if (it.text.isBlank() && hygienist.isDirty(IntakeField.Name)) {
+                        FieldError.RequiredButAbsent
+                    } else {
+                        null
+                    },
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = null,
+            initialValue = ValidatedFieldInput(),
         )
 
-    private var _descriptionField = MutableStateFlow(TextFieldValue())
-    override val descriptionField = _descriptionField.asStateFlow()
+    private var _selectedDescription = MutableStateFlow(TextFieldValue())
+    override val selectedDescription = _selectedDescription.asStateFlow()
 
-    override val descriptionValidation: StateFlow<ValidatedFieldInput?> =
-        _descriptionField.map {
+    override val validatedDescription: StateFlow<ValidatedFieldInput> =
+        _selectedDescription.map {
             val description = it.text
-            if (description.isBlank() && hasDescriptionBeenSet) {
-                ValidatedFieldInput(description, FieldError.RequiredButAbsent)
-            } else {
-                null
-            }
+            ValidatedFieldInput(
+                input = description,
+                error =
+                    if (description.isBlank() && hygienist.isDirty(IntakeField.Description)) {
+                        FieldError.RequiredButAbsent
+                    } else {
+                        null
+                    },
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = null,
+            initialValue = ValidatedFieldInput(),
         )
 
     override fun fetchCurrentItem(id: Long) {
@@ -102,12 +109,12 @@ constructor(
     }
 
     override fun updateName(new: TextFieldValue) {
-        _nameField.value = new
-        hasNameBeenSet = true
+        _selectedName.value = new
+        hygienist.markDirty(IntakeField.Name)
     }
 
     override fun updateDescription(new: TextFieldValue) {
-        _descriptionField.value = new
-        hasDescriptionBeenSet = true
+        _selectedDescription.value = new
+        hygienist.markDirty(IntakeField.Description)
     }
 }
