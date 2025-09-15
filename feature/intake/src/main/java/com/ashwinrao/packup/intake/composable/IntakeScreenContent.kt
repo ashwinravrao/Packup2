@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ashwinrao.packup.domain.model.IntakeError
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.intake.IntakeScreen
 import com.ashwinrao.packup.intake.viewmodel.IntakeScreenViewModel
@@ -84,7 +83,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
                     }
                 }
             },
-            isError = nameValidation?.error is IntakeError.RequiredField,
+            isError = nameValidation?.isError ?: false,
             value = nameFieldValue,
             onValueChange = viewmodel::updateName,
         )
@@ -97,7 +96,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             shape = RoundedCornerShape(8.dp),
             minLines = 4,
             maxLines = 4,
-            isError = descriptionValidation?.error is IntakeError.RequiredField,
+            isError = descriptionValidation?.isError ?: false,
             value = descriptionFieldValue,
             onValueChange = viewmodel::updateDescription,
         )

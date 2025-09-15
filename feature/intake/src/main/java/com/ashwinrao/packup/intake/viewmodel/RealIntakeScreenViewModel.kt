@@ -8,7 +8,7 @@ import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ashwinrao.packup.domain.model.IntakeError
+import com.ashwinrao.packup.domain.model.FieldError
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.model.ValidatedFieldInput
 import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
@@ -48,7 +48,7 @@ constructor(
         _nameField.map {
             val name = it.text
             if (name.isBlank() && hasNameBeenSet) {
-                ValidatedFieldInput(name, IntakeError.RequiredField)
+                ValidatedFieldInput(name, FieldError.RequiredButAbsent)
             } else {
                 null
             }
@@ -65,7 +65,7 @@ constructor(
         _descriptionField.map {
             val description = it.text
             if (description.isBlank() && hasDescriptionBeenSet) {
-                ValidatedFieldInput(description, IntakeError.RequiredField)
+                ValidatedFieldInput(description, FieldError.RequiredButAbsent)
             } else {
                 null
             }

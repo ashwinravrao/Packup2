@@ -4,4 +4,7 @@
 
 package com.ashwinrao.packup.domain.model
 
-data class ValidatedFieldInput(val input: String = "", val error: IntakeError? = null)
+data class ValidatedFieldInput(val input: String = "", val error: FieldError? = null) {
+    val isError: Boolean
+        get() = error in FieldError.allErrors
+}
