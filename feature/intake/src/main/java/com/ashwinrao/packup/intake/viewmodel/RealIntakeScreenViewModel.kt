@@ -15,7 +15,7 @@ import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
 import com.ashwinrao.packup.domain.usecase.ValidateFieldUseCase
-import com.ashwinrao.packup.intake.FieldMarker
+import com.ashwinrao.packup.intake.FieldInspector
 import com.ashwinrao.packup.intake.model.IntakeField
 import com.ashwinrao.packup.intake.toDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +40,7 @@ constructor(
     private val ucGetItem: GetItemUseCase,
     private val ucCreateDraftItem: CreateDraftItemUseCase,
     private val ucValidateField: ValidateFieldUseCase,
-    private val fieldMarker: FieldMarker,
+    private val inspector: FieldInspector,
 ) : ViewModel(),
     IntakeScreenViewModel {
     private var _currentItem = MutableStateFlow<Item?>(null)
@@ -52,7 +52,7 @@ constructor(
     override val validatedName: StateFlow<ValidatedFieldInput> =
         _selectedName.mapLatest {
             val name = it.text
-            val dirty = fieldMarker.isFieldDirty(IntakeField.Name)
+            val dirty = inspector.isDirty(IntakeField.Name)
             ValidatedFieldInput(
                 input = name,
                 error =
@@ -71,7 +71,7 @@ constructor(
     override val validatedDescription: StateFlow<ValidatedFieldInput> =
         _selectedDescription.mapLatest {
             val description = it.text
-            val dirty = fieldMarker.isFieldDirty(IntakeField.Description)
+            val dirty = inspector.isDirty(IntakeField.Description)
             ValidatedFieldInput(
                 input = description,
                 error =
@@ -89,13 +89,9 @@ constructor(
             validatedName,
             validatedDescription
         ) { name, description ->
-            val isNameDirty = fieldMarker.isFieldDirty(IntakeField.Name)
-            val isDescriptionDirty = fieldMarker.isFieldDirty(IntakeField.Description)
-            if (isNameDirty && isDescriptionDirty) {
-                name.isValid && description.isValid
-            } else {
-                false
-            }
+            val requiredFields = IntakeField.entries.toList() // this could change, consider lifting
+            val allDirty = inspector.areRequiredFieldsDirty(requiredFields)
+            if (allDirty) name.isValid && description.isValid else false
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -129,12 +125,12 @@ constructor(
     }
 
     override fun updateName(new: TextFieldValue) {
+        inspector.markAsDirty(IntakeField.Name)
         _selectedName.value = new
-        fieldMarker.markAsDirty(IntakeField.Name)
     }
 
     override fun updateDescription(new: TextFieldValue) {
+        inspector.markAsDirty(IntakeField.Description)
         _selectedDescription.value = new
-        fieldMarker.markAsDirty(IntakeField.Description)
     }
 }
