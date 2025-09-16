@@ -80,7 +80,7 @@ constructor(
             _selectedName,
             isNameFieldDirty
         ) { name, dirty ->
-            val input = name.text
+            val input = name.text.trim()
             ValidatedFieldInput(
                 input = input,
                 error =
@@ -101,7 +101,7 @@ constructor(
             _selectedDescription,
             isDescriptionFieldDirty
         ) { description, dirty ->
-            val input = description.text
+            val input = description.text.trim()
             ValidatedFieldInput(
                 input = input,
                 error =
