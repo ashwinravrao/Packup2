@@ -89,9 +89,9 @@ constructor(
             validatedName,
             validatedDescription
         ) { name, description ->
-            val requiredFields = IntakeField.entries.toList() // this could change, consider lifting
-            val allDirty = inspector.areRequiredFieldsDirty(requiredFields)
-            if (allDirty) name.isValid && description.isValid else false
+            inspector.areRequiredFieldsDirty
+                && name.isValid
+                && description.isValid
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,

@@ -15,8 +15,8 @@ import javax.inject.Inject
 class FieldInspector @Inject constructor() {
     private var fields = mutableSetOf<IntakeField>()
 
-    fun areRequiredFieldsDirty(required: Collection<IntakeField>): Boolean =
-        fields.containsAll(required)
+    val areRequiredFieldsDirty: Boolean
+        get() = fields.containsAll(IntakeField.REQUIRED)
 
     fun isDirty(field: IntakeField) = field in fields
 
