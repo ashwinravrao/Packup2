@@ -32,7 +32,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
@@ -48,12 +50,17 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
     val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
     var isSearchBarExpanded by rememberSaveable { mutableStateOf(false) }
 
-    val viewModel =
-        getViewModelForInspectionMode(FakeMainScreenViewModel()) {
-            hiltViewModel<RealMainScreenViewModel>()
-        }
+    val viewModel = getViewModelForInspectionMode(
+        fake = FakeMainScreenViewModel(),
+        real = { hiltViewModel<RealMainScreenViewModel>() }
+    )
 
     val items by viewModel.items.collectAsStateWithLifecycle()
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.fetchItems()
+        onPauseOrDispose {}
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
