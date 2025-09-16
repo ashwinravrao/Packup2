@@ -8,25 +8,28 @@ import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ashwinrao.packup.domain.model.FieldError
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.model.ValidatedFieldInput
 import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
-import com.ashwinrao.packup.intake.FieldHygienist
+import com.ashwinrao.packup.domain.usecase.ValidateFieldUseCase
+import com.ashwinrao.packup.intake.FieldMarker
 import com.ashwinrao.packup.intake.model.IntakeField
+import com.ashwinrao.packup.intake.toDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class RealIntakeScreenViewModel
 @Inject
@@ -35,7 +38,8 @@ constructor(
     private val ucDiscardItem: DiscardItemUseCase,
     private val ucGetItem: GetItemUseCase,
     private val ucCreateDraftItem: CreateDraftItemUseCase,
-    private val hygienist: FieldHygienist,
+    private val ucValidateField: ValidateFieldUseCase,
+    private val fieldMarker: FieldMarker,
 ) : ViewModel(),
     IntakeScreenViewModel {
     private var _currentItem = MutableStateFlow<Item?>(null)
@@ -45,15 +49,16 @@ constructor(
     override val selectedName = _selectedName.asStateFlow()
 
     override val validatedName: StateFlow<ValidatedFieldInput> =
-        _selectedName.map {
+        _selectedName.mapLatest {
+            val name = it.text
+            val dirty = fieldMarker.isFieldDirty(IntakeField.Name)
             ValidatedFieldInput(
-                input = it.text,
+                input = name,
                 error =
-                    if (it.text.isBlank() && hygienist.isDirty(IntakeField.Name)) {
-                        FieldError.RequiredButAbsent
-                    } else {
-                        null
-                    },
+                    if (dirty)
+                        ucValidateField(input = name, field = IntakeField.Name.toDomain())
+                    else
+                        null,
             )
         }.stateIn(
             scope = viewModelScope,
@@ -65,16 +70,16 @@ constructor(
     override val selectedDescription = _selectedDescription.asStateFlow()
 
     override val validatedDescription: StateFlow<ValidatedFieldInput> =
-        _selectedDescription.map {
+        _selectedDescription.mapLatest {
             val description = it.text
+            val isFieldDirty = fieldMarker.isFieldDirty(IntakeField.Description)
             ValidatedFieldInput(
                 input = description,
                 error =
-                    if (description.isBlank() && hygienist.isDirty(IntakeField.Description)) {
-                        FieldError.RequiredButAbsent
-                    } else {
-                        null
-                    },
+                    if (isFieldDirty)
+                        ucValidateField(input = description, field = IntakeField.Description.toDomain())
+                    else
+                        null,
             )
         }.stateIn(
             scope = viewModelScope,
@@ -110,11 +115,11 @@ constructor(
 
     override fun updateName(new: TextFieldValue) {
         _selectedName.value = new
-        hygienist.markDirty(IntakeField.Name)
+        fieldMarker.markAsDirty(IntakeField.Name)
     }
 
     override fun updateDescription(new: TextFieldValue) {
         _selectedDescription.value = new
-        hygienist.markDirty(IntakeField.Description)
+        fieldMarker.markAsDirty(IntakeField.Description)
     }
 }

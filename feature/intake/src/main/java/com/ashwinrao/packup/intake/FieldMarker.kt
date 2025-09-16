@@ -5,10 +5,12 @@
 package com.ashwinrao.packup.intake
 
 import com.ashwinrao.packup.intake.model.IntakeField
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-class FieldHygienist @Inject constructor() {
+@ViewModelScoped
+class FieldMarker @Inject constructor() {
     private var fields = mutableSetOf<IntakeField>()
-    fun isDirty(field: IntakeField) = field in fields
-    fun markDirty(field: IntakeField) = fields.add(field)
+    fun isFieldDirty(field: IntakeField) = field in fields
+    fun markAsDirty(field: IntakeField) = fields.add(field)
 }
