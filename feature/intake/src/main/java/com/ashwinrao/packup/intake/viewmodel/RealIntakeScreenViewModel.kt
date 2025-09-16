@@ -15,7 +15,7 @@ import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
 import com.ashwinrao.packup.domain.usecase.ValidateFieldUseCase
-import com.ashwinrao.packup.intake.FieldInspector
+import com.ashwinrao.packup.intake.DirtyDesignator
 import com.ashwinrao.packup.intake.model.IntakeField
 import com.ashwinrao.packup.intake.toDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,23 +39,46 @@ constructor(
     private val ucGetItem: GetItemUseCase,
     private val ucCreateDraftItem: CreateDraftItemUseCase,
     private val ucValidateField: ValidateFieldUseCase,
-    private val inspector: FieldInspector,
+    private val designator: DirtyDesignator,
 ) : ViewModel(),
     IntakeScreenViewModel {
     private var _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
+    private val isNameFieldDirty =
+        designator.isNameFieldDirty.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = false
+        )
+
+    private val isDescriptionFieldDirty =
+        designator.isDescriptionFieldDirty.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = false
+        )
+
+    private val areRequiredFieldsDirty =
+        designator.areRequiredFieldsDirty.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = false
+        )
+
     private var _selectedName = MutableStateFlow(TextFieldValue())
     override val selectedName = _selectedName.asStateFlow()
 
     override val validatedName: StateFlow<ValidatedFieldInput> =
-        _selectedName.mapLatest {
-            val name = it.text
-            val dirty = inspector.isDirty(IntakeField.Name)
+        combine(
+            _selectedName,
+            isNameFieldDirty
+        ) { name, dirty ->
+            val input = name.text
             ValidatedFieldInput(
-                input = name,
+                input = input,
                 error =
-                    if (dirty) ucValidateField(input = name, field = IntakeField.Name.toDomain())
+                    if (dirty) ucValidateField(input = input, field = IntakeField.Name.toDomain())
                     else null,
             )
         }.stateIn(
@@ -69,13 +91,15 @@ constructor(
     override val selectedDescription = _selectedDescription.asStateFlow()
 
     override val validatedDescription: StateFlow<ValidatedFieldInput> =
-        _selectedDescription.mapLatest {
-            val description = it.text
-            val dirty = inspector.isDirty(IntakeField.Description)
+        combine(
+            _selectedDescription,
+            isDescriptionFieldDirty
+        ) { description, dirty ->
+            val input = description.text
             ValidatedFieldInput(
-                input = description,
+                input = input,
                 error =
-                    if (dirty) ucValidateField(input = description, field = IntakeField.Description.toDomain())
+                    if (dirty) ucValidateField(input = input, field = IntakeField.Description.toDomain())
                     else null,
             )
         }.stateIn(
@@ -87,11 +111,10 @@ constructor(
     override val isFormValid: StateFlow<Boolean> =
         combine(
             validatedName,
-            validatedDescription
-        ) { name, description ->
-            inspector.areRequiredFieldsDirty
-                && name.isValid
-                && description.isValid
+            validatedDescription,
+            areRequiredFieldsDirty,
+        ) { name, description, requiredDirty ->
+            requiredDirty && name.isValid && description.isValid
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -125,12 +148,12 @@ constructor(
     }
 
     override fun updateName(new: TextFieldValue) {
-        inspector.markAsDirty(IntakeField.Name)
+        designator.designateDirty(IntakeField.Name)
         _selectedName.value = new
     }
 
     override fun updateDescription(new: TextFieldValue) {
-        inspector.markAsDirty(IntakeField.Description)
+        designator.designateDirty(IntakeField.Description)
         _selectedDescription.value = new
     }
 }

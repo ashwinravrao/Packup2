@@ -6,10 +6,13 @@ package com.ashwinrao.packup.domain.usecase
 
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.repository.ItemRepository
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-class SaveItemUseCase
-@Inject
-constructor(private val repo: ItemRepository) {
-    suspend operator fun invoke(item: Item): Long = repo.saveItem(item)
+@ViewModelScoped
+class SaveItemUseCase @Inject constructor(
+    private val repo: ItemRepository
+) {
+    suspend operator fun invoke(item: Item): Long =
+        repo.saveItem(item)
 }
