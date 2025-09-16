@@ -128,27 +128,7 @@ constructor(
         )
 
     init {
-
-        val nameUpdates = validatedName
-            .filter { it.isValid }
-            .map { IntakeField.Name to it.input }
-            .distinctUntilChanged()
-
-        val descriptionUpdates = validatedDescription
-            .filter { it.isValid }
-            .map { IntakeField.Description to it.input }
-            .distinctUntilChanged()
-
-        merge(nameUpdates, descriptionUpdates)
-            .onEach { (field, value) ->
-                _currentItem.value?.let { current ->
-                    _currentItem.value = when (field) {
-                        IntakeField.Name -> current.copy(name = value)
-                        IntakeField.Description -> current.copy(description = value)
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
+        persistValidChangesToItem()
     }
 
     override fun fetchCurrentItem(id: Long) {
@@ -185,5 +165,28 @@ constructor(
     override fun updateDescription(new: TextFieldValue) {
         designator.designateDirty(IntakeField.Description)
         _selectedDescription.value = new
+    }
+
+    private fun persistValidChangesToItem() {
+        val nameUpdates = validatedName
+            .filter { it.isValid }
+            .map { IntakeField.Name to it.input }
+            .distinctUntilChanged()
+
+        val descriptionUpdates = validatedDescription
+            .filter { it.isValid }
+            .map { IntakeField.Description to it.input }
+            .distinctUntilChanged()
+
+        merge(nameUpdates, descriptionUpdates)
+            .onEach { (field, value) ->
+                _currentItem.value?.let { current ->
+                    _currentItem.value = when (field) {
+                        IntakeField.Name -> current.copy(name = value)
+                        IntakeField.Description -> current.copy(description = value)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 }
