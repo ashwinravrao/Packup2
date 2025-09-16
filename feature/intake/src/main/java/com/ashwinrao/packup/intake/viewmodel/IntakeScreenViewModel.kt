@@ -21,6 +21,8 @@ interface IntakeScreenViewModel {
 
     val validatedDescription: StateFlow<ValidatedFieldInput>
 
+    val isFormValid: StateFlow<Boolean>
+
     fun updateName(new: TextFieldValue)
 
     fun updateDescription(new: TextFieldValue)

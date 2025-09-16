@@ -53,7 +53,7 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
         viewmodel.newItemAsDraft(itemImageUri)
     }
 
-    val currentItem by viewmodel.currentItem.collectAsStateWithLifecycle()
+    val isFormValid by viewmodel.isFormValid.collectAsStateWithLifecycle()
 
     // lock orientation until i can support landscape, tbd
     DisposableEffect(Unit) {
@@ -69,6 +69,7 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
         topBar = {
             IntakeScreenTopBar(
                 modifier = Modifier.fillMaxWidth(),
+                isSaveEnabled = isFormValid,
                 onDiscard = {
                     viewmodel.discardCurrentItem()
                     onEscape()

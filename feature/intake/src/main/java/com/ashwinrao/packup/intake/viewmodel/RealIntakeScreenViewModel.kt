@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -55,10 +56,8 @@ constructor(
             ValidatedFieldInput(
                 input = name,
                 error =
-                    if (dirty)
-                        ucValidateField(input = name, field = IntakeField.Name.toDomain())
-                    else
-                        null,
+                    if (dirty) ucValidateField(input = name, field = IntakeField.Name.toDomain())
+                    else null,
             )
         }.stateIn(
             scope = viewModelScope,
@@ -72,19 +71,35 @@ constructor(
     override val validatedDescription: StateFlow<ValidatedFieldInput> =
         _selectedDescription.mapLatest {
             val description = it.text
-            val isFieldDirty = fieldMarker.isFieldDirty(IntakeField.Description)
+            val dirty = fieldMarker.isFieldDirty(IntakeField.Description)
             ValidatedFieldInput(
                 input = description,
                 error =
-                    if (isFieldDirty)
-                        ucValidateField(input = description, field = IntakeField.Description.toDomain())
-                    else
-                        null,
+                    if (dirty) ucValidateField(input = description, field = IntakeField.Description.toDomain())
+                    else null,
             )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = ValidatedFieldInput(),
+        )
+
+    override val isFormValid: StateFlow<Boolean> =
+        combine(
+            validatedName,
+            validatedDescription
+        ) { name, description ->
+            val isNameDirty = fieldMarker.isFieldDirty(IntakeField.Name)
+            val isDescriptionDirty = fieldMarker.isFieldDirty(IntakeField.Description)
+            if (isNameDirty && isDescriptionDirty) {
+                name.isValid && description.isValid
+            } else {
+                false
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = false
         )
 
     override fun fetchCurrentItem(id: Long) {

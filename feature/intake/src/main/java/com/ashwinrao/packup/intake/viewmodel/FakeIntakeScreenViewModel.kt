@@ -17,6 +17,7 @@ class FakeIntakeScreenViewModel : IntakeScreenViewModel {
     override val validatedName: StateFlow<ValidatedFieldInput> = MutableStateFlow(ValidatedFieldInput())
     override val selectedDescription: StateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     override val validatedDescription: StateFlow<ValidatedFieldInput> = MutableStateFlow(ValidatedFieldInput())
+    override val isFormValid: StateFlow<Boolean> = MutableStateFlow(true)
 
     override fun updateName(new: TextFieldValue) {}
 

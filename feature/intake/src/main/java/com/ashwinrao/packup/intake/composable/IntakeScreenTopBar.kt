@@ -31,6 +31,7 @@ import com.ashwinrao.packup.intake.R
 @Composable
 fun IntakeScreenTopBar(
     modifier: Modifier = Modifier,
+    isSaveEnabled: Boolean,
     onDiscard: () -> Unit,
     onSave: () -> Unit,
     onEscape: () -> Unit,
@@ -52,6 +53,7 @@ fun IntakeScreenTopBar(
             Button(
                 onClick = onSave,
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
+                enabled = isSaveEnabled,
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_done_outlined),
@@ -77,6 +79,7 @@ fun IntakeScreenTopBar(
 private fun IntakeScreenTopBarPreview() {
     PackupTheme {
         IntakeScreenTopBar(
+            isSaveEnabled = true,
             onDiscard = {},
             onSave = {},
             onEscape = {},
