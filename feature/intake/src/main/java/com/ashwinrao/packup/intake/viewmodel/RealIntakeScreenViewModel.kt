@@ -26,6 +26,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -120,6 +126,30 @@ constructor(
             started = SharingStarted.Lazily,
             initialValue = false
         )
+
+    init {
+
+        val nameUpdates = validatedName
+            .filter { it.isValid }
+            .map { IntakeField.Name to it.input }
+            .distinctUntilChanged()
+
+        val descriptionUpdates = validatedDescription
+            .filter { it.isValid }
+            .map { IntakeField.Description to it.input }
+            .distinctUntilChanged()
+
+        merge(nameUpdates, descriptionUpdates)
+            .onEach { (field, value) ->
+                _currentItem.value?.let { current ->
+                    _currentItem.value = when (field) {
+                        IntakeField.Name -> current.copy(name = value)
+                        IntakeField.Description -> current.copy(description = value)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     override fun fetchCurrentItem(id: Long) {
         viewModelScope.launch {

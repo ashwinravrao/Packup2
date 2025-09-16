@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 @ViewModelScoped
 class DirtyDesignator @Inject constructor() {
-    private var _fields = MutableStateFlow<Set<IntakeField>>(setOf())
+    private var _fields = MutableStateFlow<Set<IntakeField>>(emptySet())
 
     val areRequiredFieldsDirty: Flow<Boolean> =
         check(IntakeField.REQUIRED)
