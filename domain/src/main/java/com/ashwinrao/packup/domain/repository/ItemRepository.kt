@@ -5,9 +5,10 @@
 package com.ashwinrao.packup.domain.repository
 
 import com.ashwinrao.packup.domain.model.Item
+import kotlinx.coroutines.flow.Flow
 
 interface ItemRepository {
-    suspend fun getItems(): List<Item>
+    fun getItems(): Flow<List<Item>>
 
     suspend fun getItem(id: Long): Item
 

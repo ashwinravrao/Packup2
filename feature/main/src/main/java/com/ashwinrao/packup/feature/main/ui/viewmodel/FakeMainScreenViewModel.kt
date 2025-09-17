@@ -10,6 +10,4 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeMainScreenViewModel : MainScreenViewModel {
     override val items: StateFlow<List<Item>> = MutableStateFlow(emptyList())
-
-    override fun fetchItems() {}
 }

@@ -9,13 +9,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import com.ashwinrao.packup.data.local.model.ItemEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
 @Dao
 @Singleton
 interface ItemDao {
     @Query("SELECT * FROM items")
-    suspend fun getItems(): List<ItemEntity>
+    fun getItems(): Flow<List<ItemEntity>>
 
     @Query("SELECT * FROM items WHERE id = :id")
     suspend fun getItem(id: Long): ItemEntity

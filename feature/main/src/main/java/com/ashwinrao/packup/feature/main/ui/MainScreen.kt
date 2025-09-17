@@ -57,11 +57,6 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
 
     val items by viewModel.items.collectAsStateWithLifecycle()
 
-    LifecycleResumeEffect(Unit) {
-        viewModel.fetchItems()
-        onPauseOrDispose {}
-    }
-
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
