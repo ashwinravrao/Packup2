@@ -25,13 +25,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,21 +55,21 @@ constructor(
         designator.isNameFieldDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = false
+            initialValue = false,
         )
 
     private val isDescriptionFieldDirty =
         designator.isDescriptionFieldDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = false
+            initialValue = false,
         )
 
     private val areRequiredFieldsDirty =
         designator.areRequiredFieldsDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = false
+            initialValue = false,
         )
 
     private var _selectedName = MutableStateFlow(TextFieldValue())
@@ -78,7 +78,7 @@ constructor(
     override val validatedName: StateFlow<ValidatedFieldInput> =
         combine(
             _selectedName,
-            isNameFieldDirty
+            isNameFieldDirty,
         ) { name, dirty ->
             val input = name.text.trim()
             ValidatedFieldInput(
@@ -99,7 +99,7 @@ constructor(
     override val validatedDescription: StateFlow<ValidatedFieldInput> =
         combine(
             _selectedDescription,
-            isDescriptionFieldDirty
+            isDescriptionFieldDirty,
         ) { description, dirty ->
             val input = description.text.trim()
             ValidatedFieldInput(
@@ -124,7 +124,7 @@ constructor(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = false
+            initialValue = false,
         )
 
     init {
@@ -158,13 +158,22 @@ constructor(
     }
 
     override fun updateName(new: TextFieldValue) {
-        designator.designateDirty(IntakeField.Name)
+        designateDirty(IntakeField.Name)
         _selectedName.value = new
     }
 
     override fun updateDescription(new: TextFieldValue) {
-        designator.designateDirty(IntakeField.Description)
+        designateDirty(IntakeField.Description)
         _selectedDescription.value = new
+    }
+
+    private fun designateDirty(field: IntakeField) {
+        val isFieldAlreadyDirty = when (field) {
+            IntakeField.Name -> isNameFieldDirty.value
+            IntakeField.Description -> isDescriptionFieldDirty.value
+        }
+        if (!isFieldAlreadyDirty) designator.designateDirty(field)
+        else return
     }
 
     private fun persistValidChangesToItem() {
