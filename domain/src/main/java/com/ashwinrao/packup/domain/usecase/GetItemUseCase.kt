@@ -10,9 +10,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class GetItemUseCase @Inject constructor(
-    private val repo: ItemRepository
-) {
-    suspend operator fun invoke(id: Long): Item =
-        repo.getItem(id)
+class GetItemUseCase @Inject constructor(private val repo: ItemRepository) {
+    suspend operator fun invoke(id: Long): Item = repo.getItem(id)
 }

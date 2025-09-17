@@ -10,9 +10,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class SaveItemUseCase @Inject constructor(
-    private val repo: ItemRepository
-) {
-    suspend operator fun invoke(item: Item): Long =
-        repo.saveItem(item)
+class SaveItemUseCase @Inject constructor(private val repo: ItemRepository) {
+    suspend operator fun invoke(item: Item): Long = repo.saveItem(item)
 }

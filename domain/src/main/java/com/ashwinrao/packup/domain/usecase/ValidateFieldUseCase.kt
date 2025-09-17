@@ -16,8 +16,7 @@ class ValidateFieldUseCase @Inject constructor() {
         FormInputField.Description -> validateDescription(input)
     }
 
-    private fun validateName(input: String): FieldError? =
-        if (input.isBlank()) FieldError.RequiredButAbsent else null
+    private fun validateName(input: String): FieldError? = if (input.isBlank()) FieldError.RequiredButAbsent else null
 
     private fun validateDescription(input: String): FieldError? =
         if (input.isBlank()) FieldError.RequiredButAbsent else null

@@ -10,11 +10,8 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class DiscardItemUseCase @Inject constructor(
-    private val repo: ItemRepository
-) {
-    suspend operator fun invoke(item: Item) =
-        repo.discardItem(
-            id = item.id
+class DiscardItemUseCase @Inject constructor(private val repo: ItemRepository) {
+    suspend operator fun invoke(item: Item) = repo.discardItem(
+            id = item.id,
         )
 }

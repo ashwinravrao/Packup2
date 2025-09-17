@@ -84,8 +84,11 @@ constructor(
             ValidatedFieldInput(
                 input = input,
                 error =
-                    if (dirty) ucValidateField(input = input, field = IntakeField.Name.toDomain())
-                    else null,
+                    if (dirty) {
+                        ucValidateField(input = input, field = IntakeField.Name.toDomain())
+                    } else {
+                        null
+                    },
             )
         }.stateIn(
             scope = viewModelScope,
@@ -105,8 +108,11 @@ constructor(
             ValidatedFieldInput(
                 input = input,
                 error =
-                    if (dirty) ucValidateField(input = input, field = IntakeField.Description.toDomain())
-                    else null,
+                    if (dirty) {
+                        ucValidateField(input = input, field = IntakeField.Description.toDomain())
+                    } else {
+                        null
+                    },
             )
         }.stateIn(
             scope = viewModelScope,
@@ -172,8 +178,11 @@ constructor(
             IntakeField.Name -> isNameFieldDirty.value
             IntakeField.Description -> isDescriptionFieldDirty.value
         }
-        if (!isFieldAlreadyDirty) designator.designateDirty(field)
-        else return
+        if (!isFieldAlreadyDirty) {
+            designator.designateDirty(field)
+        } else {
+            return
+        }
     }
 
     private fun persistValidChangesToItem() {

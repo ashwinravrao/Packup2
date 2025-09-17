@@ -6,7 +6,8 @@ package com.ashwinrao.packup.intake.model
 
 enum class IntakeField {
     Name,
-    Description;
+    Description,
+    ;
 
     companion object {
         val REQUIRED: Set<IntakeField> = setOf(Name, Description)

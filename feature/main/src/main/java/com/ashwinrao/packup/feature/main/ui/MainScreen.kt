@@ -32,7 +32,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ashwinrao.packup.feature.common.R
@@ -52,7 +51,7 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
 
     val viewModel = getViewModelForInspectionMode(
         fake = FakeMainScreenViewModel(),
-        real = { hiltViewModel<RealMainScreenViewModel>() }
+        real = { hiltViewModel<RealMainScreenViewModel>() },
     )
 
     val items by viewModel.items.collectAsStateWithLifecycle()

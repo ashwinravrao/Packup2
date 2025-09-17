@@ -9,9 +9,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class GetItemsUseCase @Inject constructor(
-    private val repository: ItemRepository
-) {
-    operator fun invoke() =
-        repository.getItems()
+class GetItemsUseCase @Inject constructor(private val repository: ItemRepository) {
+    operator fun invoke() = repository.getItems()
 }

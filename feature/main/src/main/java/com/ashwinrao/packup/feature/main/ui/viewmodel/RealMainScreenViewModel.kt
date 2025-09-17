@@ -15,13 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class RealMainScreenViewModel
 @Inject
-constructor(
-    getItemsUseCase: GetItemsUseCase,
-) : ViewModel(),
+constructor(getItemsUseCase: GetItemsUseCase) :
+    ViewModel(),
     MainScreenViewModel {
     override val items = getItemsUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = emptyList()
+        initialValue = emptyList(),
     )
 }

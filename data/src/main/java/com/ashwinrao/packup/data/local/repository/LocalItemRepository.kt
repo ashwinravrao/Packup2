@@ -16,8 +16,7 @@ import javax.inject.Singleton
 class LocalItemRepository
 @Inject
 constructor(private val itemDao: ItemDao) : ItemRepository {
-    override fun getItems() =
-        itemDao.getItems().map { entities ->
+    override fun getItems() = itemDao.getItems().map { entities ->
             entities.map { entity ->
                 entity.toDomainModel()
             }

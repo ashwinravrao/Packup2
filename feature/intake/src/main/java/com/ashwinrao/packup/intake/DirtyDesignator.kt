@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 @ViewModelScoped
 class DirtyDesignator @Inject constructor() {
-    private var _fields = MutableStateFlow<Set<IntakeField>>(emptySet())
+    private var dirtyFields = MutableStateFlow<Set<IntakeField>>(emptySet())
 
     val areRequiredFieldsDirty: Flow<Boolean> =
         check(IntakeField.REQUIRED)
@@ -30,12 +30,10 @@ class DirtyDesignator @Inject constructor() {
         check(IntakeField.Description)
 
     fun designateDirty(vararg fields: IntakeField) {
-        _fields.value = _fields.value + fields
+        dirtyFields.value = dirtyFields.value + fields
     }
 
-    private fun check(field: IntakeField): Flow<Boolean> =
-        _fields.map { it.contains(field) }
+    private fun check(field: IntakeField): Flow<Boolean> = dirtyFields.map { it.contains(field) }
 
-    private fun check(fields: Collection<IntakeField>): Flow<Boolean> =
-        _fields.map { it.containsAll(fields) }
+    private fun check(fields: Collection<IntakeField>): Flow<Boolean> = dirtyFields.map { it.containsAll(fields) }
 }
