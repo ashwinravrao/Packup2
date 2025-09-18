@@ -6,7 +6,6 @@ package com.ashwinrao.packup.navigation
 
 import android.net.Uri
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.EaseInQuart
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
@@ -67,11 +66,7 @@ fun NavGraphBuilder.intakeScreen(onExit: () -> Unit) {
         enterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec =
-                tween(
-                    durationMillis = 400,
-                    easing = EaseInQuart,
-                ),
+                animationSpec = tween(durationMillis = 300),
             )
         },
         exitTransition = {
