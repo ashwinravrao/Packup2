@@ -37,34 +37,33 @@ fun CaptureButton(modifier: Modifier = Modifier, enabled: Boolean = true, onClic
     val animatedButtonScale by animateFloatAsState(
         targetValue = if (isPressed) 0.9f else 1f,
         animationSpec =
-        tween(
-            durationMillis = 150,
-            easing = EaseInOut,
-        ),
+            tween(
+                durationMillis = 150,
+                easing = EaseInOut,
+            ),
         label = "animated capture button scale",
     )
 
     Box(
         modifier =
-        modifier
-            .size(84.dp)
-            .scale(animatedButtonScale)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        haptics.performHapticFeedback(HapticFeedbackType.Confirm)
-                        isPressed = true
-                        val released = tryAwaitRelease()
-                        isPressed = false
-                        // only trigger onClick if the press was properly released
-                        // mimics Pixel camera app behavior on click + drag
-                        if (released && enabled) onClick()
-                    },
-                )
-            },
+            modifier
+                .size(84.dp)
+                .scale(animatedButtonScale)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            haptics.performHapticFeedback(HapticFeedbackType.Confirm)
+                            isPressed = true
+                            val released = tryAwaitRelease()
+                            isPressed = false
+                            // only trigger onClick if the press was properly released
+                            // mimics Pixel camera app behavior on click + drag
+                            if (released && enabled) onClick()
+                        },
+                    )
+                },
         contentAlignment = Alignment.Center,
     ) {
-        // canvas for finer control of the outer ring shape
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawCircle(
                 color = Color.White.copy(alpha = 0.9f),
@@ -72,10 +71,8 @@ fun CaptureButton(modifier: Modifier = Modifier, enabled: Boolean = true, onClic
                 style = Stroke(width = 4.dp.toPx()),
             )
         }
-
         Box(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .size(64.dp)
                 .background(
                     color = Color.White,

@@ -8,4 +8,8 @@
     <string name="camera_permission_button_title_hard_denial">Open Settings</string>
     <string name="camera_permission_explanation_soft_denial">To add new items to your inventory, we need camera access to take photos of them. This makes it quick and easy to catalog your belongings.</string>
     <string name="camera_permission_button_title_soft_denial">Allow Access</string>
+    <string name="content_description_retake_button">retake the photo</string>
+  <string name="retake_button_text">RETAKE</string>
+  <string name="content_description_save_button">proceed with the captured image</string>
+  <string name="save_button_text">SAVE</string>
 </resources>

@@ -23,9 +23,9 @@ import com.google.accompanist.permissions.shouldShowRationale
 @Composable
 fun RequestPermission(
     permission: String,
-    onRequested: @Composable () -> Unit,
     onGranted: @Composable () -> Unit,
-    onSoftDenied: @Composable (onRetry: () -> Unit) -> Unit,
+    onRequested: @Composable () -> Unit,
+    onSoftDenied: @Composable (retry: () -> Unit) -> Unit,
     onHardDenied: @Composable (openSettings: () -> Unit) -> Unit,
 ) {
     val context = LocalContext.current
@@ -45,7 +45,7 @@ fun RequestPermission(
             state.launchPermissionRequest()
             requestAgain.value = false
         }
-        onPauseOrDispose { /* do nothing */ }
+        onPauseOrDispose {}
     }
 
     val isGranted = state.status.isGranted
@@ -74,11 +74,10 @@ fun RequestPermission(
 }
 
 private fun openAppInAndroidSettings(context: Context): Boolean {
-    val intent =
-        Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", context.packageName, null),
-        )
+    val intent = Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        Uri.fromParts("package", context.packageName, null),
+    )
     context.startActivity(intent)
     return true
 }

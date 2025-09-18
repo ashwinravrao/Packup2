@@ -33,5 +33,5 @@ interface IntakeScreenViewModel {
 
     fun saveCurrentItem()
 
-    fun newItemAsDraft(uri: Uri?)
+    fun startItemDraft(imageUri: Uri?)
 }

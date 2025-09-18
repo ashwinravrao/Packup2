@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,7 +56,7 @@ fun ItemImagePreview(modifier: Modifier = Modifier, uri: Uri? = null) {
                     .data(uri)
                     .crossfade(true)
                     .build(),
-                contentDescription = "Captured Item Image",
+                contentDescription = stringResource(R.string.content_description_asyncimage),
                 contentScale = ContentScale.Crop,
                 modifier =
                 Modifier
@@ -73,7 +74,7 @@ fun ItemImagePreview(modifier: Modifier = Modifier, uri: Uri? = null) {
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_coat_stand),
-                    contentDescription = "Placeholder",
+                    contentDescription = stringResource(R.string.content_description_asyncimage_placeholder),
                     tint = Color.Gray,
                 )
             }

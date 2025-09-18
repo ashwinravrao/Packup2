@@ -11,40 +11,4 @@ data class Item(
     val description: String?,
     val locationType: ItemLocationType?,
     val itemType: ItemType? = ItemType.Draft,
-) {
-    companion object {
-        fun roughDraft(photoUri: String?) = Item(
-            name = null,
-            photoUri = photoUri,
-            description = null,
-            locationType = null,
-            itemType = ItemType.Draft,
-        )
-
-        val generated: List<Item>
-            get() =
-                listOf(
-                    Item(
-                        id = 0L,
-                        name = "Spoon",
-                        photoUri = "",
-                        description = "An eating utensil that is concave.",
-                        locationType = ItemLocationType.Room(name = "Kitchen"),
-                    ),
-                    Item(
-                        id = 1L,
-                        name = "Fork",
-                        photoUri = "",
-                        description = "An eating utensil that is pointy.",
-                        locationType = ItemLocationType.Room(name = "Kitchen"),
-                    ),
-                    Item(
-                        id = 2L,
-                        name = "Knife",
-                        photoUri = "",
-                        description = "An eating utensil that is sharp and serrated.",
-                        locationType = ItemLocationType.Room(name = "Kitchen"),
-                    ),
-                )
-    }
-}
+)

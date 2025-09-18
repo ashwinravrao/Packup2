@@ -5,4 +5,10 @@
 <resources>
   <string name="generic_intake_error">There was a problem with one or more input fields. Fix the issue and try again.</string>
   <string name="required_intake_error">This field is required! Please enter a value to continue.</string>
+  <string name="content_description_asyncimage">Snapshot of the captured image</string>
+  <string name="content_description_asyncimage_placeholder">Placeholder image for a missing item photo</string>
+  <string name="text_intake_screen_tagline">Tell us about your item</string>
+  <string name="hint_name_field">Name *</string>
+  <string name="hint_description_field">Description *</string>
+  <string name="content_description_name_field_clear_button">Clear the current input</string>
 </resources>

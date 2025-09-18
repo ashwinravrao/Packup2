@@ -38,21 +38,17 @@ fun CameraScreen(modifier: Modifier = Modifier, onExit: (uri: Uri?) -> Unit) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val cameraController: LifecycleCameraController =
-        remember {
-            LifecycleCameraController(context)
-        }
+    val controller: LifecycleCameraController =
+        remember { LifecycleCameraController(context) }
 
     LaunchedEffect(Unit) {
         delay(350) // wait til nav transition completes
-        cameraController.setEnabledUseCases(IMAGE_CAPTURE)
-        cameraController.bindToLifecycle(lifecycleOwner)
+        controller.setEnabledUseCases(IMAGE_CAPTURE)
+        controller.bindToLifecycle(lifecycleOwner)
     }
 
-    DisposableEffect(cameraController) {
-        onDispose {
-            cameraController.unbind()
-        }
+    DisposableEffect(controller) {
+        onDispose { controller.unbind() }
     }
 
     RequestPermission(
@@ -61,30 +57,30 @@ fun CameraScreen(modifier: Modifier = Modifier, onExit: (uri: Uri?) -> Unit) {
             Surface(
                 modifier = modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background,
-                content = { /* intentional */ },
+                content = { /* any content will be covered by a system permissions dialog */ },
             )
         },
         onGranted = {
             CameraScreenContent(
                 modifier = modifier,
-                cameraController = cameraController,
+                controller = controller,
                 onCapturePhoto = onExit,
             )
         },
-        onSoftDenied = { onRetry ->
+        onSoftDenied = { retry ->
             PermissionExplanation(
                 modifier = modifier,
+                onClick = retry,
+                buttonText = R.string.camera_permission_button_title_soft_denial,
                 explanation = R.string.camera_permission_explanation_soft_denial,
-                buttonTitle = R.string.camera_permission_button_title_soft_denial,
-                action = onRetry,
             )
         },
-        onHardDenied = { onGoToSettings ->
+        onHardDenied = { openSettings ->
             PermissionExplanation(
                 modifier = modifier,
+                onClick = openSettings,
+                buttonText = R.string.camera_permission_button_title_hard_denial,
                 explanation = R.string.camera_permission_explanation_hard_denial,
-                buttonTitle = R.string.camera_permission_button_title_hard_denial,
-                action = onGoToSettings,
             )
         },
     )

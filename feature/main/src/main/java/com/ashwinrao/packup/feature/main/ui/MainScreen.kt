@@ -11,6 +11,7 @@
 package com.ashwinrao.packup.feature.main.ui
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -38,14 +39,14 @@ import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionM
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.main.ui.composable.BottomBar
 import com.ashwinrao.packup.feature.main.ui.composable.Dashboard
-import com.ashwinrao.packup.feature.main.ui.composable.TopSearchBar
+import com.ashwinrao.packup.feature.main.ui.composable.SearchBar
 import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
 import com.ashwinrao.packup.feature.main.ui.viewmodel.RealMainScreenViewModel
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
-    val searchBarTextFieldState: TextFieldState = remember { TextFieldState() }
+fun MainScreen(modifier: Modifier = Modifier, navigateToCamera: () -> Unit) {
+    val searchBarState: TextFieldState = remember { TextFieldState() }
     var isSearchBarExpanded by rememberSaveable { mutableStateOf(false) }
 
     val viewModel = getViewModelForInspectionMode(
@@ -53,17 +54,17 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
         real = { hiltViewModel<RealMainScreenViewModel>() },
     )
 
-    val items by viewModel.items.collectAsStateWithLifecycle()
+    val allItems by viewModel.items.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopSearchBar(
-                textFieldState = searchBarTextFieldState,
-                results = emptyList(),
+            SearchBar(
+                state = searchBarState,
+                results = allItems, // originally `emptyList()`, todo: replace with filtering logic
                 isExpanded = isSearchBarExpanded,
                 onExpanded = { isSearchBarExpanded = it },
-                onTextSearched = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
+                onTextSearch = { /* ? */ },
                 hint = stringResource(R.string.hint_main_screen_top_search_bar),
             )
         },
@@ -74,30 +75,31 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
                 exit = slideOutVertically { it },
             ) {
                 BottomBar(
-                    onCameraFabClicked = onNavigateToCamera,
+                    onCameraClicked = navigateToCamera,
                 )
             }
         },
-    ) { innerPadding ->
+    ) { padding ->
         AnimatedVisibility(
             visible = !isSearchBarExpanded,
             enter = fadeIn(animationSpec = tween(durationMillis = 300)),
             exit = fadeOut(animationSpec = tween(durationMillis = 150)),
         ) {
             Dashboard(
-                modifier = Modifier.padding(innerPadding),
-                items = items,
+                modifier = Modifier.padding(padding),
+                items = allItems,
             )
         }
     }
 }
 
 @Composable
-@Preview(device = PIXEL_7_PRO, showSystemUi = true)
+@Preview(device = PIXEL_7_PRO, uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun MainScreenPreview() {
     PackupTheme {
         MainScreen(
-            onNavigateToCamera = {},
+            modifier = Modifier.fillMaxSize(),
+            navigateToCamera = {},
         )
     }
 }

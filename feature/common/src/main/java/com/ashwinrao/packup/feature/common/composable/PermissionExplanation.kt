@@ -29,9 +29,9 @@ import com.ashwinrao.packup.feature.common.theme.PackupTheme
 @Composable
 fun PermissionExplanation(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    @StringRes buttonText: Int,
     @StringRes explanation: Int,
-    @StringRes buttonTitle: Int,
-    action: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -53,9 +53,9 @@ fun PermissionExplanation(
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp),
-                onClick = action,
+                onClick = onClick,
             ) {
-                Text(text = stringResource(id = buttonTitle))
+                Text(text = stringResource(id = buttonText))
             }
         }
     }
@@ -67,8 +67,8 @@ private fun PermissionExplanationPreview() {
     PackupTheme {
         PermissionExplanation(
             explanation = R.string.permission_explanation_preview_message,
-            buttonTitle = R.string.permission_explanation_preview_button,
-            action = {},
+            buttonText = R.string.permission_explanation_preview_button,
+            onClick = {},
         )
     }
 }

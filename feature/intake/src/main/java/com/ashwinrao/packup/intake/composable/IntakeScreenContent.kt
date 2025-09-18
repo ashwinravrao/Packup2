@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.intake.IntakeScreen
+import com.ashwinrao.packup.intake.R
 import com.ashwinrao.packup.intake.viewmodel.IntakeScreenViewModel
 
 @Composable
@@ -55,7 +57,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
         Text(
             modifier = Modifier
                 .padding(start = 24.dp, top = 48.dp, bottom = 8.dp),
-            text = "Tell us about your item",
+            text = stringResource(R.string.text_intake_screen_tagline),
             textAlign = TextAlign.Start,
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
@@ -65,7 +67,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             modifier = Modifier
                 .padding(start = 20.dp, end = 20.dp)
                 .fillMaxWidth(),
-            label = { Text(text = "Name *") },
+            label = { Text(text = stringResource(R.string.hint_name_field)) },
             shape = RoundedCornerShape(8.dp),
             trailingIcon = {
                 if (selectedName.text.isNotBlank()) {
@@ -77,7 +79,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
                         Icon(
                             modifier = Modifier.scale(0.75f),
                             imageVector = Icons.Filled.Close,
-                            contentDescription = "escape button",
+                            contentDescription = stringResource(R.string.content_description_name_field_clear_button),
                         )
                     }
                 }
@@ -91,7 +93,7 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             modifier = Modifier
                 .padding(start = 20.dp, end = 20.dp, top = 10.dp)
                 .fillMaxWidth(),
-            label = { Text(text = "Description *") },
+            label = { Text(text = stringResource(R.string.hint_description_field)) },
             shape = RoundedCornerShape(8.dp),
             minLines = 4,
             maxLines = 4,

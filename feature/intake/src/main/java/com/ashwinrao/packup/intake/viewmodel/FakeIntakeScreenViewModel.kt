@@ -29,5 +29,5 @@ class FakeIntakeScreenViewModel : IntakeScreenViewModel {
 
     override fun saveCurrentItem() {}
 
-    override fun newItemAsDraft(uri: Uri?) {}
+    override fun startItemDraft(imageUri: Uri?) {}
 }

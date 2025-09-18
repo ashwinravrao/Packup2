@@ -61,32 +61,32 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
 
     Card(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = {
-                    isExpanded = !isExpanded
-                    haptic.performHapticFeedback(HapticFeedbackType.GestureEnd)
-                },
-            ),
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = {
+                        isExpanded = !isExpanded
+                        haptic.performHapticFeedback(HapticFeedbackType.GestureEnd)
+                    },
+                ),
         elevation =
-        CardDefaults.cardElevation(
-            defaultElevation = 4.dp,
-        ),
+            CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
     ) {
         Column(
             modifier =
-            Modifier
-                .animateContentSize(
-                    animationSpec =
-                    spring(
-                        dampingRatio = 0.65f,
-                        stiffness = 800f,
+                Modifier
+                    .animateContentSize(
+                        animationSpec =
+                            spring(
+                                dampingRatio = 0.65f,
+                                stiffness = 800f,
+                            ),
                     ),
-                ),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -95,10 +95,10 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
             ) {
                 Column(
                     modifier =
-                    Modifier
-                        .weight(1f)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                        .padding(all = 16.dp),
+                        Modifier
+                            .weight(1f)
+                            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                            .padding(all = 16.dp),
                 ) {
                     item.name?.let { name ->
                         Text(
@@ -122,10 +122,10 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
 
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(color = primaryDark.copy(alpha = 0.3f))
-                        .padding(all = 16.dp),
+                        Modifier
+                            .fillMaxSize()
+                            .background(color = primaryDark.copy(alpha = 0.3f))
+                            .padding(all = 16.dp),
                 ) {
                     item.description?.let { description ->
                         Text(
@@ -154,8 +154,31 @@ private fun ExpandingItemCardPreview() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            val items = Item.generated
-            ExpandingItemCard(modifier = Modifier, items[0])
+            val generated: List<Item> = listOf(
+                Item(
+                    id = 0L,
+                    name = "Spoon",
+                    photoUri = "",
+                    description = "An eating utensil that is concave.",
+                    locationType = ItemLocationType.Room(name = "Kitchen"),
+                ),
+                Item(
+                    id = 1L,
+                    name = "Fork",
+                    photoUri = "",
+                    description = "An eating utensil that is pointy.",
+                    locationType = ItemLocationType.Room(name = "Kitchen"),
+                ),
+                Item(
+                    id = 2L,
+                    name = "Knife",
+                    photoUri = "",
+                    description = "An eating utensil that is sharp and serrated.",
+                    locationType = ItemLocationType.Room(name = "Kitchen"),
+                ),
+            )
+            ExpandingItemCard(modifier = Modifier, generated[0])
+
         }
     }
 }

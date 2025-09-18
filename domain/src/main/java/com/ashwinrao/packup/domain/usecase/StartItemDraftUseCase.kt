@@ -10,9 +10,14 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class CreateDraftItemUseCase @Inject constructor() {
+class StartItemDraftUseCase @Inject constructor() {
     operator fun invoke(uri: Uri?): Item {
         val uriString = uri?.let { Uri.encode(uri.toString()) }
-        return Item.roughDraft(uriString)
+        return Item(
+            name = null,
+            description = null,
+            locationType = null,
+            photoUri = uriString,
+        )
     }
 }

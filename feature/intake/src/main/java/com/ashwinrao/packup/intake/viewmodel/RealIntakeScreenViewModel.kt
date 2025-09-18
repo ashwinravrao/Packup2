@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.model.ValidatedFieldInput
-import com.ashwinrao.packup.domain.usecase.CreateDraftItemUseCase
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
 import com.ashwinrao.packup.domain.usecase.GetItemUseCase
 import com.ashwinrao.packup.domain.usecase.SaveItemUseCase
+import com.ashwinrao.packup.domain.usecase.StartItemDraftUseCase
 import com.ashwinrao.packup.domain.usecase.ValidateFieldUseCase
 import com.ashwinrao.packup.intake.DirtyDesignator
 import com.ashwinrao.packup.intake.model.IntakeField
@@ -43,7 +43,7 @@ constructor(
     private val ucSaveItem: SaveItemUseCase,
     private val ucDiscardItem: DiscardItemUseCase,
     private val ucGetItem: GetItemUseCase,
-    private val ucCreateDraftItem: CreateDraftItemUseCase,
+    private val ucStartItemDraft: StartItemDraftUseCase,
     private val ucValidateField: ValidateFieldUseCase,
     private val designator: DirtyDesignator,
 ) : ViewModel(),
@@ -65,7 +65,7 @@ constructor(
             initialValue = false,
         )
 
-    private val areRequiredFieldsDirty =
+    private val areAllRequiredFieldsDirty =
         designator.areRequiredFieldsDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -79,13 +79,16 @@ constructor(
         combine(
             _selectedName,
             isNameFieldDirty,
-        ) { name, dirty ->
+        ) { name, isFieldDirty ->
             val input = name.text.trim()
             ValidatedFieldInput(
                 input = input,
                 error =
-                    if (dirty) {
-                        ucValidateField(input = input, field = IntakeField.Name.toDomain())
+                    if (isFieldDirty) {
+                        ucValidateField(
+                            input = input,
+                            field = IntakeField.Name.toDomain(),
+                        )
                     } else {
                         null
                     },
@@ -103,13 +106,16 @@ constructor(
         combine(
             _selectedDescription,
             isDescriptionFieldDirty,
-        ) { description, dirty ->
+        ) { description, isFieldDirty ->
             val input = description.text.trim()
             ValidatedFieldInput(
                 input = input,
                 error =
-                    if (dirty) {
-                        ucValidateField(input = input, field = IntakeField.Description.toDomain())
+                    if (isFieldDirty) {
+                        ucValidateField(
+                            input = input,
+                            field = IntakeField.Description.toDomain(),
+                        )
                     } else {
                         null
                     },
@@ -124,9 +130,9 @@ constructor(
         combine(
             validatedName,
             validatedDescription,
-            areRequiredFieldsDirty,
-        ) { name, description, requiredDirty ->
-            requiredDirty && name.isValid && description.isValid
+            areAllRequiredFieldsDirty,
+        ) { name, description, areDirty ->
+            areDirty && name.isValid && description.isValid
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -134,7 +140,7 @@ constructor(
         )
 
     init {
-        persistValidChangesToItem()
+        observeValidInputAndUpdateCurrentItem()
     }
 
     override fun fetchCurrentItem(id: Long) {
@@ -152,6 +158,7 @@ constructor(
     }
 
     override fun saveCurrentItem() {
+        // todo: a final "manual" validation as a fail-safe, gating the following save code
         _currentItem.value?.let { item ->
             viewModelScope.launch {
                 ucSaveItem(item)
@@ -159,8 +166,8 @@ constructor(
         }
     }
 
-    override fun newItemAsDraft(uri: Uri?) {
-        _currentItem.value = ucCreateDraftItem(uri)
+    override fun startItemDraft(imageUri: Uri?) {
+        _currentItem.value = ucStartItemDraft(imageUri)
     }
 
     override fun updateName(new: TextFieldValue) {
@@ -185,18 +192,18 @@ constructor(
         }
     }
 
-    private fun persistValidChangesToItem() {
-        val nameUpdates = validatedName
+    private fun observeValidInputAndUpdateCurrentItem() {
+        val newValidName = validatedName
             .filter { it.isValid }
             .map { IntakeField.Name to it.input }
             .distinctUntilChanged()
 
-        val descriptionUpdates = validatedDescription
+        val newValidDescription = validatedDescription
             .filter { it.isValid }
             .map { IntakeField.Description to it.input }
             .distinctUntilChanged()
 
-        merge(nameUpdates, descriptionUpdates)
+        merge(newValidName, newValidDescription)
             .onEach { (field, value) ->
                 _currentItem.value?.let { current ->
                     _currentItem.value = when (field) {

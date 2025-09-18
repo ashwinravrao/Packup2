@@ -47,7 +47,7 @@ private const val VIEWFINDER_RATIO = 3f / 4f
 @Composable
 fun CameraScreenContent(
     modifier: Modifier = Modifier,
-    cameraController: LifecycleCameraController,
+    controller: LifecycleCameraController,
     onCapturePhoto: (Uri?) -> Unit,
 ) {
     val context = LocalContext.current
@@ -74,7 +74,7 @@ fun CameraScreenContent(
             ViewFinderContent(
                 modifier = modifier,
                 context = context,
-                cameraController = cameraController,
+                cameraController = controller,
                 onCaptured = {
                     imageProxy = it
                     toggleContentMode()

@@ -6,9 +6,9 @@ package com.ashwinrao.packup.feature.main.ui.composable
 
 import android.text.TextUtils.replace
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.TextFieldState
@@ -37,12 +37,12 @@ import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun TopSearchBar(
+fun SearchBar(
     modifier: Modifier = Modifier,
-    textFieldState: TextFieldState,
+    state: TextFieldState,
     isVoiceSearchEnabled: Boolean = true,
-    onVoiceSearchToggled: () -> Unit = {},
-    onTextSearched: (String) -> Unit = {},
+    onVoiceSearch: () -> Unit = {},
+    onTextSearch: (String) -> Unit = {},
     isExpanded: Boolean = false,
     onExpanded: (Boolean) -> Unit,
     results: List<Item>,
@@ -61,17 +61,17 @@ fun TopSearchBar(
             .padding(all = animatedPadding),
         inputField = {
             SearchBarDefaults.InputField(
-                query = textFieldState.text.toString(),
-                onQueryChange = { textFieldState.edit { replace(0, length, it) } },
+                query = state.text.toString(),
+                onQueryChange = { state.edit { replace(0, length, it) } },
                 onSearch = {
-                    onTextSearched(textFieldState.text.toString())
+                    onTextSearch(state.text.toString())
                     onExpanded(false)
                 },
                 leadingIcon = {
                     if (isExpanded) {
                         IconButton(
                             onClick = {
-                                textFieldState.clearText()
+                                state.clearText()
                                 onExpanded(false)
                             },
                         ) {
@@ -90,7 +90,7 @@ fun TopSearchBar(
                 trailingIcon = {
                     if (isVoiceSearchEnabled) {
                         IconButton(
-                            onClick = onVoiceSearchToggled,
+                            onClick = onVoiceSearch,
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_mic),
@@ -108,8 +108,16 @@ fun TopSearchBar(
         expanded = isExpanded,
         onExpandedChange = onExpanded,
     ) {
-        Box {
-            // todo: show search results
+        LazyColumn(modifier = modifier) {
+            items(results.size) { index ->
+                val item = results[index]
+                item.name?.let {
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = it,
+                    )
+                }
+            }
         }
     }
 }
@@ -121,10 +129,10 @@ private fun TopSearchBarPreview() {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     PackupTheme {
-        TopSearchBar(
-            textFieldState = state,
-            onTextSearched = {},
-            onVoiceSearchToggled = {},
+        SearchBar(
+            state = state,
+            onTextSearch = {},
+            onVoiceSearch = {},
             isExpanded = isExpanded,
             onExpanded = { isExpanded = it },
             results = emptyList(),

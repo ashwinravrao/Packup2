@@ -29,7 +29,7 @@ import com.ashwinrao.packup.intake.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IntakeScreenTopBar(
+fun IntakeTopBar(
     modifier: Modifier = Modifier,
     isSaveEnabled: Boolean,
     onDiscard: () -> Unit,
@@ -78,7 +78,7 @@ fun IntakeScreenTopBar(
 @Composable
 private fun IntakeScreenTopBarPreview() {
     PackupTheme {
-        IntakeScreenTopBar(
+        IntakeTopBar(
             isSaveEnabled = true,
             onDiscard = {},
             onSave = {},

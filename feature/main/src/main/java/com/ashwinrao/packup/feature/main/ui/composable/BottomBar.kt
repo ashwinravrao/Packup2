@@ -30,35 +30,35 @@ import com.ashwinrao.packup.feature.common.R as CommonR
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
-    isFilterActionEnabled: Boolean = true,
-    isSortActionEnabled: Boolean = true,
-    isSettingsActionEnabled: Boolean = true,
-    onSettingsActionClicked: () -> Unit = {},
-    onFilterActionClicked: () -> Unit = {},
-    onSortActionClicked: () -> Unit = {},
-    onCameraFabClicked: () -> Unit,
+    isFilterEnabled: Boolean = true,
+    isSortEnabled: Boolean = true,
+    isSettingsEnabled: Boolean = true,
+    onSettingsClicked: () -> Unit = {},
+    onFilterClicked: () -> Unit = {},
+    onSortClicked: () -> Unit = {},
+    onCameraClicked: () -> Unit = {},
 ) {
     BottomAppBar(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp),
         actions = {
             BottomBarAction(
-                enabled = isSettingsActionEnabled,
-                onActionClicked = onSettingsActionClicked,
+                enabled = isSettingsEnabled,
+                onClick = onSettingsClicked,
                 icon = R.drawable.ic_settings_outlined,
                 contentDescription = CommonR.string.settings_button_description,
             )
 
             BottomBarAction(
-                enabled = isFilterActionEnabled,
-                onActionClicked = onFilterActionClicked,
+                enabled = isFilterEnabled,
+                onClick = onFilterClicked,
                 icon = R.drawable.ic_filter,
                 contentDescription = R.string.action_filter_content_description,
             )
 
             BottomBarAction(
-                enabled = isSortActionEnabled,
-                onActionClicked = onSortActionClicked,
+                enabled = isSortEnabled,
+                onClick = onSortClicked,
                 icon = R.drawable.ic_sort,
                 contentDescription = R.string.action_sort_content_description,
             )
@@ -68,7 +68,7 @@ fun BottomBar(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(top = 8.dp),
-                onClick = onCameraFabClicked,
+                onClick = onCameraClicked,
                 containerColor = MaterialTheme.colorScheme.primary,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
             ) {
@@ -85,14 +85,14 @@ fun BottomBar(
 private fun BottomBarAction(
     modifier: Modifier = Modifier,
     enabled: Boolean,
-    onActionClicked: () -> Unit,
+    onClick: () -> Unit,
     @DrawableRes icon: Int,
     @StringRes contentDescription: Int,
 ) {
     if (enabled) {
         IconButton(
             modifier = modifier.padding(top = 8.dp, start = 10.dp),
-            onClick = onActionClicked,
+            onClick = onClick,
         ) {
             Icon(
                 painter = painterResource(icon),
@@ -104,10 +104,6 @@ private fun BottomBarAction(
 
 @Composable
 @Preview(device = PIXEL_7_PRO, showSystemUi = true)
-private fun BottomNavBarPreview() {
-    PackupTheme {
-        BottomBar(
-            onCameraFabClicked = {},
-        )
-    }
+private fun BottomBarPreview() {
+    PackupTheme { BottomBar() }
 }

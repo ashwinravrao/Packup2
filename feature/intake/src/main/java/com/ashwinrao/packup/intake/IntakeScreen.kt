@@ -33,7 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.intake.composable.IntakeScreenContent
-import com.ashwinrao.packup.intake.composable.IntakeScreenTopBar
+import com.ashwinrao.packup.intake.composable.IntakeTopBar
 import com.ashwinrao.packup.intake.viewmodel.FakeIntakeScreenViewModel
 import com.ashwinrao.packup.intake.viewmodel.RealIntakeScreenViewModel
 
@@ -50,7 +50,7 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
         )
 
     LaunchedEffect(itemImageUri) {
-        viewmodel.newItemAsDraft(itemImageUri)
+        viewmodel.startItemDraft(itemImageUri)
     }
 
     val isFormValid by viewmodel.isFormValid.collectAsStateWithLifecycle()
@@ -67,7 +67,7 @@ fun IntakeScreen(modifier: Modifier = Modifier, itemImageUri: Uri?, onEscape: ()
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            IntakeScreenTopBar(
+            IntakeTopBar(
                 modifier = Modifier.fillMaxWidth(),
                 isSaveEnabled = isFormValid,
                 onDiscard = {

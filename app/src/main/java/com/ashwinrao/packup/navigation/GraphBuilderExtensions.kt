@@ -22,7 +22,7 @@ import com.ashwinrao.packup.intake.IntakeScreen
 fun NavGraphBuilder.mainScreen(onNavigateToCamera: () -> Unit) {
     composable<NavRoute.MainScreen> {
         MainScreen(
-            onNavigateToCamera = onNavigateToCamera,
+            navigateToCamera = onNavigateToCamera,
         )
     }
 }

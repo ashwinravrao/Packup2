@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,7 +67,7 @@ fun PhotoPreviewButtons(modifier: Modifier = Modifier, onSave: () -> Unit, onRet
                             .fillMaxSize()
                             .weight(1f),
                         painter = painterResource(R.drawable.ic_retake),
-                        contentDescription = "retake button",
+                        contentDescription = stringResource(R.string.content_description_retake_button),
                     )
                     Text(
                         modifier =
@@ -74,7 +75,7 @@ fun PhotoPreviewButtons(modifier: Modifier = Modifier, onSave: () -> Unit, onRet
                             .fillMaxSize()
                             .weight(1f)
                             .padding(top = 8.dp),
-                        text = "RETAKE",
+                        text = stringResource(R.string.retake_button_text),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelSmall,
                     )
@@ -107,7 +108,7 @@ fun PhotoPreviewButtons(modifier: Modifier = Modifier, onSave: () -> Unit, onRet
                             .fillMaxSize()
                             .weight(1f),
                         painter = painterResource(R.drawable.ic_floppy_disk),
-                        contentDescription = "save button",
+                        contentDescription = stringResource(R.string.content_description_save_button),
                     )
                     Text(
                         modifier =
@@ -115,7 +116,7 @@ fun PhotoPreviewButtons(modifier: Modifier = Modifier, onSave: () -> Unit, onRet
                             .fillMaxSize()
                             .weight(1f)
                             .padding(top = 8.dp),
-                        text = "SAVE",
+                        text = stringResource(R.string.save_button_text),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelSmall,
                     )
