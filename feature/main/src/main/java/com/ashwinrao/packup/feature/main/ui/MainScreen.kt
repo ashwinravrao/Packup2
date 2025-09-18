@@ -33,11 +33,10 @@ import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
-import com.ashwinrao.packup.feature.main.ui.composable.BottomNavBar
+import com.ashwinrao.packup.feature.main.ui.composable.BottomBar
 import com.ashwinrao.packup.feature.main.ui.composable.Dashboard
 import com.ashwinrao.packup.feature.main.ui.composable.TopSearchBar
 import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
@@ -61,10 +60,9 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
         topBar = {
             TopSearchBar(
                 textFieldState = searchBarTextFieldState,
-                searchResults = emptyList(),
+                results = emptyList(),
                 isExpanded = isSearchBarExpanded,
                 onExpanded = { isSearchBarExpanded = it },
-                onVoiceSearchToggled = { /* TODO: Figure out how to take in voice input */ },
                 onTextSearched = { /* TODO: Retrieve item from DB/list and display a bottom sheet modal */ },
                 hint = stringResource(R.string.hint_main_screen_top_search_bar),
             )
@@ -75,10 +73,7 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigateToCamera: () -> Unit) {
                 enter = slideInVertically { it },
                 exit = slideOutVertically { it },
             ) {
-                BottomNavBar(
-                    onSettingsClicked = {
-                        /* TODO: Figure out what view to open settings in (ie. bottom sheet? replace grid?) */
-                    },
+                BottomBar(
                     onCameraFabClicked = onNavigateToCamera,
                 )
             }

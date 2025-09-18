@@ -4,6 +4,7 @@
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
+import android.text.TextUtils.replace
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 
@@ -39,11 +41,11 @@ fun TopSearchBar(
     modifier: Modifier = Modifier,
     textFieldState: TextFieldState,
     isVoiceSearchEnabled: Boolean = true,
-    onVoiceSearchToggled: () -> Unit,
-    onTextSearched: (String) -> Unit,
+    onVoiceSearchToggled: () -> Unit = {},
+    onTextSearched: (String) -> Unit = {},
     isExpanded: Boolean = false,
     onExpanded: (Boolean) -> Unit,
-    searchResults: List<String>, // todo: change type?
+    results: List<Item>,
     hint: String = stringResource(R.string.default_search_bar_hint),
 ) {
     // Animate horizontal padding so the bar doesn't jankily widen before expanding
@@ -125,7 +127,7 @@ private fun TopSearchBarPreview() {
             onVoiceSearchToggled = {},
             isExpanded = isExpanded,
             onExpanded = { isExpanded = it },
-            searchResults = emptyList(),
+            results = emptyList(),
             hint = "Describe an item to search...",
         )
     }
