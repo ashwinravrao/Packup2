@@ -4,6 +4,7 @@
 
 package com.ashwinrao.packup.intake.composable
 
+import android.R.attr.contentDescription
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box

@@ -5,4 +5,5 @@
 <resources>
   <string name="action_filter_content_description">Bottom bar action to filter list of items</string>
   <string name="action_sort_content_description">Bottom bar action to sort list of items</string>
+  <string name="thumbnail_image">item image thumbnail</string>
 </resources>

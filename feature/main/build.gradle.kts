@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.coil.compose)
+
     implementation(libs.hilt.runtime)
     implementation(libs.hilt.compose)
 

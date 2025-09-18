@@ -4,6 +4,7 @@
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
+import android.content.res.Configuration
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -47,8 +48,7 @@ import com.ashwinrao.packup.feature.common.theme.primaryDark
 fun Dashboard(modifier: Modifier = Modifier, items: List<Item>) {
     LazyColumn(modifier = modifier) {
         items(items.size) { index ->
-            val item = items[index]
-            ExpandingItemCard(modifier = Modifier, item)
+            ItemCard(item = items[index])
         }
     }
 }
@@ -146,7 +146,7 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
     }
 }
 
-@Preview(device = PIXEL_7_PRO, showSystemUi = true)
+@Preview(device = PIXEL_7_PRO, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun ExpandingItemCardPreview() {
     PackupTheme {
@@ -178,7 +178,6 @@ private fun ExpandingItemCardPreview() {
                 ),
             )
             ExpandingItemCard(modifier = Modifier, generated[0])
-
         }
     }
 }
