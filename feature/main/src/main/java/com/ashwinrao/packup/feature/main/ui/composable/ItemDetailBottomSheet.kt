@@ -7,7 +7,8 @@ package com.ashwinrao.packup.feature.main.ui.composable
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -28,14 +29,17 @@ import com.ashwinrao.packup.feature.main.ui.viewmodel.ItemSelection
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemDetailBottomSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismiss: () -> Unit = {}) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     if (item is ItemSelection.Selected) {
         ModalBottomSheet(
             modifier = modifier,
             onDismissRequest = onDismiss,
             sheetState = sheetState,
         ) {
-            ItemDetailBottomSheetContent(item = item.item)
+            ItemDetailBottomSheetContent(
+                modifier = Modifier.fillMaxHeight(0.90f),
+                item = item.item,
+            )
         }
     }
 }
@@ -46,7 +50,7 @@ fun ItemDetailBottomSheetContent(modifier: Modifier = Modifier, item: Item) {
     Log.d("ItemCard", "decodedUri=$decodedUri")
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
     ) {
         AsyncImage(
             model =
