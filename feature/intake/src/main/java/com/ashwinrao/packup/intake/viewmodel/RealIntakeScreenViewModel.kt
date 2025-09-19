@@ -48,7 +48,7 @@ constructor(
     private val designator: DirtyDesignator,
 ) : ViewModel(),
     IntakeScreenViewModel {
-    private var _currentItem = MutableStateFlow<Item?>(null)
+    private val _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
     private val isNameFieldDirty =
@@ -72,7 +72,7 @@ constructor(
             initialValue = false,
         )
 
-    private var _selectedName = MutableStateFlow(TextFieldValue())
+    private val _selectedName = MutableStateFlow(TextFieldValue())
     override val selectedName = _selectedName.asStateFlow()
 
     override val validatedName: StateFlow<ValidatedFieldInput> =
@@ -99,7 +99,7 @@ constructor(
             initialValue = ValidatedFieldInput(),
         )
 
-    private var _selectedDescription = MutableStateFlow(TextFieldValue())
+    private val _selectedDescription = MutableStateFlow(TextFieldValue())
     override val selectedDescription = _selectedDescription.asStateFlow()
 
     override val validatedDescription: StateFlow<ValidatedFieldInput> =

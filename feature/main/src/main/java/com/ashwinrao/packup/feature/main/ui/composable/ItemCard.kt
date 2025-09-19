@@ -34,14 +34,14 @@ import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.main.R
 
 @Composable
-fun ItemCard(modifier: Modifier = Modifier, item: Item, onClick: () -> Unit = {}) {
+fun ItemCard(modifier: Modifier = Modifier, item: Item, onClick: (Item) -> Unit = {}) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
             .padding(horizontal = 20.dp, vertical = 12.dp),
         shape = RoundedCornerShape(12.dp),
-        onClick = onClick,
+        onClick = { onClick(item) },
     ) {
         val decodedUri = item.photoUri?.let { Uri.decode(it) }?.toUri()
         Log.d("ItemCard", "decodedUri=$decodedUri")

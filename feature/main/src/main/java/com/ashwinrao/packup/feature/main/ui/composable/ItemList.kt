@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import com.ashwinrao.packup.domain.model.Item
 
 @Composable
-fun Dashboard(modifier: Modifier = Modifier, items: List<Item>) {
+fun ItemList(modifier: Modifier = Modifier, items: List<Item>, onItemClick: (Item) -> Unit) {
     LazyColumn(modifier = modifier) {
         items(items.size) { index ->
-            ItemCard(item = items[index])
+            ItemCard(item = items[index], onClick = onItemClick)
         }
     }
 }

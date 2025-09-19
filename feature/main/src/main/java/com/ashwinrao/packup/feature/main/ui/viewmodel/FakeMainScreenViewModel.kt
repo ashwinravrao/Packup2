@@ -10,4 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeMainScreenViewModel : MainScreenViewModel {
     override val items: StateFlow<List<Item>> = MutableStateFlow(emptyList())
+    override val selectedItem: StateFlow<ItemSelection> = MutableStateFlow(ItemSelection.None)
+
+    override fun selectItem(item: Item) {}
+
+    override fun unselectItem() {}
 }

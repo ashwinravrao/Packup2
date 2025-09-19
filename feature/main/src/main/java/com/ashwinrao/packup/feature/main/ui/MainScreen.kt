@@ -18,6 +18,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
@@ -38,7 +39,8 @@ import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.main.ui.composable.BottomBar
-import com.ashwinrao.packup.feature.main.ui.composable.Dashboard
+import com.ashwinrao.packup.feature.main.ui.composable.ItemDetailBottomSheet
+import com.ashwinrao.packup.feature.main.ui.composable.ItemList
 import com.ashwinrao.packup.feature.main.ui.composable.SearchBar
 import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
 import com.ashwinrao.packup.feature.main.ui.viewmodel.RealMainScreenViewModel
@@ -55,6 +57,7 @@ fun MainScreen(modifier: Modifier = Modifier, navigateToCamera: () -> Unit) {
     )
 
     val allItems by viewModel.items.collectAsStateWithLifecycle()
+    val selectedItem by viewModel.selectedItem.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -85,10 +88,17 @@ fun MainScreen(modifier: Modifier = Modifier, navigateToCamera: () -> Unit) {
             enter = fadeIn(animationSpec = tween(durationMillis = 300)),
             exit = fadeOut(animationSpec = tween(durationMillis = 150)),
         ) {
-            Dashboard(
-                modifier = Modifier.padding(padding),
-                items = allItems,
-            )
+            Box(modifier = Modifier.fillMaxSize()) {
+                ItemList(
+                    modifier = Modifier.padding(padding),
+                    items = allItems,
+                    onItemClick = viewModel::selectItem,
+                )
+                ItemDetailBottomSheet(
+                    item = selectedItem,
+                    onDismiss = viewModel::unselectItem,
+                )
+            }
         }
     }
 }
