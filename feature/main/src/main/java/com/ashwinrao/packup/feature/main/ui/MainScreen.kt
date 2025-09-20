@@ -39,7 +39,7 @@ import com.ashwinrao.packup.feature.common.R
 import com.ashwinrao.packup.feature.common.composable.getViewModelForInspectionMode
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.main.ui.composable.BottomBar
-import com.ashwinrao.packup.feature.main.ui.composable.ItemDetailBottomSheet
+import com.ashwinrao.packup.feature.main.ui.composable.ItemDetailSheet
 import com.ashwinrao.packup.feature.main.ui.composable.ItemList
 import com.ashwinrao.packup.feature.main.ui.composable.SearchBar
 import com.ashwinrao.packup.feature.main.ui.viewmodel.FakeMainScreenViewModel
@@ -94,7 +94,7 @@ fun MainScreen(modifier: Modifier = Modifier, navigateToCamera: () -> Unit) {
                     items = allItems,
                     onItemClick = viewModel::selectItem,
                 )
-                ItemDetailBottomSheet(
+                ItemDetailSheet(
                     item = selectedItem,
                     onDismiss = viewModel::unselectItem,
                 )

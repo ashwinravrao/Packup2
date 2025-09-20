@@ -34,12 +34,15 @@ import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.main.R
 
 @Composable
-fun ItemCard(modifier: Modifier = Modifier, item: Item, onClick: (Item) -> Unit = {}) {
+fun ItemCard(modifier: Modifier = Modifier, index: Int, item: Item, onClick: (Item) -> Unit = {}) {
+    val startPadding = if (index % 2 == 0) 0.dp else 8.dp
+    val endPadding = if (index % 2 == 0) 8.dp else 0.dp
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .padding(start = startPadding, end = endPadding, top = 8.dp, bottom = 8.dp),
         shape = RoundedCornerShape(12.dp),
         onClick = { onClick(item) },
     ) {

@@ -28,7 +28,7 @@ import com.ashwinrao.packup.feature.main.ui.viewmodel.ItemSelection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemDetailBottomSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismiss: () -> Unit = {}) {
+fun ItemDetailSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismiss: () -> Unit = {}) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     if (item is ItemSelection.Selected) {
         ModalBottomSheet(
@@ -36,7 +36,7 @@ fun ItemDetailBottomSheet(modifier: Modifier = Modifier, item: ItemSelection, on
             onDismissRequest = onDismiss,
             sheetState = sheetState,
         ) {
-            ItemDetailBottomSheetContent(
+            ItemDetailSheet(
                 modifier = Modifier.fillMaxHeight(0.90f),
                 item = item.item,
             )
@@ -45,9 +45,9 @@ fun ItemDetailBottomSheet(modifier: Modifier = Modifier, item: ItemSelection, on
 }
 
 @Composable
-fun ItemDetailBottomSheetContent(modifier: Modifier = Modifier, item: Item) {
+fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
     val decodedUri = item.photoUri?.let { Uri.decode(it) }?.toUri()
-    Log.d("ItemCard", "decodedUri=$decodedUri")
+    Log.d("ItemDetailBottomSheetContent", "decodedUri=$decodedUri")
 
     Box(
         modifier = modifier.fillMaxWidth(),
