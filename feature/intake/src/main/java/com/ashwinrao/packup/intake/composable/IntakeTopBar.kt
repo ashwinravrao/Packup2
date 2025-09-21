@@ -37,7 +37,7 @@ fun IntakeTopBar(
     onEscape: () -> Unit,
 ) {
     TopAppBar(
-        modifier = modifier.padding(all = 8.dp),
+        modifier = modifier,
         title = { /* no title desired */ },
         actions = {
             FilledIconButton(
@@ -51,6 +51,7 @@ fun IntakeTopBar(
             }
             Spacer(modifier = Modifier.width(8.dp))
             Button(
+                modifier = Modifier.padding(end = 16.dp),
                 onClick = onSave,
                 contentPadding = ButtonDefaults.TextButtonContentPadding,
                 enabled = isSaveEnabled,

@@ -69,7 +69,7 @@ fun BottomBar(
             FloatingActionButton(
                 modifier = Modifier.padding(top = 8.dp),
                 onClick = onCameraClicked,
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.tertiary,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
             ) {
                 Icon(

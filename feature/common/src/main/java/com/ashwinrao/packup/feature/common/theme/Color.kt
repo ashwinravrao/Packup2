@@ -7,14 +7,14 @@ package com.ashwinrao.packup.feature.common.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF4C662B)
-val onPrimaryLight = Color(0xFFFFFFFF)
+val onPrimaryLight = Color(0xFFFFF8E1)
 val primaryContainerLight = Color(0xFFCDEDA3)
 val onPrimaryContainerLight = Color(0xFF354E16)
 val secondaryLight = Color(0xFF586249)
 val onSecondaryLight = Color(0xFFFFFFFF)
 val secondaryContainerLight = Color(0xFFDCE7C8)
 val onSecondaryContainerLight = Color(0xFF404A33)
-val tertiaryLight = Color(0xFF386663)
+val tertiaryLight = Color(0xFF4B382B)
 val onTertiaryLight = Color(0xFFFFFFFF)
 val tertiaryContainerLight = Color(0xFFBCECE7)
 val onTertiaryContainerLight = Color(0xFF1F4E4B)
@@ -22,9 +22,13 @@ val errorLight = Color(0xFFBA1A1A)
 val onErrorLight = Color(0xFFFFFFFF)
 val errorContainerLight = Color(0xFFFFDAD6)
 val onErrorContainerLight = Color(0xFF93000A)
-val backgroundLight = Color(0xFFF9FAEF)
+
+// val backgroundLight = Color(0xFFDCD5CC)
+val backgroundLight = Color(0xFFDCD5CC)
 val onBackgroundLight = Color(0xFF1A1C16)
-val surfaceLight = Color(0xFFF9FAEF)
+
+// val surfaceLight = Color(0xFFDCD5CC)
+val surfaceLight = Color(0xFFF9FAEF) // old
 val onSurfaceLight = Color(0xFF1A1C16)
 val surfaceVariantLight = Color(0xFFE1E4D5)
 val onSurfaceVariantLight = Color(0xFF44483D)

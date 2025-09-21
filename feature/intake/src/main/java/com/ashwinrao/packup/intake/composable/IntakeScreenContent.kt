@@ -4,15 +4,19 @@
 
 package com.ashwinrao.packup.intake.composable
 
+import android.R.attr.end
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
@@ -54,14 +59,25 @@ fun IntakeScreenContent(modifier: Modifier = Modifier, viewmodel: IntakeScreenVi
             uri = previewImageUri,
         )
 
-        Text(
+        Row(
             modifier = Modifier
-                .padding(start = 24.dp, top = 48.dp, bottom = 8.dp),
-            text = stringResource(R.string.text_intake_screen_tagline),
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
-        )
+                .wrapContentSize()
+                .padding(horizontal = 24.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "REQUIRED",
+                textAlign = TextAlign.Start,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
+            )
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp),
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
 
         OutlinedTextField(
             modifier = Modifier
