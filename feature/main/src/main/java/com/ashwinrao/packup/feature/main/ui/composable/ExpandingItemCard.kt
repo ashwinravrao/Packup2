@@ -39,7 +39,6 @@ import androidx.compose.ui.tooling.preview.Devices.PIXEL_7_PRO
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ashwinrao.packup.domain.model.Item
-import com.ashwinrao.packup.domain.model.ItemLocationType
 import com.ashwinrao.packup.feature.common.theme.PackupTheme
 import com.ashwinrao.packup.feature.common.theme.primaryDark
 
@@ -96,13 +95,6 @@ fun ExpandingItemCard(modifier: Modifier = Modifier, item: Item) {
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                         )
-                        (item.locationType as? ItemLocationType.Room)?.let { room ->
-                            Text(
-                                text = room.name,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
                     }
                 }
             }
@@ -150,21 +142,18 @@ private fun ExpandingItemCardPreview() {
                     name = "Spoon",
                     photoUri = "",
                     description = "An eating utensil that is concave.",
-                    locationType = ItemLocationType.Room(name = "Kitchen"),
                 ),
                 Item(
                     id = 1L,
                     name = "Fork",
                     photoUri = "",
                     description = "An eating utensil that is pointy.",
-                    locationType = ItemLocationType.Room(name = "Kitchen"),
                 ),
                 Item(
                     id = 2L,
                     name = "Knife",
                     photoUri = "",
                     description = "An eating utensil that is sharp and serrated.",
-                    locationType = ItemLocationType.Room(name = "Kitchen"),
                 ),
             )
             ExpandingItemCard(modifier = Modifier, generated[0])

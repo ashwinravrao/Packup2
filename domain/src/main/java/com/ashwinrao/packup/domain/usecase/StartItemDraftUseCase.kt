@@ -16,7 +16,6 @@ class StartItemDraftUseCase @Inject constructor() {
         return Item(
             name = null,
             description = null,
-            locationType = null,
             photoUri = uriString,
         )
     }

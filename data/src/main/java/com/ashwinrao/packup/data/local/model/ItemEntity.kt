@@ -6,8 +6,7 @@ package com.ashwinrao.packup.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ashwinrao.packup.domain.model.ItemLocationType
-import com.ashwinrao.packup.domain.model.ItemType
+import com.ashwinrao.packup.domain.model.CompositionState
 
 @Entity(tableName = "items")
 data class ItemEntity(
@@ -15,6 +14,5 @@ data class ItemEntity(
     val name: String?,
     val photoUri: String?,
     val description: String?,
-    val locationType: ItemLocationType?,
-    val itemType: ItemType?,
+    val state: CompositionState?,
 )

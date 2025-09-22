@@ -9,6 +9,5 @@ data class Item(
     val name: String?,
     val photoUri: String?,
     val description: String?,
-    val locationType: ItemLocationType?,
-    val itemType: ItemType? = ItemType.Draft,
+    val state: CompositionState? = CompositionState.Draft,
 )
