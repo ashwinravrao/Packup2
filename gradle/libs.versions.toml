@@ -61,7 +61,6 @@ moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-ktlint-plugin = "org.jlleitschuh.gradle:ktlint-gradle:13.1.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
