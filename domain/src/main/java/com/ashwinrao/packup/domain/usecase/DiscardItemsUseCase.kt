@@ -12,6 +12,6 @@ import javax.inject.Inject
 @ViewModelScoped
 class DiscardItemsUseCase @Inject constructor(private val repo: ItemRepository) {
     suspend operator fun invoke(items: List<Item>) = repo.discardItems(
-            ids = items.map { it.id },
+            ids = items.mapNotNull { it.id },
         )
 }

@@ -4,7 +4,7 @@
 
 package com.ashwinrao.packup.data.local.repository
 
-import com.ashwinrao.packup.data.local.mapper.toDataEntity
+import com.ashwinrao.packup.data.local.mapper.toDataModel
 import com.ashwinrao.packup.data.local.mapper.toDomainModel
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.repository.ItemRepository
@@ -24,7 +24,7 @@ constructor(private val itemDao: ItemDao) : ItemRepository {
 
     override suspend fun getItem(id: Long) = itemDao.getItem(id).toDomainModel()
 
-    override suspend fun saveItem(item: Item): Long = itemDao.saveItem(item.toDataEntity())
+    override suspend fun saveItem(item: Item): Long = itemDao.saveItem(item.toDataModel())
 
     override suspend fun discardItem(id: Long) = itemDao.discardItemById(id)
 

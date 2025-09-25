@@ -46,7 +46,7 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismis
 
 @Composable
 fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
-    val decodedUri = item.photoUri?.let { Uri.decode(it) }?.toUri()
+    val decodedUri = item.imageUri?.let { Uri.decode(it) }?.toUri()
     Log.d("ItemDetailBottomSheetContent", "decodedUri=$decodedUri")
 
     Box(

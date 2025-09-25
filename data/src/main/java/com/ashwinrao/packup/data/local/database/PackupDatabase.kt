@@ -10,13 +10,19 @@ import androidx.room.TypeConverters
 import com.ashwinrao.packup.data.local.model.ItemEntity
 import com.ashwinrao.packup.data.local.repository.ItemDao
 import com.ashwinrao.packup.data.local.typeconverter.CompositionStateConverter
+import com.ashwinrao.packup.data.local.typeconverter.StringListConverter
+import com.ashwinrao.packup.data.local.typeconverter.MeasurementConverter
 
 @Database(
     entities = [ItemEntity::class],
     version = DatabaseConstants.DATABASE_VERSION,
     exportSchema = false,
 )
-@TypeConverters(CompositionStateConverter::class)
+@TypeConverters(
+    CompositionStateConverter::class,
+    MeasurementConverter::class,
+    StringListConverter::class,
+)
 abstract class PackupDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
 }

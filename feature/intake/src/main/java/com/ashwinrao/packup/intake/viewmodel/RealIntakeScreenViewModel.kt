@@ -8,6 +8,7 @@ import android.net.Uri
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ashwinrao.packup.domain.model.CompositionState
 import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.domain.model.ValidatedFieldInput
 import com.ashwinrao.packup.domain.usecase.DiscardItemUseCase
@@ -161,7 +162,7 @@ constructor(
         // todo: a final "manual" validation as a fail-safe, gating the following save code
         _currentItem.value?.let { item ->
             viewModelScope.launch {
-                ucSaveItem(item)
+                ucSaveItem(item.copy(state = CompositionState.Complete))
             }
         }
     }

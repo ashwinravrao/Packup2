@@ -5,9 +5,12 @@
 package com.ashwinrao.packup.domain.model
 
 data class Item(
-    val id: Long = 0L,
-    val name: String?,
-    val photoUri: String?,
-    val description: String?,
-    val state: CompositionState? = CompositionState.Draft,
+    val id: Long? = null,
+    val name: String? = null,
+    val imageUri: String? = null,
+    val description: String? = null,
+    val state: CompositionState = CompositionState.Draft,
+    val quantity: Int = 1,
+    val tags: List<String> = emptyList(),
+    val measurements: List<Measurement> = emptyList(),
 )

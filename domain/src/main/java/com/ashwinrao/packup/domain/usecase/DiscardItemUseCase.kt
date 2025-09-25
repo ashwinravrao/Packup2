@@ -11,7 +11,11 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class DiscardItemUseCase @Inject constructor(private val repo: ItemRepository) {
-    suspend operator fun invoke(item: Item): Unit = repo.discardItem(
-            id = item.id,
-        )
+    suspend operator fun invoke(item: Item) {
+        item.id?.let { id ->
+            repo.discardItem(
+                id = id,
+            )
+        }
+    }
 }

@@ -46,7 +46,7 @@ fun ItemCard(modifier: Modifier = Modifier, index: Int, item: Item, onClick: (It
         shape = RoundedCornerShape(12.dp),
         onClick = { onClick(item) },
     ) {
-        val decodedUri = item.photoUri?.let { Uri.decode(it) }?.toUri()
+        val decodedUri = item.imageUri?.let { Uri.decode(it) }?.toUri()
         Log.d("ItemCard", "decodedUri=$decodedUri")
 
         Box(

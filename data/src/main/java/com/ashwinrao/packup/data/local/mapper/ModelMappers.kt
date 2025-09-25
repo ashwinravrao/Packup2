@@ -10,15 +10,21 @@ import com.ashwinrao.packup.domain.model.Item
 fun ItemEntity.toDomainModel(): Item = Item(
     id = id,
     name = name,
-    photoUri = photoUri,
+    imageUri = imageUri,
     description = description,
     state = state,
+    quantity = quantity,
+    tags = tags,
+    measurements = measurements,
 )
 
-fun Item.toDataEntity(): ItemEntity = ItemEntity(
-    id = id,
+fun Item.toDataModel(): ItemEntity = ItemEntity(
+    id = if (id == null || id == 0L) null else id,
     name = name,
-    photoUri = photoUri,
+    imageUri = imageUri,
     description = description,
     state = state,
+    quantity = quantity,
+    tags = tags,
+    measurements = measurements,
 )
