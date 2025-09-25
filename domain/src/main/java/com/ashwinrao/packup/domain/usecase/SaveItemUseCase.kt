@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
+ * Copyright (c) 2025 Ashwin Rao (@ashwinravrao)
  */
 
 package com.ashwinrao.packup.domain.usecase
