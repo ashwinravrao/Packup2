@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -15,9 +20,11 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
@@ -64,15 +71,28 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
             modifier = Modifier.matchParentSize(),
         )
 
-        // todo: replace
-        Column(modifier = modifier.align(Alignment.Center)) {
-            Text(text = "id=${item.id}")
-            Text(text = "name=${item.name}")
-            Text(text = "description=${item.description}")
-            Text(text = "quantity=${item.quantity}")
-            Text(text = "tags=${item.tags}")
-            Text(text = "measurements=${item.measurements}")
-            Text(text = "state=${item.state}")
+        Card(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .wrapContentSize()
+                .padding(12.dp),
+            shape = RoundedCornerShape(10.dp),
+            colors = CardColors(
+                contentColor = Color.Black.copy(alpha = 0.5f),
+                containerColor = Color.Black.copy(alpha = 0.5f),
+                disabledContainerColor = Color.Black.copy(alpha = 0.5f),
+                disabledContentColor = Color.Black.copy(alpha = 0.5f),
+            ),
+        ) {
+            Column(modifier = Modifier.padding(32.dp)) {
+                Text(text = "id=${item.id}", color = Color.White)
+                Text(text = "name=${item.name}", color = Color.White)
+                Text(text = "description=${item.description}", color = Color.White)
+                Text(text = "quantity=${item.quantity}", color = Color.White)
+                Text(text = "tags=${item.tags}", color = Color.White)
+                Text(text = "measurements=${item.measurements}", color = Color.White)
+                Text(text = "state=${item.state}", color = Color.White)
+            }
         }
     }
 }
