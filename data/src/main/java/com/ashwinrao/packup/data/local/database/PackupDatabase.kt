@@ -12,6 +12,7 @@ import com.ashwinrao.packup.data.local.repository.ItemDao
 import com.ashwinrao.packup.data.local.typeconverter.CompositionStateConverter
 import com.ashwinrao.packup.data.local.typeconverter.StringListConverter
 import com.ashwinrao.packup.data.local.typeconverter.MeasurementConverter
+import com.ashwinrao.packup.data.local.typeconverter.UriConverter
 
 @Database(
     entities = [ItemEntity::class],
@@ -22,6 +23,7 @@ import com.ashwinrao.packup.data.local.typeconverter.MeasurementConverter
     CompositionStateConverter::class,
     MeasurementConverter::class,
     StringListConverter::class,
+    UriConverter::class,
 )
 abstract class PackupDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao

@@ -140,19 +140,16 @@ private fun ExpandingItemCardPreview() {
                 Item(
                     id = 0L,
                     name = "Spoon",
-                    imageUri = "",
                     description = "An eating utensil that is concave.",
                 ),
                 Item(
                     id = 1L,
                     name = "Fork",
-                    imageUri = "",
                     description = "An eating utensil that is pointy.",
                 ),
                 Item(
                     id = 2L,
                     name = "Knife",
-                    imageUri = "",
                     description = "An eating utensil that is sharp and serrated.",
                 ),
             )

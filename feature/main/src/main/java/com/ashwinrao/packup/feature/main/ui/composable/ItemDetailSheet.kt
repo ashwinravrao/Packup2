@@ -4,8 +4,6 @@
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
-import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
@@ -46,16 +43,13 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismis
 
 @Composable
 fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
-    val decodedUri = item.imageUri?.let { Uri.decode(it) }?.toUri()
-    Log.d("ItemDetailBottomSheetContent", "decodedUri=$decodedUri")
-
     Box(
         modifier = modifier.fillMaxWidth(),
     ) {
         AsyncImage(
             model =
                 ImageRequest.Builder(LocalContext.current)
-                    .data(decodedUri)
+                    .data(item.imageUri)
                     .crossfade(true)
                     .scale(Scale.FILL)
                     .build(),

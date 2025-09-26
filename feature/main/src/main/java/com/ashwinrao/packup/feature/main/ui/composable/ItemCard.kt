@@ -4,8 +4,6 @@
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
-import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
@@ -34,7 +31,12 @@ import com.ashwinrao.packup.domain.model.Item
 import com.ashwinrao.packup.feature.main.R
 
 @Composable
-fun ItemCard(modifier: Modifier = Modifier, index: Int, item: Item, onClick: (Item) -> Unit = {}) {
+fun ItemCard(
+    modifier: Modifier = Modifier,
+    index: Int,
+    item: Item,
+    onClick: (Item) -> Unit,
+) {
     val startPadding = if (index % 2 == 0) 0.dp else 8.dp
     val endPadding = if (index % 2 == 0) 8.dp else 0.dp
 
@@ -46,16 +48,13 @@ fun ItemCard(modifier: Modifier = Modifier, index: Int, item: Item, onClick: (It
         shape = RoundedCornerShape(12.dp),
         onClick = { onClick(item) },
     ) {
-        val decodedUri = item.imageUri?.let { Uri.decode(it) }?.toUri()
-        Log.d("ItemCard", "decodedUri=$decodedUri")
-
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
             AsyncImage(
                 model =
                     ImageRequest.Builder(LocalContext.current)
-                        .data(decodedUri)
+                        .data(item.imageUri)
                         .crossfade(true)
                         .scale(Scale.FILL)
                         .build(),

@@ -4,7 +4,6 @@
 
 package com.ashwinrao.packup.feature.main.ui.composable
 
-import android.R.attr.bottom
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -17,7 +16,11 @@ import com.ashwinrao.packup.domain.model.Item
 internal const val ITEM_GRID_COLUMNS = 2
 
 @Composable
-fun ItemList(modifier: Modifier = Modifier, items: List<Item>, onItemClick: (Item) -> Unit) {
+fun ItemList(
+    modifier: Modifier = Modifier,
+    items: List<Item>,
+    onItemClick: (Item) -> Unit,
+) {
     val lazyGridState = rememberLazyGridState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(ITEM_GRID_COLUMNS),
@@ -26,7 +29,11 @@ fun ItemList(modifier: Modifier = Modifier, items: List<Item>, onItemClick: (Ite
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 8.dp),
     ) {
         items(items.size) { index ->
-            ItemCard(item = items[index], index = index, onClick = onItemClick)
+            ItemCard(
+                item = items[index],
+                index = index,
+                onClick = onItemClick,
+            )
         }
     }
 }
