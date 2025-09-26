@@ -7,8 +7,9 @@ package com.ashwinrao.packup.data.local.typeconverter
 import androidx.room.TypeConverter
 import com.ashwinrao.packup.domain.model.CompositionState
 
-class CompositionStateConverter {
+object CompositionStateConverter {
     @TypeConverter
+    @JvmStatic
     fun fromCompositionStateToString(compositionState: CompositionState?): String? = when (compositionState) {
         is CompositionState.Draft -> "draft"
         is CompositionState.Complete -> "complete"
@@ -17,6 +18,7 @@ class CompositionStateConverter {
     }
 
     @TypeConverter
+    @JvmStatic
     fun fromStringToCompositionState(value: String?): CompositionState? = when (value) {
         "draft" -> CompositionState.Draft
         "complete" -> CompositionState.Complete
