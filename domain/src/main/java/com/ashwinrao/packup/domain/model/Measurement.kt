@@ -11,95 +11,106 @@ sealed interface Measurement {
     val value: Double
     val name: String
     val abbreviated: String
+    val measureOf: MeasureOf
 
     @Serializable
-    sealed interface Weight : Measurement {
-        @Serializable
-        data class KG(override val value: Double) : Weight {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "kilogram$suffix"
-                }
-            override val abbreviated: String
-                get() = "kg"
-        }
-
-        @Serializable
-        data class OZ(override val value: Double) : Weight {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "ounce$suffix"
-                }
-            override val abbreviated: String
-                get() = "oz"
-        }
-
-        @Serializable
-        data class LB(override val value: Double) : Weight {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "pound$suffix"
-                }
-            override val abbreviated: String
-                get() = "oz"
-        }
+    data class KG(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "kilogram$suffix"
+            }
+        override val abbreviated: String
+            get() = "kg"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.Weight
     }
 
     @Serializable
-    sealed interface LWH : Measurement {
-        @Serializable
-        data class IN(override val value: Double) : LWH {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "es" else ""
-                    return "inch$suffix"
-                }
-            override val abbreviated: String
-                get() = "in"
-        }
+    data class OZ(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "ounce$suffix"
+            }
+        override val abbreviated: String
+            get() = "oz"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.Weight
+    }
 
-        @Serializable
-        data class FT(override val value: Double) : LWH {
-            override val name: String
-                get() = if (value > 1.0) "feet" else "foot"
-            override val abbreviated: String
-                get() = "in"
-        }
+    @Serializable
+    data class LB(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "pound$suffix"
+            }
+        override val abbreviated: String
+            get() = "lb"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.Weight
+    }
 
-        @Serializable
-        data class CM(override val value: Double) : LWH {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "centimeter$suffix"
-                }
-            override val abbreviated: String
-                get() = "cm"
-        }
+    @Serializable
+    data class IN(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "es" else ""
+                return "inch$suffix"
+            }
+        override val abbreviated: String
+            get() = "in"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.LxHxW
+    }
 
-        @Serializable
-        data class MM(override val value: Double) : LWH {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "millimeter$suffix"
-                }
-            override val abbreviated: String
-                get() = "mm"
-        }
+    @Serializable
+    data class FT(override val value: Double) : Measurement {
+        override val name: String
+            get() = if (value > 1.0) "feet" else "foot"
+        override val abbreviated: String
+            get() = "ft"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.LxHxW
+    }
 
-        @Serializable
-        data class M(override val value: Double) : LWH {
-            override val name: String
-                get() {
-                    val suffix = if (value > 1.0) "s" else ""
-                    return "meter$suffix"
-                }
-            override val abbreviated: String
-                get() = "m"
-        }
+    @Serializable
+    data class CM(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "centimeter$suffix"
+            }
+        override val abbreviated: String
+            get() = "cm"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.LxHxW
+    }
+
+    @Serializable
+    data class MM(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "millimeter$suffix"
+            }
+        override val abbreviated: String
+            get() = "mm"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.LxHxW
+    }
+
+    @Serializable
+    data class M(override val value: Double) : Measurement {
+        override val name: String
+            get() {
+                val suffix = if (value > 1.0) "s" else ""
+                return "meter$suffix"
+            }
+        override val abbreviated: String
+            get() = "m"
+        override val measureOf: MeasureOf
+            get() = MeasureOf.LxHxW
     }
 }
