@@ -5,10 +5,12 @@
 package com.ashwinrao.packup.feature.main.ui.composable
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,8 +27,13 @@ import com.ashwinrao.packup.feature.main.ui.viewmodel.ItemSelection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemDetailSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismiss: () -> Unit = {}) {
+fun ItemDetailSheet(
+    modifier: Modifier = Modifier,
+    item: ItemSelection,
+    onDismiss: () -> Unit,
+) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     if (item is ItemSelection.Selected) {
         ModalBottomSheet(
             modifier = modifier,
@@ -43,9 +50,7 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: ItemSelection, onDismis
 
 @Composable
 fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
-    Box(
-        modifier = modifier.fillMaxWidth(),
-    ) {
+    Box(modifier = modifier.fillMaxWidth()) {
         AsyncImage(
             model =
                 ImageRequest.Builder(LocalContext.current)
@@ -58,5 +63,16 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
             alignment = Alignment.Center,
             modifier = Modifier.matchParentSize(),
         )
+
+        // todo: replace
+        Column(modifier = modifier.align(Alignment.Center)) {
+            Text(text = "id=${item.id}")
+            Text(text = "name=${item.name}")
+            Text(text = "description=${item.description}")
+            Text(text = "quantity=${item.quantity}")
+            Text(text = "tags=${item.tags}")
+            Text(text = "measurements=${item.measurements}")
+            Text(text = "state=${item.state}")
+        }
     }
 }

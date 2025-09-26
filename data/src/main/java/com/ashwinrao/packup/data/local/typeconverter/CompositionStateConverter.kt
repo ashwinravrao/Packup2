@@ -8,6 +8,7 @@ import androidx.room.TypeConverter
 import com.ashwinrao.packup.domain.model.CompositionState
 
 object CompositionStateConverter {
+
     @TypeConverter
     @JvmStatic
     fun fromCompositionStateToString(compositionState: CompositionState?): String? = when (compositionState) {

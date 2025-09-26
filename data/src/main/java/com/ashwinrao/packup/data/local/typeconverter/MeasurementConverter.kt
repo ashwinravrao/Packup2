@@ -9,6 +9,7 @@ import com.ashwinrao.packup.domain.model.Measurement
 import kotlinx.serialization.json.Json
 
 object MeasurementConverter {
+
     private val json = Json {
         classDiscriminator = "type"
         ignoreUnknownKeys = true

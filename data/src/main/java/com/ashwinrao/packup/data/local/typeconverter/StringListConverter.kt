@@ -8,6 +8,7 @@ import androidx.room.TypeConverter
 import kotlinx.serialization.json.Json
 
 object StringListConverter {
+
     private val json = Json {
         ignoreUnknownKeys = true
     }
