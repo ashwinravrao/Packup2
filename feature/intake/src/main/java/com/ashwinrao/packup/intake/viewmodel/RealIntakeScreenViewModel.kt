@@ -52,14 +52,14 @@ constructor(
     private val _currentItem = MutableStateFlow<Item?>(null)
     override val currentItem = _currentItem.asStateFlow()
 
-    private val isNameFieldDirty =
+    override val isNameFieldDirty =
         designator.isNameFieldDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = false,
         )
 
-    private val isDescriptionFieldDirty =
+    override val isDescriptionFieldDirty =
         designator.isDescriptionFieldDirty.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,

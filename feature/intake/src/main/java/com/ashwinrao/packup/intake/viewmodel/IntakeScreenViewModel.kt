@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 interface IntakeScreenViewModel {
     val currentItem: StateFlow<Item?>
 
+    val isNameFieldDirty: StateFlow<Boolean>
+
+    val isDescriptionFieldDirty: StateFlow<Boolean>
+
     val selectedName: StateFlow<TextFieldValue>
 
     val validatedName: StateFlow<ValidatedFieldInput>
