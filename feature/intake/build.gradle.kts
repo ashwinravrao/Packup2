@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.hilt.runtime)
     implementation(libs.hilt.compose)
     implementation(libs.coil.compose)
+    implementation(libs.turbine)
+    implementation(libs.kotlinx.coroutines.test)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
