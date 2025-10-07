@@ -1,11 +1,20 @@
 /*
- * Copyright (c) 2025 Ashwin R. Rao (github.com/ashwinravrao). All rights reserved.
+ * Copyright (c) 2025 Ashwin Rao (github:ashwinravrao).
  *
- * Permission is NOT granted to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of this software, in whole or in part, except
- * with the author's prior written permission.
+ * This file is part of Packup 2.
  *
- * This software is provided "AS IS", without warranty of any kind.
+ * Packup 2 is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Packup 2 is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.ashwinrao.packup.feature.camera.screen
