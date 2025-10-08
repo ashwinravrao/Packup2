@@ -2,6 +2,11 @@
 
 Packup 2 is a total rewrite of my first app [Packup](https://github.com/ashwinravrao/Packup). Packup was an NFC-based home inventory tool and box tracker. My objective with this project is to provide substantial improvements to performance and usability, while aiming to demonstrate clean architecture principles and good software design.
 
+### Current State 🚧🏗️🧱
+
+As of Oct 7, 2025...
+![screen-20250926-114901~2](https://github.com/user-attachments/assets/35f83e73-e18f-4e10-a3b7-13a5ce584c1e)
+
 ---
 
 ### License
