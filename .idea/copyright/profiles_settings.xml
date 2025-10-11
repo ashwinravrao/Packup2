@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings>
+  <settings default="Packup GPLv3 Short">
     <module2copyright>
-      <element module="Project Source Files" copyright="Packup Copylite" />
+      <element module="Project Source Files" copyright="Packup GPLv3 Short" />
     </module2copyright>
   </settings>
 </component>
