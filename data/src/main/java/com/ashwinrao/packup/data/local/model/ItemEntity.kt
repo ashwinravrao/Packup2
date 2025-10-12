@@ -20,7 +20,4 @@ data class ItemEntity(
     val imageUri: Uri?,
     val description: String?,
     val state: CompositionState,
-    val quantity: Int,
-    val tags: List<String>,
-    val measurements: List<Measurement>,
 )

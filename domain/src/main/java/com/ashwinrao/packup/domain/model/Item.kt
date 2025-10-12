@@ -15,7 +15,4 @@ data class Item(
     val imageUri: Uri? = null,
     val description: String? = null,
     val state: CompositionState = CompositionState.Draft,
-    val quantity: Int = 1,
-    val tags: List<String> = emptyList(),
-    val measurements: List<Measurement> = emptyList(),
 )

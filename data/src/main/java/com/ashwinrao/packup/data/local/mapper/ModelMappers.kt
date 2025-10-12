@@ -16,9 +16,6 @@ fun ItemEntity.toDomainModel(): Item = Item(
     imageUri = imageUri,
     description = description,
     state = state,
-    quantity = quantity,
-    tags = tags,
-    measurements = measurements,
 )
 
 fun Item.toDataModel(): ItemEntity = ItemEntity(
@@ -27,7 +24,4 @@ fun Item.toDataModel(): ItemEntity = ItemEntity(
     imageUri = imageUri,
     description = description,
     state = state,
-    quantity = quantity,
-    tags = tags,
-    measurements = measurements,
 )

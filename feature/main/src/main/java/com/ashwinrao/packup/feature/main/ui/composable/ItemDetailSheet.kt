@@ -91,9 +91,6 @@ fun ItemDetailSheet(modifier: Modifier = Modifier, item: Item) {
                 Text(text = "id=${item.id}", color = Color.White)
                 Text(text = "name=${item.name}", color = Color.White)
                 Text(text = "description=${item.description}", color = Color.White)
-                Text(text = "quantity=${item.quantity}", color = Color.White)
-                Text(text = "tags=${item.tags}", color = Color.White)
-                Text(text = "measurements=${item.measurements}", color = Color.White)
                 Text(text = "state=${item.state}", color = Color.White)
             }
         }
