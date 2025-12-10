@@ -25,6 +25,7 @@
 /.idea/copilot.*
 /.idea/markdown.xml
 /.kotlin/
+/.claude/
 
 .DS_Store
 /build
