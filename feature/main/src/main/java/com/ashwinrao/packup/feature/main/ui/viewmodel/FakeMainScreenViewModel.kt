@@ -13,7 +13,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeMainScreenViewModel : MainScreenViewModel {
     override val items: StateFlow<List<Item>> = MutableStateFlow(emptyList())
+    override val searchQuery: StateFlow<String> = MutableStateFlow("")
+    override val filteredItems: StateFlow<List<Item>> = MutableStateFlow(emptyList())
     override val selectedItem: StateFlow<ItemSelection> = MutableStateFlow(ItemSelection.None)
+
+    override fun updateSearchQuery(query: String) {}
+
+    override fun collapseSearchBar() {}
 
     override fun selectItem(item: Item) {}
 

@@ -12,7 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface MainScreenViewModel {
     val items: StateFlow<List<Item>>
+    val searchQuery: StateFlow<String>
+    val filteredItems: StateFlow<List<Item>>
     val selectedItem: StateFlow<ItemSelection>
+    fun updateSearchQuery(query: String)
+    fun collapseSearchBar()
     fun selectItem(item: Item)
     fun unselectItem()
 }
