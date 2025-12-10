@@ -45,10 +45,10 @@ fun SearchBar(
     state: TextFieldState,
     isVoiceSearchEnabled: Boolean = true,
     onVoiceSearch: () -> Unit = {},
-    onTextSearch: (String) -> Unit = {},
     isExpanded: Boolean = false,
     onExpanded: (Boolean) -> Unit,
     results: List<Item>,
+    onResultClick: (Item) -> Unit = {},
     hint: String = stringResource(R.string.default_search_bar_hint),
 ) {
     // Animate horizontal padding so the bar doesn't jankily widen before expanding
@@ -67,7 +67,6 @@ fun SearchBar(
                 query = state.text.toString(),
                 onQueryChange = { state.edit { replace(0, length, it) } },
                 onSearch = {
-                    onTextSearch(state.text.toString())
                     onExpanded(false)
                 },
                 leadingIcon = {
@@ -113,13 +112,13 @@ fun SearchBar(
     ) {
         LazyColumn(modifier = modifier) {
             items(results.size) { index ->
-                val item = results[index]
-                item.name?.let {
-                    Text(
-                        modifier = Modifier.padding(16.dp),
-                        text = it,
-                    )
-                }
+                ItemCard(
+                    item = results[index],
+                    index = index,
+                    onClick = { item ->
+                        onResultClick(item)
+                    }
+                )
             }
         }
     }
@@ -134,11 +133,11 @@ private fun TopSearchBarPreview() {
     PackupTheme {
         SearchBar(
             state = state,
-            onTextSearch = {},
             onVoiceSearch = {},
             isExpanded = isExpanded,
             onExpanded = { isExpanded = it },
             results = emptyList(),
+            onResultClick = {},
             hint = "Describe an item to search...",
         )
     }
