@@ -32,3 +32,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+.claude/
